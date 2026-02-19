@@ -737,7 +737,7 @@
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  محرك مرصد كتب فلسطين 🇵🇸
+//  محرك مرصد كتب فلسطين 🇵🇸 (مع منع تكرار محسّن)
 // ═══════════════════════════════════════════════════════════════
 
 let ALL_BOOKS = [];
@@ -902,6 +902,176 @@ function detectTopics(title, desc) {
 }
 
 // ═══════════════════════════════════════════════════
+//  دوال منع التكرار المحسّنة
+// ═══════════════════════════════════════════════════
+
+// تطبيع متقدم للعنوان
+function normalizeTitle(title) {
+  if (!title) return '';
+  
+  return title
+    .toLowerCase()
+    .trim()
+    // إزالة علامات الترقيم
+    .replace(/[^\w\s\u0600-\u06FF]/g, ' ')
+    // إزالة المسافات المتعددة
+    .replace(/\s+/g, ' ')
+    // إزالة كلمات شائعة غير مهمة
+    .replace(/\b(the|a|an|and|or|of|in|on|at|to|for|with|by|from|le|la|les|un|une|des|du|de|et|في|من|إلى|على|و|أو)\b/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    // أخذ أول 80 حرف للمقارنة
+    .substring(0, 80);
+}
+
+// تطبيع اسم المؤلف
+function normalizeAuthor(author) {
+  if (!author) return '';
+  
+  return author
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s\u0600-\u06FF]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// تنظيف ISBN
+function cleanISBN(isbn) {
+  if (!isbn) return '';
+  return isbn.replace(/[^0-9X]/gi, '');
+}
+
+// توليد مفتاح فريد للكتاب
+function generateBookKey(book) {
+  const keys = [];
+  
+  // 1. ISBN (أقوى معرّف)
+  if (book.isbn && book.isbn.length >= 10) {
+    const cleanedISBN = cleanISBN(book.isbn);
+    if (cleanedISBN.length >= 10) {
+      keys.push(`isbn:${cleanedISBN}`);
+    }
+  }
+  
+  // 2. العنوان المطبّع + أول مؤلف
+  const normTitle = normalizeTitle(book.title);
+  if (normTitle && normTitle.length > 10) {
+    const firstAuthor = book.authors && book.authors[0] ? 
+      normalizeAuthor(book.authors[0]) : '';
+    
+    if (firstAuthor) {
+      keys.push(`title-author:${normTitle}:${firstAuthor}`);
+    } else {
+      keys.push(`title:${normTitle}`);
+    }
+  }
+  
+  // 3. العنوان + الناشر + السنة (كنسخة احتياطية)
+  if (normTitle && book.publisher && book.publication_date) {
+    const year = new Date(book.publication_date).getFullYear();
+    if (year && year > 2000) {
+      const normPublisher = normalizeTitle(book.publisher);
+      keys.push(`title-pub-year:${normTitle}:${normPublisher}:${year}`);
+    }
+  }
+  
+  return keys;
+}
+
+// فحص التشابه بين عنوانين (fuzzy matching بسيط)
+function titlesAreSimilar(title1, title2, threshold = 0.85) {
+  const norm1 = normalizeTitle(title1);
+  const norm2 = normalizeTitle(title2);
+  
+  if (!norm1 || !norm2) return false;
+  
+  // إذا كان أحدهما يحتوي على الآخر بالكامل
+  if (norm1.includes(norm2) || norm2.includes(norm1)) {
+    return true;
+  }
+  
+  // حساب نسبة التشابه بطريقة بسيطة (Jaccard similarity)
+  const words1 = new Set(norm1.split(' ').filter(w => w.length > 2));
+  const words2 = new Set(norm2.split(' ').filter(w => w.length > 2));
+  
+  if (words1.size === 0 || words2.size === 0) return false;
+  
+  const intersection = new Set([...words1].filter(x => words2.has(x)));
+  const union = new Set([...words1, ...words2]);
+  
+  const similarity = intersection.size / union.size;
+  
+  return similarity >= threshold;
+}
+
+// دالة إزالة التكرار المحسّنة
+function removeDuplicates(books) {
+  const uniqueBooks = [];
+  const seenKeys = new Set();
+  const seenTitles = [];
+  
+  let duplicateCount = 0;
+  
+  for (const book of books) {
+    let isDuplicate = false;
+    
+    // 1. فحص المفاتيح الفريدة
+    const keys = generateBookKey(book);
+    for (const key of keys) {
+      if (seenKeys.has(key)) {
+        isDuplicate = true;
+        duplicateCount++;
+        console.log(`⚠️ مكرر (مفتاح): ${book.title.substring(0, 50)} - المفتاح: ${key.substring(0, 40)}`);
+        break;
+      }
+    }
+    
+    if (isDuplicate) continue;
+    
+    // 2. فحص التشابه مع العناوين الموجودة
+    for (const existingBook of seenTitles) {
+      if (titlesAreSimilar(book.title, existingBook.title)) {
+        // تحقق إضافي: نفس المؤلف أو الناشر؟
+        const sameAuthor = book.authors[0] && existingBook.authors[0] && 
+          normalizeAuthor(book.authors[0]) === normalizeAuthor(existingBook.authors[0]);
+        
+        const samePublisher = book.publisher && existingBook.publisher &&
+          normalizeTitle(book.publisher) === normalizeTitle(existingBook.publisher);
+        
+        if (sameAuthor || samePublisher) {
+          isDuplicate = true;
+          duplicateCount++;
+          console.log(`⚠️ مكرر (تشابه): ${book.title.substring(0, 50)} ≈ ${existingBook.title.substring(0, 50)}`);
+          break;
+        }
+      }
+    }
+    
+    if (isDuplicate) continue;
+    
+    // 3. إضافة الكتاب (غير مكرر)
+    uniqueBooks.push(book);
+    
+    // حفظ المفاتيح
+    for (const key of keys) {
+      seenKeys.add(key);
+    }
+    
+    // حفظ العنوان للمقارنة
+    seenTitles.push({
+      title: book.title,
+      authors: book.authors,
+      publisher: book.publisher
+    });
+  }
+  
+  console.log(`✅ إزالة التكرار: ${books.length} → ${uniqueBooks.length} (حُذف ${duplicateCount} مكرر)`);
+  
+  return uniqueBooks;
+}
+
+// ═══════════════════════════════════════════════════
 //  جلب من Google Books
 // ═══════════════════════════════════════════════════
 async function fetchGoogleBooks(query) {
@@ -938,7 +1108,8 @@ async function fetchGoogleBooks(query) {
         publisher: v.publisher || '',
         publication_date: pubDate,
         pages: v.pageCount || null,
-        isbn: (v.industryIdentifiers||[]).find(i=>i.type==='ISBN_13')?.identifier || '',
+        isbn: (v.industryIdentifiers||[]).find(i=>i.type==='ISBN_13')?.identifier || 
+              (v.industryIdentifiers||[]).find(i=>i.type==='ISBN_10')?.identifier || '',
         book_url: v.infoLink || '',
         cover: (v.imageLinks?.thumbnail||'').replace('http:','https:'),
         description: (v.description||'').substring(0,500),
@@ -1100,25 +1271,22 @@ async function fetchAllBooks() {
     await sleep(delay);
   }
 
-  updateProgress(totalSteps, totalSteps, 'معالجة البيانات...');
+  updateProgress(totalSteps, totalSteps, 'إزالة التكرار...');
 
-  // إزالة التكرار
-  const seen = new Set();
-  ALL_BOOKS = allBooks.filter(b => {
-    const key = (b.isbn && b.isbn.length > 5) ? 
-      b.isbn : 
-      normalizeTitle(b.title) + '|||' + b.authors.join(',');
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
+  console.log(`📊 إجمالي الكتب قبل إزالة التكرار: ${allBooks.length}`);
 
+  // ═══ إزالة التكرار بالخوارزمية المحسّنة ═══
+  ALL_BOOKS = removeDuplicates(allBooks);
+
+  console.log(`📊 إجمالي الكتب بعد إزالة التكرار: ${ALL_BOOKS.length}`);
+
+  // ترتيب حسب الأحدث
   ALL_BOOKS.sort((a, b) => 
     new Date(b.publication_date) - new Date(a.publication_date)
   );
 
   try {
-    localStorage.setItem('palestine_books_v3', JSON.stringify({
+    localStorage.setItem('palestine_books_v4', JSON.stringify({
       books: ALL_BOOKS,
       timestamp: Date.now()
     }));
@@ -1130,12 +1298,6 @@ async function fetchAllBooks() {
   updateStats();
   filterBooks();
   updateLastTime();
-}
-
-function normalizeTitle(t) {
-  return (t || '').toLowerCase()
-    .replace(/[^\w\u0600-\u06FF]/g, '')
-    .substring(0, 50);
 }
 
 function sleep(ms) { 
@@ -1224,7 +1386,6 @@ function renderBooks(books) {
       b.language === 'fr' ? 'Français' : 
       'English';
     
-    // تنسيق التاريخ بأرقام عادية
     const date = b.publication_date ? 
       new Date(b.publication_date).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -1349,7 +1510,7 @@ function toggleSources() {
 //  التحديث اليدوي
 // ═══════════════════════════════════════════════════
 function manualRefresh() {
-  localStorage.removeItem('palestine_books_v3');
+  localStorage.removeItem('palestine_books_v4');
   fetchAllBooks();
 }
 
@@ -1359,7 +1520,7 @@ function manualRefresh() {
 (async function init() {
   try {
     const cache = JSON.parse(
-      localStorage.getItem('palestine_books_v3')
+      localStorage.getItem('palestine_books_v4')
     );
     
     if (cache && (Date.now() - cache.timestamp) < 3600000) {
