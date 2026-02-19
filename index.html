@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مرصد كتب فلسطين 🇵🇸 | Palestine Books Observatory</title>
-<meta name="description" content="مرصد متخصص يجمع أحدث الكتب حول القضية الفلسطينية (2023-2026) بالعربية والإنجليزية والفرنسية — مع مراجعات أكاديمية — تحديث تلقائي كل ساعة">
+<meta name="description" content="مرصد متخصص يجمع أحدث الكتب حول القضية الفلسطينية (2023-2026) بالعربية والإنجليزية والفرنسية — تحديث تلقائي كل ساعة">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
 
@@ -16,7 +16,6 @@
     --palestine-red: #c8102e;
     --palestine-green: #007a3d;
     --palestine-black: #000000;
-    --review-orange: #f59e0b;
     --ar: #007a3d;
     --fr: #2563eb;
     --en: #7c3aed;
@@ -378,23 +377,6 @@
   .lang-fr { background: var(--fr); }
   .lang-en { background: var(--en); }
 
-  .review-count-badge {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    padding: 6px 14px;
-    border-radius: 30px;
-    font-size: .75em;
-    font-weight: 800;
-    background: var(--review-orange);
-    color: white;
-    z-index: 3;
-    box-shadow: 0 2px 8px rgba(0,0,0,.3);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
   .source-badge {
     position: absolute;
     bottom: 12px;
@@ -482,66 +464,6 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     margin-bottom: 14px;
-  }
-
-  /* ── المراجعات المدمجة ── */
-  .reviews-section {
-    margin: 14px 0;
-    padding-top: 14px;
-    border-top: 2px solid #f0f0f0;
-  }
-  .reviews-section h4 {
-    font-size: .9em;
-    color: var(--review-orange);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 800;
-  }
-  .review-item {
-    background: #fffbf0;
-    border: 1px solid #fef3c7;
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 10px;
-    font-size: .82em;
-    transition: all .3s;
-  }
-  .review-item:hover {
-    background: #fef9e7;
-    border-color: #fde68a;
-  }
-  .review-item .review-source {
-    font-weight: 800;
-    color: var(--review-orange);
-    margin-bottom: 6px;
-    font-size: .95em;
-  }
-  .review-item .review-meta {
-    font-size: .85em;
-    color: var(--text2);
-    margin-bottom: 6px;
-  }
-  .review-item .review-text {
-    color: var(--text);
-    line-height: 1.6;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    margin-bottom: 8px;
-  }
-  .review-item .review-link {
-    color: var(--palestine-red);
-    font-size: .9em;
-    text-decoration: none;
-    font-weight: 700;
-    transition: color .3s;
-  }
-  .review-item .review-link:hover { 
-    color: var(--palestine-black); 
-    text-decoration: underline;
   }
 
   .book-actions {
@@ -678,12 +600,12 @@
     <p class="subtitle">Palestine Books Observatory</p>
     <p style="font-size:.95em;opacity:.9;max-width:800px;margin:0 auto">
       مرصد متخصص يجمع تلقائيًا أحدث الكتب حول القضية الفلسطينية (2023-2026)<br>
-      من 85+ مصدر أكاديمي — بالعربية والإنجليزية والفرنسية — مع مراجعات أكاديمية
+      من 85+ مصدر أكاديمي — بالعربية والإنجليزية والفرنسية
     </p>
     <div class="badges">
       <span class="badge">📚 آخر 3 سنوات (2023-2026)</span>
       <span class="badge">🔄 تحديث كل ساعة</span>
-      <span class="badge">📝 مراجعات أكاديمية</span>
+      <span class="badge">🌍 3 لغات</span>
       <span class="badge">📡 85+ مصدر</span>
     </div>
   </div>
@@ -710,11 +632,6 @@
     <div class="icon">🇫🇷</div>
     <div class="num" id="frCount">-</div>
     <div class="lbl">Français</div>
-  </div>
-  <div class="stat-card">
-    <div class="icon">📝</div>
-    <div class="num" id="reviewedCount">-</div>
-    <div class="lbl">لديه مراجعات</div>
   </div>
   <div class="stat-card">
     <div class="icon">🏛️</div>
@@ -772,7 +689,6 @@
     <span class="filter-label" style="margin-right:20px">ترتيب:</span>
     <select class="select-box" id="sortSelect" onchange="filterBooks()">
       <option value="date">الأحدث أولاً</option>
-      <option value="reviews">الأكثر مراجعات</option>
       <option value="title">أبجدي (العنوان)</option>
       <option value="pages">عدد الصفحات</option>
     </select>
@@ -811,7 +727,7 @@
 <footer>
   <h3>🇵🇸 مرصد كتب فلسطين</h3>
   <p>مشروع مفتوح المصدر لتوثيق ونشر الإنتاج المعرفي حول القضية الفلسطينية</p>
-  <p>يجمع تلقائيًا من Google Books, Open Library, Crossref, DOAB, LSE Reviews, H-Net وأكثر من 85 مصدرًا</p>
+  <p>يجمع تلقائيًا من Google Books, Open Library, Crossref, DOAB وأكثر من 85 مصدرًا أكاديميًا</p>
   <p style="font-size:.85em;margin-top:12px">© 2023-2026 — Palestine Books Observatory</p>
   <button class="sources-toggle" onclick="toggleSources()">
     📡 عرض قائمة المصادر الـ 85+
@@ -821,19 +737,13 @@
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  محرك مرصد كتب فلسطين 🇵🇸 (نسخة محسّنة)
+//  محرك مرصد كتب فلسطين 🇵🇸
 // ═══════════════════════════════════════════════════════════════
 
 let ALL_BOOKS = [];
-let ALL_REVIEWS = [];
 let currentLang = 'all';
 
-// ─── تحويل الأرقام العربية إلى لاتينية ───
-function toWesternNumerals(str) {
-  return String(str).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
-}
-
-// ─── قائمة المصادر الموسّعة (85+) ───
+// ─── قائمة المصادر (85+) ───
 const SOURCES_LIST = [
   // === APIs رئيسية ===
   "Google Books API","Open Library API","Crossref Metadata API","DOAB (Directory of Open Access Books)",
@@ -844,11 +754,6 @@ const SOURCES_LIST = [
   "Al-Zaytouna Centre for Studies","Palestine Studies Portal","Birzeit University Publications",
   "Palestine & Palestinians Studies Portal","Mada al-Carmel","Ibrahim Abu-Lughod Institute",
   "Palestinian Center for Policy Research (PCPSR)","Al-Shabaka Policy Network",
-  
-  // === مراصد المراجعات الأكاديمية ===
-  "LSE Review of Books","H-Net Palestine","H-Net Middle East","JSTOR Daily",
-  "Arab Studies Journal","Journal of Palestine Studies","Middle East Report (MERIP)",
-  "Jerusalem Quarterly","Mondoweiss Academic Reviews",
   
   // === ناشرون أكاديميون EN (متخصصون بفلسطين/الشرق الأوسط) ===
   "Oxford University Press (Middle East Studies)","Cambridge University Press (Palestine Studies)",
@@ -878,112 +783,67 @@ const SOURCES_LIST = [
   "EBSCOhost","ProQuest","SAGE Publications","Taylor & Francis Online"
 ];
 
-// ─── استعلامات البحث المتخصصة (موسّعة) ───
+// ─── استعلامات البحث (موسّعة) ───
 const QUERIES = {
   en: [
-    // عامة حديثة
     "palestine 2023","palestine 2024","palestine 2025","palestine 2026",
     "palestinian history","palestinian resistance","palestinian liberation",
-    
-    // غزة والحرب الأخيرة
     "gaza war 2023","gaza genocide 2024","israel gaza assault",
     "hamas october 7","al-aqsa flood","israel war crimes gaza",
     "gaza humanitarian crisis","gaza blockade siege",
-    
-    // النكبة والتطهير العرقي
     "nakba 1948 palestine","ethnic cleansing palestine","palestinian refugees",
     "right of return palestine","palestinian diaspora",
-    
-    // الاحتلال والاستيطان
     "israeli occupation palestine","west bank settlements","israeli apartheid",
     "palestine colonialism","zionist settler colonialism",
-    
-    // القدس والأقصى
     "jerusalem al-quds","al-aqsa mosque","jerusalem palestine",
-    
-    // القانون والسياسة الدولية
     "palestine international law","ICJ palestine","ICC israel war crimes",
     "BDS movement palestine","israel sanctions boycott",
     "one state solution palestine","two state solution critique",
-    
-    // مؤلفون محددون
     "edward said orientalism palestine","rashid khalidi hundred years war",
     "ilan pappe ethnic cleansing palestine","norman finkelstein gaza",
     "noam chomsky palestine","judith butler precarious life palestine",
     "sara roy gaza","nur masalha palestine nakba",
     "gideon levy israel palestine","avi shlaim iron wall",
-    
-    // الثقافة والأدب
     "palestinian literature","mahmoud darwish poetry",
     "ghassan kanafani palestine","palestinian cinema","palestinian art resistance",
-    
-    // تاريخ وتحليل
     "zionism history critique","mandate palestine british",
     "oslo accords failure","palestinian authority criticism",
     "intifada palestine history"
   ],
   
   fr: [
-    // عامة
     "palestine 2023","palestine 2024","palestine 2025",
     "palestine histoire","résistance palestinienne",
-    
-    // غزة
     "gaza génocide 2024","guerre gaza 2023","crimes de guerre israël",
     "gaza blocus siège","gaza crise humanitaire",
-    
-    // النكبة والاحتلال
     "nakba palestine 1948","occupation israélienne palestine",
     "nettoyage ethnique palestine","réfugiés palestiniens",
     "droit au retour palestine","apartheid israélien",
-    
-    // القدس
     "jérusalem al-qods","mosquée al-aqsa",
-    
-    // القانون والسياسة
     "palestine droit international","CIJ palestine","CPI israël",
     "BDS palestine boycott","sionisme colonialisme",
-    
-    // مؤلفون
     "edward said orientalisme","ilan pappe nettoyage ethnique",
     "rashid khalidi palestine","shlomo sand invention peuple juif",
-    
-    // الأدب
     "littérature palestinienne","mahmoud darwich poésie",
     "ghassan kanafani","cinéma palestinien"
   ],
   
   ar: [
-    // عامة
     "فلسطين 2023","فلسطين 2024","فلسطين 2025","فلسطين 2026",
     "فلسطين التاريخ","القضية الفلسطينية","المقاومة الفلسطينية",
-    
-    // غزة والحرب
     "غزة الحرب 2023","غزة الإبادة 2024","طوفان الأقصى",
     "غزة الحصار","غزة الكارثة الإنسانية","العدوان على غزة",
-    
-    // النكبة
     "النكبة الفلسطينية 1948","التطهير العرقي فلسطين",
     "اللاجئون الفلسطينيون","حق العودة الفلسطيني",
-    
-    // الاحتلال
     "الاحتلال الإسرائيلي","الاستيطان الصهيوني","الضفة الغربية",
     "القدس المحتلة","المسجد الأقصى","أبارتهايد إسرائيل",
-    
-    // القانون الدولي
     "فلسطين القانون الدولي","محكمة العدل الدولية فلسطين",
     "المحكمة الجنائية الدولية إسرائيل","جرائم الحرب الإسرائيلية",
-    
-    // الأدب والثقافة
     "الأدب الفلسطيني","محمود درويش","غسان كنفاني",
     "السينما الفلسطينية","الثقافة الفلسطينية",
-    
-    // مفكرون ومؤلفون
     "إدوارد سعيد الاستشراق","إيلان بابه التطهير العرقي",
     "نورمان فينكلشتاين غزة","نعوم تشومسكي فلسطين",
     "رشيد الخالدي فلسطين","نور مصالحة النكبة",
-    
-    // التاريخ والتحليل
     "الصهيونية الاستعمار","الانتفاضة الفلسطينية",
     "اتفاقيات أوسلو","السلطة الفلسطينية نقد"
   ]
@@ -999,7 +859,7 @@ function detectLang(text) {
   return 'en';
 }
 
-// ─── تحديد الموضوعات المتخصصة ───
+// ─── تحديد الموضوعات ───
 function detectTopics(title, desc) {
   const text = ((title||'') + ' ' + (desc||'')).toLowerCase();
   const topics = [];
@@ -1028,16 +888,12 @@ function detectTopics(title, desc) {
     'war.crime|جرائم حرب|crimes.guerre': 'War Crimes',
     'bds|مقاطع|boycott': 'BDS',
     'hamas|حماس': 'Hamas',
-    'fatah|فتح': 'Fatah',
-    'plo|منظمة التحرير': 'PLO',
-    'oslo|أوسلو': 'Oslo Accords',
   };
   
   for (const [pattern, topic] of Object.entries(topicMap)) {
     if (new RegExp(pattern, 'i').test(text)) topics.push(topic);
   }
   
-  // تأكد من وجود "Palestine" دائمًا
   if (!topics.includes('Palestine')) {
     if (/palestin|فلسط/i.test(text)) topics.unshift('Palestine');
   }
@@ -1046,7 +902,7 @@ function detectTopics(title, desc) {
 }
 
 // ═══════════════════════════════════════════════════
-//  جلب من Google Books API
+//  جلب من Google Books
 // ═══════════════════════════════════════════════════
 async function fetchGoogleBooks(query) {
   const books = [];
@@ -1061,18 +917,15 @@ async function fetchGoogleBooks(query) {
     if (!resp.ok) return books;
     const data = await resp.json();
     
-    // آخر 3 سنوات = 1095 يوم
     const threeYearsAgo = Date.now() - (3 * 365 * 24 * 60 * 60 * 1000);
     
     for (const item of (data.items||[])) {
       const v = item.volumeInfo||{};
       const pubDate = v.publishedDate||'';
       
-      // فلترة: آخر 3 سنوات فقط
       if (pubDate && new Date(pubDate).getTime() < threeYearsAgo) continue;
       if (!pubDate) continue;
       
-      // فلترة: يجب أن يحتوي على "فلسطين/Palestine"
       const titleDesc = (v.title||'') + ' ' + (v.description||'');
       if (!/palestin|فلسط/i.test(titleDesc)) continue;
       
@@ -1093,7 +946,6 @@ async function fetchGoogleBooks(query) {
         topics: detectTopics(v.title, v.description),
         source: 'Google Books',
         rating: v.averageRating || null,
-        reviews: [],
       });
     }
   } catch(e) { 
@@ -1117,7 +969,6 @@ async function fetchOpenLibrary(query) {
     if (!resp.ok) return books;
     const data = await resp.json();
     
-    // آخر 3 سنوات
     const threeYearsAgo = new Date().getFullYear() - 3;
     
     for (const doc of (data.docs||[])) {
@@ -1145,7 +996,6 @@ async function fetchOpenLibrary(query) {
         topics: detectTopics(title, subjects),
         source: 'Open Library',
         rating: null,
-        reviews: [],
       });
     }
   } catch(e) { 
@@ -1205,7 +1055,6 @@ async function fetchCrossref(query) {
         topics: detectTopics(title, (item.subject||[]).join(' ')),
         source: 'Crossref',
         rating: null,
-        reviews: [],
       });
     }
   } catch(e) { 
@@ -1215,126 +1064,27 @@ async function fetchCrossref(query) {
 }
 
 // ═══════════════════════════════════════════════════
-//  جلب المراجعات من LSE Review of Books
+//  المحرك الرئيسي
 // ═══════════════════════════════════════════════════
-async function fetchLSEReviews() {
-  const reviews = [];
-  try {
-    const feedUrl = 'https://blogs.lse.ac.uk/lsereviewofbooks/feed/';
-    const resp = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&count=100`);
-    if (!resp.ok) return reviews;
-    const data = await resp.json();
-    
-    for (const item of (data.items||[])) {
-      const title = item.title||'';
-      const desc = item.description||'';
-      
-      // فلترة: فلسطين فقط
-      if (!/palestin|فلسط|gaza|israel.*occup/i.test(title + ' ' + desc)) continue;
-      
-      // استخراج اسم الكتاب
-      const bookMatch = title.match(/[rR]eview[:\s]+(.+?)(?:\s+by\s+(.+))?$/);
-      const bookTitle = bookMatch?.[1] || title;
-      const bookAuthor = bookMatch?.[2] || '';
-      
-      reviews.push({
-        id: 'lse_'+item.guid,
-        book_title: bookTitle.trim(),
-        book_author: bookAuthor.trim(),
-        review_source: 'LSE Review of Books',
-        review_type: 'academic',
-        review_text: desc.replace(/<[^>]+>/g, '').substring(0, 500),
-        review_url: item.link || '',
-        review_date: item.pubDate || '',
-        language: detectLang(title),
-      });
-    }
-  } catch(e) { 
-    console.warn('LSE Reviews error:', e); 
-  }
-  return reviews;
-}
-
-// ═══════════════════════════════════════════════════
-//  جلب المراجعات من H-Net (محاكاة + عينات)
-// ═══════════════════════════════════════════════════
-async function fetchHNetReviews() {
-  // عينة واقعية من كتب حديثة عن فلسطين
-  return [
-    {
-      id: 'hnet_1',
-      book_title: "The Hundred Years' War on Palestine",
-      book_author: "Rashid Khalidi",
-      review_source: "H-Net Palestine",
-      review_type: "academic",
-      review_text: "Khalidi offers a masterful reframing of Palestinian history as a century-long colonial war. Drawing on family archives and Ottoman records, he demonstrates how major powers have consistently undermined Palestinian self-determination while claiming to support peace.",
-      review_url: "https://networks.h-net.org/node/28765/reviews",
-      review_date: "2024-03-15",
-      language: "en",
-    },
-    {
-      id: 'hnet_2',
-      book_title: "Ten Myths About Israel",
-      book_author: "Ilan Pappe",
-      review_source: "H-Net Middle East",
-      review_type: "academic",
-      review_text: "Pappe systematically deconstructs foundational Israeli narratives, from 'a land without a people' to the myth of voluntary Palestinian exodus in 1948. Essential reading for understanding Palestine/Israel through critical historical scholarship.",
-      review_url: "https://networks.h-net.org/node/28443/reviews",
-      review_date: "2023-11-20",
-      language: "en",
-    },
-    {
-      id: 'hnet_3',
-      book_title: "Gaza: An Inquest into Its Martyrdom",
-      book_author: "Norman Finkelstein",
-      review_source: "H-Net Palestine",
-      review_type: "academic",
-      review_text: "Finkelstein's meticulous documentation of Israel's military operations in Gaza exposes systematic violations of international law. His analysis of the 2014 assault remains devastatingly relevant to understanding current atrocities.",
-      review_url: "https://networks.h-net.org/node/28765/reviews",
-      review_date: "2024-02-08",
-      language: "en",
-    },
-    {
-      id: 'hnet_4',
-      book_title: "The Gaza Strip: The Political Economy of De-Development",
-      book_author: "Sara Roy",
-      review_source: "H-Net Middle East",
-      review_type: "academic",
-      review_text: "Roy introduces the concept of 'de-development' to describe Israel's deliberate destruction of Gaza's economic capacity. Her work remains the definitive study of Gaza's political economy under occupation and blockade.",
-      review_url: "https://networks.h-net.org/node/28443/reviews",
-      review_date: "2023-09-12",
-      language: "en",
-    }
-  ];
-}
-
-// ═══════════════════════════════════════════════════
-//  المحرك الرئيسي: جلب الكتب والمراجعات
-// ═══════════════════════════════════════════════════
-async function fetchAllContent() {
+async function fetchAllBooks() {
   document.getElementById('progressBar').style.display = 'block';
   document.getElementById('refreshBtn').disabled = true;
   document.getElementById('booksGrid').innerHTML = 
-    '<div class="loader"><div class="spinner"></div><p>جارٍ جلب الكتب والمراجعات من 85+ مصدر...</p></div>';
+    '<div class="loader"><div class="spinner"></div><p>جارٍ جلب الكتب من 85+ مصدر...</p></div>';
 
   const allBooks = [];
-  const allReviews = [];
   
-  // جمع كل الاستعلامات
   const allQueries = [
     ...QUERIES.en.map(q => ({ q, lang:'en', api:'google' })),
     ...QUERIES.fr.map(q => ({ q, lang:'fr', api:'google' })),
     ...QUERIES.ar.map(q => ({ q, lang:'ar', api:'google' })),
-    // Open Library
     ...QUERIES.en.slice(0, 15).map(q => ({ q, lang:'en', api:'openlibrary' })),
-    // Crossref
     ...QUERIES.en.slice(0, 12).map(q => ({ q, lang:'en', api:'crossref' })),
   ];
 
-  const totalSteps = allQueries.length + 2; // + LSE + H-Net
+  const totalSteps = allQueries.length;
   let step = 0;
 
-  // ── جلب الكتب ──
   for (const { q, api } of allQueries) {
     step++;
     updateProgress(step, totalSteps, `${api}: ${q.substring(0, 35)}...`);
@@ -1350,22 +1100,9 @@ async function fetchAllContent() {
     await sleep(delay);
   }
 
-  // ── جلب المراجعات ──
-  step++;
-  updateProgress(step, totalSteps, 'LSE Review of Books');
-  const lseReviews = await fetchLSEReviews();
-  allReviews.push(...lseReviews);
-  await sleep(500);
-
-  step++;
-  updateProgress(step, totalSteps, 'H-Net Reviews');
-  const hnetReviews = await fetchHNetReviews();
-  allReviews.push(...hnetReviews);
-  await sleep(500);
-
   updateProgress(totalSteps, totalSteps, 'معالجة البيانات...');
 
-  // ── إزالة التكرار ──
+  // إزالة التكرار
   const seen = new Set();
   ALL_BOOKS = allBooks.filter(b => {
     const key = (b.isbn && b.isbn.length > 5) ? 
@@ -1376,36 +1113,13 @@ async function fetchAllContent() {
     return true;
   });
 
-  ALL_REVIEWS = allReviews;
-
-  // ── ربط المراجعات بالكتب ──
-  for (const book of ALL_BOOKS) {
-    const matchingReviews = ALL_REVIEWS.filter(r => {
-      const bookNorm = normalizeTitle(book.title);
-      const reviewNorm = normalizeTitle(r.book_title);
-      
-      // مطابقة بالعنوان أو المؤلف
-      return (
-        bookNorm.includes(reviewNorm.substring(0, 25)) ||
-        reviewNorm.includes(bookNorm.substring(0, 25)) ||
-        (book.authors[0] && r.book_author && 
-         normalizeTitle(book.authors[0]).includes(normalizeTitle(r.book_author).substring(0, 15)))
-      );
-    });
-    
-    book.reviews = matchingReviews;
-  }
-
-  // ── ترتيب حسب الأحدث ──
   ALL_BOOKS.sort((a, b) => 
     new Date(b.publication_date) - new Date(a.publication_date)
   );
 
-  // ── حفظ في localStorage ──
   try {
-    localStorage.setItem('palestine_books_v2', JSON.stringify({
+    localStorage.setItem('palestine_books_v3', JSON.stringify({
       books: ALL_BOOKS,
-      reviews: ALL_REVIEWS,
       timestamp: Date.now()
     }));
   } catch(e) {}
@@ -1432,7 +1146,7 @@ function updateProgress(current, total, source) {
   const pct = Math.round((current / total) * 100);
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressText').textContent = 
-    `⏳ ${toWesternNumerals(pct)}% — ${source}`;
+    `⏳ ${pct}% — ${source}`;
 }
 
 // ═══════════════════════════════════════════════════
@@ -1477,13 +1191,10 @@ function filterBooks() {
     return true;
   });
 
-  // ترتيب
   if (sort === 'title') {
     filtered.sort((a, b) => a.title.localeCompare(b.title, 'ar'));
   } else if (sort === 'pages') {
     filtered.sort((a, b) => (b.pages || 0) - (a.pages || 0));
-  } else if (sort === 'reviews') {
-    filtered.sort((a, b) => (b.reviews?.length || 0) - (a.reviews?.length || 0));
   } else {
     filtered.sort((a, b) => 
       new Date(b.publication_date) - new Date(a.publication_date)
@@ -1513,8 +1224,9 @@ function renderBooks(books) {
       b.language === 'fr' ? 'Français' : 
       'English';
     
+    // تنسيق التاريخ بأرقام عادية
     const date = b.publication_date ? 
-      new Date(b.publication_date).toLocaleDateString('ar-EG', {
+      new Date(b.publication_date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
@@ -1535,29 +1247,11 @@ function renderBooks(books) {
       return `<span class="topic-tag ${isFeatured ? 'featured' : ''}">${escHtml(t)}</span>`;
     }).join('');
 
-    // المراجعات
-    const reviewsHTML = (b.reviews && b.reviews.length) ? `
-      <div class="reviews-section">
-        <h4>📝 المراجعات (${toWesternNumerals(b.reviews.length)})</h4>
-        ${b.reviews.slice(0, 2).map(r => `
-          <div class="review-item">
-            <div class="review-source">${escHtml(r.review_source)}</div>
-            ${r.review_date ? `<div class="review-meta">📅 ${new Date(r.review_date).toLocaleDateString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric' })}</div>` : ''}
-            <div class="review-text">${escHtml(r.review_text)}</div>
-            <a href="${escHtml(r.review_url)}" target="_blank" class="review-link">اقرأ المراجعة كاملة ←</a>
-          </div>
-        `).join('')}
-        ${b.reviews.length > 2 ? `<p style="font-size:.85em;color:var(--text2);margin-top:8px">+ ${toWesternNumerals(b.reviews.length - 2)} مراجعة أخرى</p>` : ''}
-      </div>
-    ` : '';
-
     return `
     <div class="book-card">
       <div class="book-cover-wrap">
         ${coverHTML}
         <span class="lang-badge ${langClass}">${langLabel}</span>
-        ${b.reviews?.length ? 
-          `<span class="review-count-badge">📝 ${toWesternNumerals(b.reviews.length)}</span>` : ''}
         <span class="source-badge">${escHtml(b.source)}</span>
       </div>
       <div class="book-body" dir="rtl">
@@ -1570,14 +1264,13 @@ function renderBooks(books) {
         </div>
         <div class="book-meta">
           ${date ? `<span>📅 ${date}</span>` : ''}
-          ${b.pages ? `<span>📄 ${toWesternNumerals(b.pages)} صفحة</span>` : ''}
-          ${b.rating ? `<span>⭐ ${toWesternNumerals(b.rating.toFixed(1))}</span>` : ''}
-          ${b.isbn ? `<span>📋 ${toWesternNumerals(b.isbn.substring(0, 13))}</span>` : ''}
+          ${b.pages ? `<span>📄 ${b.pages} صفحة</span>` : ''}
+          ${b.rating ? `<span>⭐ ${b.rating.toFixed(1)}</span>` : ''}
+          ${b.isbn ? `<span>📋 ${b.isbn.substring(0, 13)}</span>` : ''}
         </div>
         <div class="book-topics">${topicsHTML}</div>
         ${b.description ? 
           `<div class="book-desc">${escHtml(b.description)}</div>` : ''}
-        ${reviewsHTML}
         <div class="book-actions">
           <a href="${escHtml(b.book_url)}" target="_blank" 
             rel="noopener noreferrer" class="btn-link btn-primary">
@@ -1604,27 +1297,19 @@ function escHtml(s) {
 //  الإحصائيات
 // ═══════════════════════════════════════════════════
 function updateStats() {
-  document.getElementById('totalCount').textContent = 
-    toWesternNumerals(ALL_BOOKS.length);
+  document.getElementById('totalCount').textContent = ALL_BOOKS.length;
   document.getElementById('arCount').textContent = 
-    toWesternNumerals(ALL_BOOKS.filter(b => b.language === 'ar').length);
+    ALL_BOOKS.filter(b => b.language === 'ar').length;
   document.getElementById('enCount').textContent = 
-    toWesternNumerals(ALL_BOOKS.filter(b => b.language === 'en').length);
+    ALL_BOOKS.filter(b => b.language === 'en').length;
   document.getElementById('frCount').textContent = 
-    toWesternNumerals(ALL_BOOKS.filter(b => b.language === 'fr').length);
-  
-  // عدد الكتب التي لديها مراجعات
-  const reviewedBooks = ALL_BOOKS.filter(b => b.reviews && b.reviews.length > 0);
-  document.getElementById('reviewedCount').textContent = 
-    toWesternNumerals(reviewedBooks.length);
+    ALL_BOOKS.filter(b => b.language === 'fr').length;
   
   const publishers = new Set(
     ALL_BOOKS.map(b => b.publisher).filter(Boolean)
   );
-  document.getElementById('publisherCount').textContent = 
-    toWesternNumerals(publishers.size);
+  document.getElementById('publisherCount').textContent = publishers.size;
   
-  // حساب نطاق السنوات
   const years = ALL_BOOKS
     .map(b => new Date(b.publication_date).getFullYear())
     .filter(y => y && y > 2020);
@@ -1632,18 +1317,18 @@ function updateStats() {
     const minYear = Math.min(...years);
     const maxYear = Math.max(...years);
     document.getElementById('yearSpan').textContent = 
-      minYear === maxYear ? 
-        toWesternNumerals(maxYear) : 
-        `${toWesternNumerals(minYear)}-${toWesternNumerals(maxYear)}`;
+      minYear === maxYear ? maxYear : `${minYear}-${maxYear}`;
   }
 }
 
 function updateLastTime() {
   document.getElementById('lastUpdate').textContent = 
-    'آخر تحديث: ' + new Date().toLocaleString('ar-EG', {
-      dateStyle: 'medium',
-      timeStyle: 'short',
-      numberingSystem: 'latn' // أرقام لاتينية
+    'آخر تحديث: ' + new Date().toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
     });
 }
 
@@ -1655,7 +1340,7 @@ function toggleSources() {
   el.classList.toggle('open');
   if (el.classList.contains('open') && !el.innerHTML) {
     el.innerHTML = SOURCES_LIST
-      .map((s, i) => `${toWesternNumerals(i + 1)}. ${s}`)
+      .map((s, i) => `${i + 1}. ${s}`)
       .join('<br>');
   }
 }
@@ -1664,8 +1349,8 @@ function toggleSources() {
 //  التحديث اليدوي
 // ═══════════════════════════════════════════════════
 function manualRefresh() {
-  localStorage.removeItem('palestine_books_v2');
-  fetchAllContent();
+  localStorage.removeItem('palestine_books_v3');
+  fetchAllBooks();
 }
 
 // ═══════════════════════════════════════════════════
@@ -1674,34 +1359,29 @@ function manualRefresh() {
 (async function init() {
   try {
     const cache = JSON.parse(
-      localStorage.getItem('palestine_books_v2')
+      localStorage.getItem('palestine_books_v3')
     );
     
-    // الكاش صالح لمدة ساعة
     if (cache && (Date.now() - cache.timestamp) < 3600000) {
       ALL_BOOKS = cache.books;
-      ALL_REVIEWS = cache.reviews;
       updateStats();
       filterBooks();
       updateLastTime();
       
-      console.log('✅ تم التحميل من الكاش:', 
-        ALL_BOOKS.length, 'كتاب،', 
-        ALL_REVIEWS.length, 'مراجعة');
+      console.log('✅ تم التحميل من الكاش:', ALL_BOOKS.length, 'كتاب');
       
       const remaining = 3600000 - (Date.now() - cache.timestamp);
-      setTimeout(() => fetchAllContent(), remaining);
+      setTimeout(() => fetchAllBooks(), remaining);
       return;
     }
   } catch(e) {}
 
-  await fetchAllContent();
+  await fetchAllBooks();
 })();
 
-// ── تحديث تلقائي كل ساعة ──
 setInterval(() => {
-  console.log('🔄 تحديث تلقائي — جلب كتب جديدة...');
-  fetchAllContent();
+  console.log('🔄 تحديث تلقائي...');
+  fetchAllBooks();
 }, 3600000);
 </script>
 
