@@ -59,18 +59,15 @@ body{font-family:'Segoe UI','Cairo',Tahoma,Arial,sans-serif;background:var(--bg)
 .pfill{height:100%;background:linear-gradient(90deg,var(--red),var(--green));border-radius:6px;transition:width .5s;width:0}
 .ptxt{font-size:.8em;color:var(--text2);margin-top:6px;text-align:center;font-weight:600}
 
-/* ── debug log ── */
 .debug-panel{max-width:1400px;margin:0 auto 20px;padding:0 20px;display:none}
 .debug-panel.show{display:block}
 .debug-log{background:#1a1a1a;color:#0f0;padding:16px;border-radius:12px;font-family:'Courier New',monospace;font-size:.8em;max-height:300px;overflow-y:auto;direction:ltr;text-align:left;line-height:1.8}
-.debug-toggle{padding:8px 20px;border-radius:50px;border:2px solid #e0e0e0;background:#fff;cursor:pointer;font-size:.85em;font-weight:600;margin-bottom:10px}
+.debug-toggle{padding:8px 20px;border-radius:50px;border:2px solid #e0e0e0;background:#fff;cursor:pointer;font-size:.85em;font-weight:600}
 
 .books-grid{max-width:1400px;margin:0 auto;padding:0 20px 50px;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
 
 .book-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border-top:4px solid var(--red);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column}
 .book-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,.15)}
-.book-card.new-card{animation:glow 2s ease-out}
-@keyframes glow{0%{box-shadow:0 0 0 4px var(--green)}100%{box-shadow:var(--shadow)}}
 
 .cover-wrap{position:relative;height:240px;background:linear-gradient(135deg,#1a1a1a,#2c2c2c);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .cover-wrap::before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--black) 0%,transparent 40%),linear-gradient(180deg,var(--green) 0%,transparent 40%);opacity:.2}
@@ -125,11 +122,12 @@ footer p{font-size:.95em;opacity:.85;margin-bottom:8px;line-height:1.8}
   <div class="hero-c">
     <h1>🇵🇸 مرصد كتب فلسطين</h1>
     <p class="sub">Palestine Books Observatory</p>
-    <p class="info">مرصد متخصص يجمع تلقائيًا أحدث الكتب حول القضية الفلسطينية (2023-2026)<br>من عدة مصادر أكاديمية — بالعربية والإنجليزية والفرنسية</p>
+    <p class="info">مرصد متخصص يجمع تلقائيًا الكتب المتعلقة مباشرة بالقضية الفلسطينية (2023-2026)<br>بالعربية والإنجليزية والفرنسية — فلترة صارمة للمحتوى</p>
     <div class="badges">
-      <span>📅 2023-2026</span>
+      <span>📅 من 2023 فقط</span>
       <span>🔄 تحديث يومي</span>
       <span>🌍 3 لغات</span>
+      <span>🎯 فلسطين فقط</span>
     </div>
   </div>
 </div>
@@ -140,7 +138,7 @@ footer p{font-size:.95em;opacity:.85;margin-bottom:8px;line-height:1.8}
   <div class="stat-card"><div class="icon">🇬🇧</div><div class="num" id="sEn">-</div><div class="lbl">English</div></div>
   <div class="stat-card"><div class="icon">🇫🇷</div><div class="num" id="sFr">-</div><div class="lbl">Français</div></div>
   <div class="stat-card"><div class="icon">🏛</div><div class="num" id="sPub">-</div><div class="lbl">ناشر</div></div>
-  <div class="stat-card"><div class="icon">🔍</div><div class="num" id="sSrc">-</div><div class="lbl">مصادر نشطة</div></div>
+  <div class="stat-card"><div class="icon">🔍</div><div class="num" id="sSrc">-</div><div class="lbl">مصدر</div></div>
 </div>
 
 <div class="controls">
@@ -176,7 +174,7 @@ footer p{font-size:.95em;opacity:.85;margin-bottom:8px;line-height:1.8}
 </div>
 
 <div class="update-bar">
-  <div class="live"><span class="live-dot"></span><span>تحديث يومي تلقائي</span></div>
+  <div class="live"><span class="live-dot"></span><span>تحديث يومي</span></div>
   <span class="time" id="lastUp">جاري التحميل...</span>
   <button class="rbtn" id="rBtn" onclick="manualRefresh()">🔄 تحديث الآن</button>
   <button class="debug-toggle" onclick="toggleDebug()">🐛 سجل التتبع</button>
@@ -200,560 +198,658 @@ footer p{font-size:.95em;opacity:.85;margin-bottom:8px;line-height:1.8}
 <footer>
   <h3>🇵🇸 مرصد كتب فلسطين</h3>
   <p>يجمع تلقائيًا من Google Books, Open Library, Crossref</p>
+  <p>🎯 فقط الكتب المتعلقة مباشرة بفلسطين — فلترة صارمة</p>
   <p style="font-size:.85em;margin-top:12px">© 2024 — Palestine Books Observatory</p>
 </footer>
 
 <script>
-// ═══════════════════════════════════════════
-// محرك مرصد كتب فلسطين 🇵🇸 v6 (مُصحَّح)
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// مرصد كتب فلسطين v7 — فلترة صارمة + من 2023 فقط
+// ═══════════════════════════════════════════════════
 
 let ALL_BOOKS = [];
 let currentLang = 'all';
 let isUpdating = false;
 let activeSources = new Set();
-const DAILY_MS = 24 * 60 * 60 * 1000;
-const CACHE_KEY = 'pbooks_v6';
+const DAILY_MS = 24*60*60*1000;
+const CACHE_KEY = 'pbooks_v7';
+const MIN_YEAR = 2023; // ★ من 2023 فقط
 
-// ─── سجل التتبع ───
+// ═══════════════════════════════════════════════════
+// ★★★ فلتر فلسطين الصارم ★★★
+// ═══════════════════════════════════════════════════
+
+// كلمات مفتاحية يجب أن تتواجد في العنوان أو الوصف
+// لا يُقبل أي كتاب لا يحتوي واحدة منها على الأقل
+const PALESTINE_KEYWORDS = [
+  // إنجليزي
+  'palestine', 'palestinian', 'palestinians',
+  'gaza', 'gazan',
+  'west bank',
+  'nakba',
+  'intifada',
+  'ramallah', 'nablus', 'hebron', 'jenin', 'bethlehem', 'jericho', 'tulkarm',
+  'al-aqsa', 'al aqsa',
+  'hamas',
+  'plo', 'pflp', 'fatah',
+  'idf occupation',
+  'israeli occupation',
+  'israeli apartheid',
+  'zionist colonization of palestine',
+  'ethnic cleansing of palestine',
+  // فرنسي
+  'palestinien', 'palestinienne', 'palestiniens',
+  'cisjordanie',
+  'bande de gaza',
+  'mosquée al-aqsa',
+  'occupation israélienne',
+  'colonisation sioniste',
+  // عربي
+  'فلسطين', 'فلسطيني', 'فلسطينية', 'فلسطينيون', 'فلسطينيين',
+  'غزة', 'غزّة',
+  'الضفة الغربية', 'الضفة',
+  'النكبة', 'نكبة',
+  'الانتفاضة', 'انتفاضة',
+  'القدس',
+  'الأقصى', 'المسجد الأقصى',
+  'رام الله', 'نابلس', 'الخليل', 'جنين', 'بيت لحم', 'أريحا', 'طولكرم',
+  'حماس',
+  'الاحتلال الإسرائيلي', 'الاحتلال الصهيوني',
+  'المقاومة الفلسطينية',
+  'حق العودة',
+  'اللاجئون الفلسطينيون', 'اللاجئين الفلسطينيين',
+  'طوفان الأقصى',
+  'التطهير العرقي',
+  'الاستيطان',
+  'المستوطنات',
+  'جرائم الحرب الإسرائيلية',
+  'الإبادة',
+];
+
+// كلمات مفتاحية ثانوية — إذا وُجدت مع "israel" تُقبل
+const SECONDARY_KEYWORDS = [
+  'occupation', 'apartheid', 'settler colonial', 'settler-colonial',
+  'ethnic cleansing', 'genocide', 'war crimes',
+  'blockade', 'siege',
+  'احتلال', 'أبارتهايد', 'استعمار استيطاني', 'إبادة جماعية',
+  'حصار', 'جرائم حرب',
+  'colonisation', 'nettoyage ethnique', 'génocide', 'crimes de guerre',
+  'blocus',
+];
+
+// مؤلفون معروفون في مجال فلسطين — كتبهم تُقبل تلقائياً
+const KNOWN_AUTHORS = [
+  'edward said', 'ilan pappe', 'ilan pappé', 'rashid khalidi',
+  'norman finkelstein', 'noam chomsky', 'nur masalha',
+  'joseph massad', 'sara roy', 'gideon levy', 'amira hass',
+  'avi shlaim', 'benny morris', 'shlomo sand',
+  'angela davis', 'judith butler',
+  'mahmoud darwish', 'mahmoud darwich', 'محمود درويش',
+  'ghassan kanafani', 'غسان كنفاني',
+  'إدوارد سعيد', 'إيلان بابه', 'إيلان بابيه',
+  'رشيد الخالدي', 'نورمان فينكلشتاين',
+  'نور مصالحة', 'جوزيف مسعد',
+  'عزمي بشارة', 'azmi bishara',
+  'frantz fanon', 'فرانز فانون',
+];
+
+/**
+ * ★ الفلتر الصارم: هل هذا الكتاب عن فلسطين مباشرة؟
+ * يفحص العنوان + الوصف + المؤلفين
+ */
+function isPalestineBook(title, description, authors) {
+  const titleLow = (title || '').toLowerCase();
+  const descLow = (description || '').toLowerCase();
+  const authorsLow = (authors || []).join(' ').toLowerCase();
+  const allText = titleLow + ' ' + descLow;
+
+  // 1) فحص العنوان أولاً — إذا احتوى كلمة فلسطينية واضحة ✅
+  for (const kw of PALESTINE_KEYWORDS) {
+    if (titleLow.includes(kw.toLowerCase())) {
+      return { pass: true, reason: `العنوان يحتوي: "${kw}"` };
+    }
+  }
+
+  // 2) فحص الوصف — إذا احتوى كلمتين فلسطينيتين على الأقل ✅
+  let descHits = 0;
+  const foundInDesc = [];
+  for (const kw of PALESTINE_KEYWORDS) {
+    if (descLow.includes(kw.toLowerCase())) {
+      descHits++;
+      foundInDesc.push(kw);
+    }
+  }
+  if (descHits >= 2) {
+    return { pass: true, reason: `الوصف يحتوي ${descHits} كلمات: ${foundInDesc.slice(0,3).join(', ')}` };
+  }
+
+  // 3) فحص ثانوي: "israel" + كلمة احتلال/إبادة/أبارتهايد في العنوان
+  if (/israel|إسرائيل|israël/i.test(titleLow)) {
+    for (const kw of SECONDARY_KEYWORDS) {
+      if (allText.includes(kw.toLowerCase())) {
+        return { pass: true, reason: `إسرائيل + "${kw}"` };
+      }
+    }
+  }
+
+  // 4) مؤلف معروف في مجال فلسطين + العنوان يحتوي إشارة
+  for (const author of KNOWN_AUTHORS) {
+    if (authorsLow.includes(author)) {
+      // المؤلف معروف — نتأكد أن الكتاب ليس عن موضوع مختلف تماماً
+      const hasAnyHint = PALESTINE_KEYWORDS.concat(SECONDARY_KEYWORDS).some(kw =>
+        allText.includes(kw.toLowerCase())
+      );
+      if (hasAnyHint) {
+        return { pass: true, reason: `مؤلف معروف: "${author}"` };
+      }
+    }
+  }
+
+  // 5) كلمة واحدة في الوصف فقط — غير كافٍ ❌
+  return { pass: false, reason: `لا يتعلق مباشرة بفلسطين` };
+}
+
+// ═══════════════════════════════════════════════════
+// سجل التتبع
+// ═══════════════════════════════════════════════════
 const debugLines = [];
-function log(msg, type = 'info') {
-  const time = new Date().toLocaleTimeString();
-  const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warn' ? '⚠️' : 'ℹ️';
-  const line = `[${time}] ${prefix} ${msg}`;
+function log(msg, type='info') {
+  const t = new Date().toLocaleTimeString();
+  const p = type==='error'?'❌':type==='success'?'✅':type==='warn'?'⚠️':type==='filter'?'🚫':'ℹ️';
+  const line = `[${t}] ${p} ${msg}`;
   debugLines.push(line);
   console.log(line);
   const el = document.getElementById('debugLog');
-  if (el) {
-    el.textContent = debugLines.slice(-100).join('\n');
-    el.scrollTop = el.scrollHeight;
-  }
+  if(el){el.textContent=debugLines.slice(-150).join('\n');el.scrollTop=el.scrollHeight}
 }
-function toggleDebug() {
-  document.getElementById('debugPanel').classList.toggle('show');
-}
+function toggleDebug(){document.getElementById('debugPanel').classList.toggle('show')}
 
-// ─── استعلامات البحث ───
+// ═══════════════════════════════════════════════════
+// استعلامات البحث — مركّزة على فلسطين
+// ═══════════════════════════════════════════════════
 const QUERIES = {
   en: [
-    "palestine","palestinian history","gaza war","gaza genocide",
-    "nakba 1948","israeli occupation","palestinian resistance",
-    "jerusalem al-quds","west bank settlements","palestinian refugees",
-    "israel war crimes","apartheid israel","zionism colonialism",
-    "BDS movement","intifada","october 7 hamas",
-    "ethnic cleansing palestine","one state solution",
-    "mahmoud darwish","edward said orientalism",
-    "ilan pappe","norman finkelstein","noam chomsky palestine",
-    "rashid khalidi","gaza blockade","ICJ palestine"
+    "palestine book 2024","palestine book 2023","palestine book 2025",
+    "palestinian history book","palestinian resistance book",
+    "gaza war book","gaza genocide book","gaza 2023 book",
+    "nakba 1948 book","nakba palestine",
+    "israeli occupation palestine book",
+    "west bank settlements book","israeli apartheid book",
+    "palestinian refugees book","right of return palestine",
+    "jerusalem al-quds book","al-aqsa mosque book",
+    "ethnic cleansing palestine","settler colonialism palestine",
+    "BDS movement palestine book",
+    "intifada palestine book",
+    "october 7 book","hamas book 2024",
+    "war crimes israel gaza book",
+    "ICJ genocide palestine","ICC israel palestine",
+    "palestinian literature","mahmoud darwish book",
+    "ghassan kanafani","edward said palestine",
+    "ilan pappe book","rashid khalidi book",
+    "norman finkelstein book","noam chomsky palestine book",
+    "one state solution palestine",
+    "blockade gaza book","siege gaza",
+    "palestinian cinema","palestinian art",
+    "zionism critique book","anti-zionism book"
   ],
   fr: [
-    "palestine","histoire palestinienne","gaza guerre",
-    "nakba 1948","occupation israélienne","résistance palestinienne",
-    "jérusalem al-qods","réfugiés palestiniens","apartheid israélien",
-    "sionisme colonialisme","mahmoud darwich","génocide gaza",
-    "crimes de guerre israël","droit international palestine"
+    "palestine livre 2024","palestine livre 2023",
+    "histoire palestinienne livre","résistance palestinienne",
+    "gaza guerre livre","gaza génocide",
+    "nakba palestine livre",
+    "occupation israélienne livre","apartheid israélien",
+    "réfugiés palestiniens livre",
+    "jérusalem al-qods","mosquée al-aqsa",
+    "nettoyage ethnique palestine",
+    "sionisme colonialisme livre",
+    "mahmoud darwich","littérature palestinienne",
+    "crimes de guerre israël gaza",
+    "droit international palestine",
+    "BDS palestine","blocus gaza"
   ],
   ar: [
-    "فلسطين","القضية الفلسطينية","غزة حرب","غزة إبادة",
-    "النكبة 1948","الاحتلال الإسرائيلي","المقاومة الفلسطينية",
-    "القدس","اللاجئون الفلسطينيون","الاستيطان","محمود درويش",
-    "غسان كنفاني","التطهير العرقي فلسطين","طوفان الأقصى",
-    "جرائم الحرب إسرائيل","حق العودة","الضفة الغربية",
-    "الصهيونية","الانتفاضة","الأدب الفلسطيني"
+    "فلسطين كتاب 2024","فلسطين كتاب 2023",
+    "القضية الفلسطينية","المقاومة الفلسطينية",
+    "غزة حرب كتاب","غزة إبادة","العدوان على غزة",
+    "طوفان الأقصى","النكبة الفلسطينية",
+    "الاحتلال الإسرائيلي","الاستيطان الصهيوني",
+    "الضفة الغربية كتاب","القدس المحتلة",
+    "المسجد الأقصى","حق العودة الفلسطيني",
+    "اللاجئون الفلسطينيون","التطهير العرقي فلسطين",
+    "محمود درويش","غسان كنفاني","الأدب الفلسطيني",
+    "إدوارد سعيد","الاستشراق","إيلان بابه",
+    "الصهيونية كتاب","الانتفاضة الفلسطينية",
+    "جرائم الحرب الإسرائيلية","حصار غزة",
+    "محكمة العدل الدولية فلسطين",
+    "الثقافة الفلسطينية","السينما الفلسطينية",
+    "تاريخ فلسطين","نكبة 1948"
   ]
 };
 
-// ─── كشف اللغة ───
+// ═══════════════════════════════════════════════════
+// كشف اللغة + الموضوعات
+// ═══════════════════════════════════════════════════
 function detectLang(text) {
-  if (!text) return 'en';
-  if (/[\u0600-\u06FF]/.test(text)) return 'ar';
-  if (/[àâéèêëïîôùûüÿçœæ]/i.test(text)) return 'fr';
-  if (/\b(le|la|les|du|des|une?|et|ou|qui|que|dans|pour|avec|sur|par)\b/i.test(text)) return 'fr';
+  if(!text) return 'en';
+  if(/[\u0600-\u06FF]/.test(text)) return 'ar';
+  if(/[àâéèêëïîôùûüÿçœæ]/i.test(text)) return 'fr';
+  if(/\b(le|la|les|du|des|une?|et|ou|qui|que|dans|pour|avec|sur|par)\b/i.test(text)) return 'fr';
   return 'en';
 }
 
-// ─── تحديد الموضوعات ───
 function detectTopics(title, desc) {
-  const t = ((title||'') + ' ' + (desc||'')).toLowerCase();
+  const t = ((title||'')+' '+(desc||'')).toLowerCase();
   const out = [];
   const map = [
-    [/غز|gaza/i, 'Gaza'],
-    [/نكب|nakba|catastrophe/i, 'Nakba'],
-    [/إباد|genocide|génocide/i, 'Genocide'],
-    [/احتلال|occupation/i, 'Occupation'],
-    [/مقاوم|resistance|résistance/i, 'Resistance'],
-    [/تاريخ|history|histoire/i, 'History'],
-    [/قدس|jerusalem|jérusalem/i, 'Jerusalem'],
-    [/لاج|refugee|réfugié/i, 'Refugees'],
-    [/قانون.*دول|international.law|droit.inter/i, 'International Law'],
-    [/أدب|literature|littérature/i, 'Literature'],
-    [/حقوق|human.right|droits/i, 'Human Rights'],
-    [/أبارتهايد|apartheid/i, 'Apartheid'],
-    [/صهيون|zionism|sionisme/i, 'Zionism'],
-    [/استيطان|settlement|coloni/i, 'Settlements'],
-    [/انتفاض|intifada/i, 'Intifada'],
-    [/تطهير|ethnic.cleansing|nettoyage/i, 'Ethnic Cleansing'],
-    [/حماس|hamas/i, 'Hamas'],
-    [/حصار|blockade|blocus|siege/i, 'Blockade'],
-    [/عود|return|retour/i, 'Right of Return'],
-    [/ضف|west.bank|cisjordanie/i, 'West Bank'],
+    [/غز|gaza/i,'Gaza'],[/نكب|nakba/i,'Nakba'],
+    [/إباد|genocide|génocide/i,'Genocide'],[/احتلال|occupation/i,'Occupation'],
+    [/مقاوم|resistance|résistance/i,'Resistance'],[/تاريخ|history|histoire/i,'History'],
+    [/قدس|jerusalem|jérusalem/i,'Jerusalem'],[/لاج|refugee|réfugié/i,'Refugees'],
+    [/قانون.*دول|international.law|droit.inter/i,'International Law'],
+    [/أدب|literature|littérature/i,'Literature'],
+    [/حقوق|human.right|droits/i,'Human Rights'],
+    [/أبارتهايد|apartheid/i,'Apartheid'],[/صهيون|zionism|sionisme/i,'Zionism'],
+    [/استيطان|settlement|coloni/i,'Settlements'],[/انتفاض|intifada/i,'Intifada'],
+    [/تطهير|ethnic.cleansing|nettoyage/i,'Ethnic Cleansing'],
+    [/حماس|hamas/i,'Hamas'],[/حصار|blockade|blocus|siege/i,'Blockade'],
+    [/عود|return|retour/i,'Right of Return'],
+    [/ضف|west.bank|cisjordanie/i,'West Bank'],
   ];
-  for (const [rx, label] of map) {
-    if (rx.test(t)) out.push(label);
-  }
-  if (/palestin|فلسط/i.test(t) && !out.includes('Palestine')) out.unshift('Palestine');
-  return out.length ? out.slice(0,5) : ['Palestine'];
+  for(const[rx,label]of map) if(rx.test(t)) out.push(label);
+  if(/palestin|فلسط/i.test(t)&&!out.includes('Palestine')) out.unshift('Palestine');
+  return out.length?out.slice(0,5):['Palestine'];
 }
 
-// ═══════ إزالة التكرار ═══════
-function normT(s) {
-  return (s||'').toLowerCase().replace(/[^\w\s\u0600-\u06FF]/g,' ').replace(/\s+/g,' ').trim().substring(0,80);
-}
+// ═══════════════════════════════════════════════════
+// إزالة التكرار
+// ═══════════════════════════════════════════════════
+function normT(s){return(s||'').toLowerCase().replace(/[^\w\s\u0600-\u06FF]/g,' ').replace(/\s+/g,' ').trim().substring(0,80)}
 function dedup(books) {
-  const seen = new Set();
-  const titles = [];
-  const out = [];
-  for (const b of books) {
-    const nt = normT(b.title);
-    if (!nt || nt.length < 5) continue;
-
-    // ISBN check
-    const isbn = (b.isbn||'').replace(/[^0-9X]/gi,'');
-    if (isbn.length >= 10) {
-      if (seen.has('isbn:'+isbn)) continue;
-      seen.add('isbn:'+isbn);
-    }
-
-    // Title similarity
-    let dup = false;
-    for (const et of titles) {
-      if (nt === et || nt.includes(et) || et.includes(nt)) { dup = true; break; }
-      // Jaccard
-      const w1 = new Set(nt.split(' ').filter(w=>w.length>2));
-      const w2 = new Set(et.split(' ').filter(w=>w.length>2));
-      if (w1.size && w2.size) {
-        const inter = [...w1].filter(x=>w2.has(x)).length;
-        const union = new Set([...w1,...w2]).size;
-        if (inter/union > 0.8) { dup = true; break; }
+  const seen=new Set(), titles=[], out=[];
+  for(const b of books){
+    const nt=normT(b.title);
+    if(!nt||nt.length<5) continue;
+    const isbn=(b.isbn||'').replace(/[^0-9X]/gi,'');
+    if(isbn.length>=10){if(seen.has('i:'+isbn))continue;seen.add('i:'+isbn)}
+    let dup=false;
+    for(const et of titles){
+      if(nt===et||nt.includes(et)||et.includes(nt)){dup=true;break}
+      const w1=new Set(nt.split(' ').filter(w=>w.length>2));
+      const w2=new Set(et.split(' ').filter(w=>w.length>2));
+      if(w1.size&&w2.size){
+        const inter=[...w1].filter(x=>w2.has(x)).length;
+        if(inter/new Set([...w1,...w2]).size>.8){dup=true;break}
       }
     }
-    if (dup) continue;
-
-    titles.push(nt);
-    out.push(b);
+    if(dup)continue;
+    titles.push(nt);out.push(b);
   }
   log(`إزالة التكرار: ${books.length} → ${out.length}`);
   return out;
 }
 
-// ═══════════════════════════════════════════
-// Google Books API - مُصحَّح
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// Google Books API — فلترة صارمة
+// ═══════════════════════════════════════════════════
 async function fetchGoogle(query, langRestrict) {
   const books = [];
   try {
     const params = new URLSearchParams({
-      q: query,
-      printType: 'books',
-      orderBy: 'newest',
-      maxResults: '40',
+      q: query, printType:'books', orderBy:'newest', maxResults:'40'
     });
-    // إضافة تقييد اللغة فقط للعربية والفرنسية
-    if (langRestrict === 'ar' || langRestrict === 'fr') {
-      params.set('langRestrict', langRestrict);
-    }
+    if(langRestrict==='ar'||langRestrict==='fr') params.set('langRestrict',langRestrict);
 
     const url = `https://www.googleapis.com/books/v1/volumes?${params}`;
-    log(`Google Books: "${query}" (lang=${langRestrict||'any'})`);
+    log(`Google: "${query}" (${langRestrict||'any'})`);
 
     const resp = await fetch(url);
-
-    if (resp.status === 429) {
-      log('Google Books: Rate limit! الانتظار 5 ثوانٍ...', 'warn');
-      await sleep(5000);
-      return books;
-    }
-
-    if (!resp.ok) {
-      log(`Google Books: HTTP ${resp.status} for "${query}"`, 'error');
-      return books;
-    }
+    if(resp.status===429){log('Google: Rate limit! انتظار...','warn');await sleep(5000);return books}
+    if(!resp.ok){log(`Google: HTTP ${resp.status}`,'error');return books}
 
     const data = await resp.json();
-    const items = data.items || [];
-    log(`Google Books: "${query}" → ${items.length} نتيجة`, items.length > 0 ? 'success' : 'warn');
+    const items = data.items||[];
+    log(`Google: "${query}" → ${items.length} خام`);
 
-    // الحد الأدنى للسنة: 2022 (لنكون أكثر مرونة)
-    const minYear = 2022;
+    let accepted = 0, rejected = 0;
 
-    for (const item of items) {
-      try {
-        const v = item.volumeInfo || {};
-        const title = v.title || '';
-        if (!title || title.length < 3) continue;
+    for(const item of items){
+      try{
+        const v = item.volumeInfo||{};
+        const title = v.title||'';
+        if(!title||title.length<3) continue;
 
-        // تاريخ النشر - مرن أكثر
-        const pubDate = v.publishedDate || '';
+        // ★ فحص السنة — من 2023 فقط
+        const pubDate = v.publishedDate||'';
         let year = 0;
-        if (pubDate) {
-          year = parseInt(pubDate.substring(0, 4));
+        if(pubDate) year = parseInt(pubDate.substring(0,4));
+        if(year > 0 && year < MIN_YEAR) { rejected++; continue; }
+        // إذا لم يكن هناك تاريخ — نرفض (لا نريد كتب مجهولة التاريخ)
+        if(!year) { rejected++; continue; }
+
+        const desc = (v.description||'').substring(0,500);
+        const authors = v.authors||[];
+
+        // ★★★ الفلتر الصارم ★★★
+        const check = isPalestineBook(title + (v.subtitle ? ': '+v.subtitle : ''), desc, authors);
+        if(!check.pass) {
+          log(`🚫 رُفض: "${title.substring(0,40)}..." — ${check.reason}`, 'filter');
+          rejected++;
+          continue;
         }
 
-        // ★ قبول الكتب: إذا كان لها تاريخ >= 2022، أو بدون تاريخ (نقبلها)
-        if (year > 0 && year < minYear) continue;
-        // إذا لم يكن هناك تاريخ نهائيًا وليس فيها كلمة فلسطين، نتخطاها
-        if (!year && !/palestin|فلسط|gaza|غز|nakba|نكب/i.test(title + ' ' + (v.description||''))) continue;
+        const lang = v.language==='ar'?'ar':v.language==='fr'?'fr':detectLang(title);
+        const isbns = v.industryIdentifiers||[];
 
-        const lang = v.language === 'ar' ? 'ar' : v.language === 'fr' ? 'fr' : detectLang(title);
-        const isbns = v.industryIdentifiers || [];
-        const isbn13 = isbns.find(i => i.type === 'ISBN_13');
-        const isbn10 = isbns.find(i => i.type === 'ISBN_10');
-
-        const book = {
-          id: item.id || 'g_' + Math.random().toString(36).substr(2,9),
-          title: title + (v.subtitle ? ': ' + v.subtitle : ''),
-          authors: v.authors || [],
-          publisher: v.publisher || '',
-          publication_date: pubDate || (year ? year+'-01-01' : '2024-01-01'),
-          pages: v.pageCount || null,
-          isbn: (isbn13 && isbn13.identifier) || (isbn10 && isbn10.identifier) || '',
-          book_url: v.infoLink || v.previewLink || '',
-          cover: ((v.imageLinks && v.imageLinks.thumbnail) || '').replace('http:', 'https:'),
-          description: (v.description || '').substring(0, 500),
+        books.push({
+          id: item.id||'g_'+Math.random().toString(36).substr(2,9),
+          title: title + (v.subtitle ? ': '+v.subtitle : ''),
+          authors,
+          publisher: v.publisher||'',
+          publication_date: pubDate,
+          pages: v.pageCount||null,
+          isbn: (isbns.find(i=>i.type==='ISBN_13')||isbns.find(i=>i.type==='ISBN_10')||{}).identifier||'',
+          book_url: v.infoLink||v.previewLink||'',
+          cover: ((v.imageLinks&&v.imageLinks.thumbnail)||'').replace('http:','https:'),
+          description: desc,
           language: lang,
-          topics: detectTopics(title, v.description),
+          topics: detectTopics(title, desc),
           source: 'Google Books',
-          rating: v.averageRating || null,
+          rating: v.averageRating||null,
+          filterReason: check.reason,
           addedAt: Date.now()
-        };
-
-        books.push(book);
-      } catch (itemErr) {
-        log(`Google Books: خطأ في معالجة عنصر: ${itemErr.message}`, 'error');
-      }
+        });
+        accepted++;
+      }catch(e){}
     }
 
-    activeSources.add('Google Books');
-  } catch (e) {
-    log(`Google Books: خطأ عام "${query}": ${e.message}`, 'error');
+    log(`Google: "${query}" → ✅ ${accepted} قُبل | 🚫 ${rejected} رُفض`, accepted>0?'success':'warn');
+    if(accepted>0) activeSources.add('Google Books');
+  }catch(e){
+    log(`Google: خطأ "${query}": ${e.message}`,'error');
   }
   return books;
 }
 
-// ═══════════════════════════════════════════
-// Open Library API
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// Open Library — فلترة صارمة
+// ═══════════════════════════════════════════════════
 async function fetchOpenLib(query) {
   const books = [];
   try {
-    const params = new URLSearchParams({ q: query, limit: '30', sort: 'new' });
-    const url = `https://openlibrary.org/search.json?${params}`;
-    log(`Open Library: "${query}"`);
+    const params = new URLSearchParams({q:query,limit:'30',sort:'new'});
+    log(`OpenLib: "${query}"`);
 
-    const resp = await fetch(url);
-    if (!resp.ok) {
-      log(`Open Library: HTTP ${resp.status}`, 'error');
-      return books;
-    }
+    const resp = await fetch(`https://openlibrary.org/search.json?${params}`);
+    if(!resp.ok){log(`OpenLib: HTTP ${resp.status}`,'error');return books}
 
     const data = await resp.json();
-    const docs = data.docs || [];
-    log(`Open Library: "${query}" → ${docs.length} نتيجة`, docs.length > 0 ? 'success' : 'warn');
+    const docs = data.docs||[];
+    log(`OpenLib: "${query}" → ${docs.length} خام`);
 
-    for (const doc of docs) {
-      try {
-        const title = doc.title || '';
-        if (!title) continue;
-        const year = doc.first_publish_year || 0;
-        if (year > 0 && year < 2022) continue;
+    let accepted=0, rejected=0;
+
+    for(const doc of docs){
+      try{
+        const title = doc.title||'';
+        if(!title) continue;
+        const year = doc.first_publish_year||0;
+        if(year>0 && year<MIN_YEAR){rejected++;continue}
+        if(!year){rejected++;continue}
+
+        const subjects = (doc.subject||[]).join(' ');
+        const authors = doc.author_name||[];
+
+        // ★★★ الفلتر الصارم ★★★
+        const check = isPalestineBook(title, subjects, authors);
+        if(!check.pass){
+          log(`🚫 رُفض OL: "${title.substring(0,40)}..." — ${check.reason}`,'filter');
+          rejected++;continue;
+        }
 
         const coverId = doc.cover_i;
         books.push({
-          id: 'ol_' + (doc.key || Math.random().toString(36).substr(2,9)),
-          title,
-          authors: doc.author_name || [],
-          publisher: (doc.publisher || [])[0] || '',
-          publication_date: year ? year + '-01-01' : '2024-01-01',
-          pages: doc.number_of_pages_median || null,
-          isbn: (doc.isbn || [])[0] || '',
-          book_url: 'https://openlibrary.org' + doc.key,
-          cover: coverId ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg` : '',
-          description: '',
+          id:'ol_'+(doc.key||Math.random().toString(36).substr(2,9)),
+          title, authors,
+          publisher:(doc.publisher||[])[0]||'',
+          publication_date: year+'-01-01',
+          pages: doc.number_of_pages_median||null,
+          isbn:(doc.isbn||[])[0]||'',
+          book_url:'https://openlibrary.org'+doc.key,
+          cover: coverId?`https://covers.openlibrary.org/b/id/${coverId}-M.jpg`:'',
+          description:'',
           language: detectLang(title),
-          topics: detectTopics(title, (doc.subject || []).join(' ')),
-          source: 'Open Library',
-          rating: null,
+          topics: detectTopics(title, subjects),
+          source:'Open Library', rating:null,
+          filterReason: check.reason,
           addedAt: Date.now()
         });
-      } catch (e) {}
+        accepted++;
+      }catch(e){}
     }
-    activeSources.add('Open Library');
-  } catch (e) {
-    log(`Open Library: خطأ "${query}": ${e.message}`, 'error');
+
+    log(`OpenLib: "${query}" → ✅ ${accepted} | 🚫 ${rejected}`, accepted>0?'success':'warn');
+    if(accepted>0) activeSources.add('Open Library');
+  }catch(e){
+    log(`OpenLib: خطأ: ${e.message}`,'error');
   }
   return books;
 }
 
-// ═══════════════════════════════════════════
-// Crossref API
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// Crossref — فلترة صارمة
+// ═══════════════════════════════════════════════════
 async function fetchCrossref(query) {
   const books = [];
   try {
     const params = new URLSearchParams({
-      query: query,
-      filter: 'type:book,from-pub-date:2022-01-01',
-      rows: '20',
-      sort: 'published',
-      order: 'desc'
+      query, filter:'type:book,from-pub-date:2023-01-01',
+      rows:'20', sort:'published', order:'desc'
     });
-    const url = `https://api.crossref.org/works?${params}`;
     log(`Crossref: "${query}"`);
 
-    const resp = await fetch(url, {
-      headers: { 'User-Agent': 'PalestineBooks/2.0 (mailto:research@example.com)' }
+    const resp = await fetch(`https://api.crossref.org/works?${params}`,{
+      headers:{'User-Agent':'PalestineBooks/2.0 (mailto:research@example.com)'}
     });
-
-    if (!resp.ok) {
-      log(`Crossref: HTTP ${resp.status}`, 'error');
-      return books;
-    }
+    if(!resp.ok){log(`Crossref: HTTP ${resp.status}`,'error');return books}
 
     const data = await resp.json();
-    const items = (data.message && data.message.items) || [];
-    log(`Crossref: "${query}" → ${items.length} نتيجة`, items.length > 0 ? 'success' : 'warn');
+    const items = (data.message&&data.message.items)||[];
+    log(`Crossref: "${query}" → ${items.length} خام`);
 
-    for (const item of items) {
-      try {
-        const title = (item.title || [])[0] || '';
-        if (!title) continue;
+    let accepted=0, rejected=0;
 
-        const dp = (item['published-print'] && item['published-print']['date-parts'] && item['published-print']['date-parts'][0]) ||
-                   (item['published-online'] && item['published-online']['date-parts'] && item['published-online']['date-parts'][0]);
-        const pubDate = dp ? `${dp[0]}-${String(dp[1]||1).padStart(2,'0')}-${String(dp[2]||1).padStart(2,'0')}` : '2024-01-01';
+    for(const item of items){
+      try{
+        const title = (item.title||[])[0]||'';
+        if(!title) continue;
+        const authors = (item.author||[]).map(a=>`${a.given||''} ${a.family||''}`.trim());
+
+        // ★★★ الفلتر الصارم ★★★
+        const check = isPalestineBook(title, (item.subject||[]).join(' '), authors);
+        if(!check.pass){rejected++;continue}
+
+        const dp=(item['published-print']&&item['published-print']['date-parts']&&item['published-print']['date-parts'][0])||
+                 (item['published-online']&&item['published-online']['date-parts']&&item['published-online']['date-parts'][0]);
+        const pubDate=dp?`${dp[0]}-${String(dp[1]||1).padStart(2,'0')}-${String(dp[2]||1).padStart(2,'0')}`:'2024-01-01';
+
+        // فحص السنة
+        const yr = dp ? dp[0] : 0;
+        if(yr>0 && yr<MIN_YEAR){rejected++;continue}
 
         books.push({
-          id: 'cr_' + (item.DOI || Math.random().toString(36).substr(2,9)),
-          title,
-          authors: (item.author || []).map(a => `${a.given || ''} ${a.family || ''}`.trim()),
-          publisher: item.publisher || '',
+          id:'cr_'+(item.DOI||Math.random().toString(36).substr(2,9)),
+          title, authors,
+          publisher:item.publisher||'',
           publication_date: pubDate,
-          pages: item.page ? parseInt(item.page) : null,
-          isbn: (item.ISBN || [])[0] || '',
-          book_url: item.URL || (item.DOI ? `https://doi.org/${item.DOI}` : ''),
-          cover: '',
-          description: '',
-          language: detectLang(title),
-          topics: detectTopics(title, (item.subject || []).join(' ')),
-          source: 'Crossref',
-          rating: null,
-          addedAt: Date.now()
+          pages:item.page?parseInt(item.page):null,
+          isbn:(item.ISBN||[])[0]||'',
+          book_url:item.URL||(item.DOI?`https://doi.org/${item.DOI}`:''),
+          cover:'', description:'',
+          language:detectLang(title),
+          topics:detectTopics(title,(item.subject||[]).join(' ')),
+          source:'Crossref', rating:null,
+          filterReason: check.reason,
+          addedAt:Date.now()
         });
-      } catch (e) {}
+        accepted++;
+      }catch(e){}
     }
-    activeSources.add('Crossref');
-  } catch (e) {
-    log(`Crossref: خطأ "${query}": ${e.message}`, 'error');
+
+    log(`Crossref: "${query}" → ✅ ${accepted} | 🚫 ${rejected}`, accepted>0?'success':'warn');
+    if(accepted>0) activeSources.add('Crossref');
+  }catch(e){
+    log(`Crossref: خطأ: ${e.message}`,'error');
   }
   return books;
 }
 
-// ═══════════════════════════════════════════
-// المحرك الرئيسي - تراكمي
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// المحرك الرئيسي — تراكمي
+// ═══════════════════════════════════════════════════
 async function fetchAllBooks() {
-  if (isUpdating) {
-    log('⏳ تحديث قيد التنفيذ بالفعل...', 'warn');
-    return;
-  }
+  if(isUpdating){log('⏳ تحديث جارٍ بالفعل','warn');return}
   isUpdating = true;
   activeSources.clear();
-
   const prevCount = ALL_BOOKS.length;
 
-  document.getElementById('pbar').style.display = 'block';
-  document.getElementById('rBtn').disabled = true;
+  document.getElementById('pbar').style.display='block';
+  document.getElementById('rBtn').disabled=true;
 
-  // ★ عرض رسالة التحميل فقط إذا لم تكن هناك كتب
-  if (ALL_BOOKS.length === 0) {
-    document.getElementById('grid').innerHTML =
-      '<div class="loader"><div class="spinner"></div><p>جارٍ جلب الكتب من المصادر...</p></div>';
+  if(ALL_BOOKS.length===0){
+    document.getElementById('grid').innerHTML='<div class="loader"><div class="spinner"></div><p>جارٍ جلب الكتب...</p></div>';
   }
 
-  log('═══════ بدء جلب الكتب ═══════', 'info');
+  log('═══════════════════════════════════════');
+  log('🚀 بدء جلب الكتب — فلترة صارمة — من 2023 فقط');
+  log('═══════════════════════════════════════');
 
   const newBooks = [];
-
-  // ── بناء قائمة المهام ──
   const tasks = [];
 
-  // Google Books - إنجليزي
-  for (const q of QUERIES.en) {
-    tasks.push({ api: 'google', q, lang: 'en' });
-  }
-  // Google Books - فرنسي
-  for (const q of QUERIES.fr) {
-    tasks.push({ api: 'google', q, lang: 'fr' });
-  }
-  // Google Books - عربي
-  for (const q of QUERIES.ar) {
-    tasks.push({ api: 'google', q, lang: 'ar' });
-  }
+  // Google Books
+  for(const q of QUERIES.en) tasks.push({api:'google',q,lang:'en'});
+  for(const q of QUERIES.fr) tasks.push({api:'google',q,lang:'fr'});
+  for(const q of QUERIES.ar) tasks.push({api:'google',q,lang:'ar'});
   // Open Library
-  for (const q of QUERIES.en.slice(0, 10)) {
-    tasks.push({ api: 'openlib', q, lang: 'en' });
-  }
+  for(const q of QUERIES.en.slice(0,12)) tasks.push({api:'openlib',q,lang:'en'});
+  for(const q of QUERIES.ar.slice(0,8)) tasks.push({api:'openlib',q,lang:'ar'});
   // Crossref
-  for (const q of QUERIES.en.slice(0, 8)) {
-    tasks.push({ api: 'crossref', q, lang: 'en' });
-  }
+  for(const q of QUERIES.en.slice(0,10)) tasks.push({api:'crossref',q,lang:'en'});
 
-  const total = tasks.length;
-  let done = 0;
+  const total=tasks.length;
+  let done=0;
 
-  for (const task of tasks) {
+  for(const task of tasks){
     done++;
-    const pct = Math.round((done / total) * 100);
-    document.getElementById('pfill').style.width = pct + '%';
-    document.getElementById('ptxt').textContent = `⏳ ${pct}% — ${task.api}: ${task.q.substring(0, 30)}...`;
+    const pct=Math.round((done/total)*100);
+    document.getElementById('pfill').style.width=pct+'%';
+    document.getElementById('ptxt').textContent=`⏳ ${pct}% — ${task.api}: ${task.q.substring(0,30)}...`;
 
-    let result = [];
-    try {
-      if (task.api === 'google') {
-        result = await fetchGoogle(task.q, task.lang);
-      } else if (task.api === 'openlib') {
-        result = await fetchOpenLib(task.q);
-      } else if (task.api === 'crossref') {
-        result = await fetchCrossref(task.q);
-      }
-    } catch (e) {
-      log(`خطأ في ${task.api}: ${e.message}`, 'error');
-    }
+    let result=[];
+    try{
+      if(task.api==='google') result=await fetchGoogle(task.q,task.lang);
+      else if(task.api==='openlib') result=await fetchOpenLib(task.q);
+      else if(task.api==='crossref') result=await fetchCrossref(task.q);
+    }catch(e){log(`خطأ ${task.api}: ${e.message}`,'error')}
 
-    if (result.length > 0) {
-      newBooks.push(...result);
-      log(`+${result.length} كتاب من ${task.api} (${task.q.substring(0,25)})`, 'success');
-    }
+    if(result.length>0) newBooks.push(...result);
 
-    // ★ تأخير بين الطلبات لتجنب Rate Limit
-    const delay = task.api === 'google' ? 600 : task.api === 'crossref' ? 1200 : 500;
+    const delay=task.api==='google'?600:task.api==='crossref'?1200:500;
     await sleep(delay);
   }
 
-  log(`═══════ انتهى الجلب: ${newBooks.length} كتاب جديد ═══════`);
+  log(`═══════════════════════════════════════`);
+  log(`📊 انتهى: ${newBooks.length} كتاب جديد مقبول من الفلتر الصارم`);
 
-  // ★ دمج تراكمي
-  const combined = [...ALL_BOOKS, ...newBooks];
-  ALL_BOOKS = dedup(combined);
+  // دمج تراكمي
+  const combined=[...ALL_BOOKS,...newBooks];
+  ALL_BOOKS=dedup(combined);
+  ALL_BOOKS.sort((a,b)=>new Date(b.publication_date)-new Date(a.publication_date));
 
-  // ترتيب بالأحدث
-  ALL_BOOKS.sort((a, b) => new Date(b.publication_date) - new Date(a.publication_date));
-
-  const addedCount = ALL_BOOKS.length - prevCount;
-  log(`📊 النتيجة: ${prevCount} → ${ALL_BOOKS.length} (أُضيف ${addedCount > 0 ? addedCount : 0})`, 'success');
+  const addedCount=ALL_BOOKS.length-prevCount;
+  log(`📚 ${prevCount} → ${ALL_BOOKS.length} (أُضيف ${Math.max(0,addedCount)})`,'success');
 
   // حفظ
-  try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify({
-      books: ALL_BOOKS,
-      timestamp: Date.now(),
-      sources: [...activeSources]
+  try{
+    localStorage.setItem(CACHE_KEY,JSON.stringify({
+      books:ALL_BOOKS, timestamp:Date.now(), sources:[...activeSources]
     }));
-    log('💾 تم الحفظ في localStorage', 'success');
-  } catch (e) {
-    log('💾 خطأ في الحفظ: ' + e.message, 'error');
-  }
+    log('💾 تم الحفظ','success');
+  }catch(e){log('💾 خطأ حفظ: '+e.message,'error')}
 
-  // إنهاء
-  document.getElementById('pbar').style.display = 'none';
-  document.getElementById('rBtn').disabled = false;
-  isUpdating = false;
+  document.getElementById('pbar').style.display='none';
+  document.getElementById('rBtn').disabled=false;
+  isUpdating=false;
 
-  updateStats();
-  filterBooks();
-  updateTime();
+  updateStats();filterBooks();updateTime();
 
-  if (addedCount > 0 && prevCount > 0) {
-    showNotif(`✅ تم إضافة ${addedCount} كتاب جديد!`);
-  }
+  if(addedCount>0&&prevCount>0) showNotif(`✅ تم إضافة ${addedCount} كتاب جديد عن فلسطين!`);
 }
 
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+function showNotif(msg){const el=document.getElementById('notif');el.textContent=msg;el.style.display='block';setTimeout(()=>el.style.display='none',5000)}
 
-function showNotif(msg) {
-  const el = document.getElementById('notif');
-  el.textContent = msg;
-  el.style.display = 'block';
-  setTimeout(() => el.style.display = 'none', 5000);
-}
-
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // الفلترة والعرض
-// ═══════════════════════════════════════════
-function setLang(lang, btn) {
-  currentLang = lang;
-  document.querySelectorAll('.fbtn').forEach(b => b.className = 'fbtn');
-  if (lang === 'all') btn.classList.add('active');
-  else btn.classList.add('a-' + lang);
+// ═══════════════════════════════════════════════════
+function setLang(lang,btn){
+  currentLang=lang;
+  document.querySelectorAll('.fbtn').forEach(b=>b.className='fbtn');
+  if(lang==='all')btn.classList.add('active');else btn.classList.add('a-'+lang);
   filterBooks();
 }
 
-function filterBooks() {
-  const search = document.getElementById('searchInput').value.toLowerCase();
-  const topic = document.getElementById('topicSel').value;
-  const sort = document.getElementById('sortSel').value;
+function filterBooks(){
+  const search=document.getElementById('searchInput').value.toLowerCase();
+  const topic=document.getElementById('topicSel').value;
+  const sort=document.getElementById('sortSel').value;
 
-  let list = ALL_BOOKS.filter(b => {
-    if (currentLang !== 'all' && b.language !== currentLang) return false;
-    if (topic && !b.topics.some(t => t.toLowerCase().includes(topic.toLowerCase()))) return false;
-    if (search) {
-      const hay = (b.title + ' ' + b.authors.join(' ') + ' ' + b.publisher + ' ' + (b.description || '')).toLowerCase();
-      if (!hay.includes(search)) return false;
+  let list=ALL_BOOKS.filter(b=>{
+    if(currentLang!=='all'&&b.language!==currentLang)return false;
+    if(topic&&!b.topics.some(t=>t.toLowerCase().includes(topic.toLowerCase())))return false;
+    if(search){
+      const hay=(b.title+' '+b.authors.join(' ')+' '+b.publisher+' '+(b.description||'')).toLowerCase();
+      if(!hay.includes(search))return false;
     }
     return true;
   });
 
-  if (sort === 'title') list.sort((a, b) => a.title.localeCompare(b.title, 'ar'));
-  else list.sort((a, b) => new Date(b.publication_date) - new Date(a.publication_date));
+  if(sort==='title')list.sort((a,b)=>a.title.localeCompare(b.title,'ar'));
+  else list.sort((a,b)=>new Date(b.publication_date)-new Date(a.publication_date));
 
   renderBooks(list);
 }
 
-function esc(s) {
-  const d = document.createElement('div');
-  d.textContent = s || '';
-  return d.innerHTML;
-}
+function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
 
-function renderBooks(books) {
-  const grid = document.getElementById('grid');
+function renderBooks(books){
+  const grid=document.getElementById('grid');
 
-  if (!books.length && ALL_BOOKS.length === 0) {
-    grid.innerHTML = '<div class="loader"><div class="spinner"></div><p>جارٍ جلب الكتب...</p></div>';
+  if(!books.length&&ALL_BOOKS.length===0){
+    grid.innerHTML='<div class="loader"><div class="spinner"></div><p>جارٍ جلب الكتب...</p></div>';
+    return;
+  }
+  if(!books.length){
+    grid.innerHTML=`<div class="no-res"><div class="emoji">📚</div><p>لا توجد كتب مطابقة</p><p style="font-size:.9em;margin-top:8px;opacity:.7">جرّب تغيير الفلتر</p></div>`;
     return;
   }
 
-  if (!books.length) {
-    grid.innerHTML = `<div class="no-res"><div class="emoji">📚</div><p>لا توجد كتب مطابقة</p><p style="font-size:.9em;margin-top:8px;opacity:.7">جرّب تغيير الفلتر</p></div>`;
-    return;
-  }
+  const hotTopics=['Nakba','Gaza','Genocide','Occupation','Resistance','Hamas','Ethnic Cleansing'];
 
-  const hotTopics = ['Nakba','Gaza','Genocide','Occupation','Resistance','Hamas'];
+  grid.innerHTML=books.map(b=>{
+    const lc=`l-${b.language}`;
+    const ll=b.language==='ar'?'عربي':b.language==='fr'?'Français':'English';
+    const date=b.publication_date?new Date(b.publication_date).toLocaleDateString('en-US',{year:'numeric',month:'short'}):'';
 
-  grid.innerHTML = books.map(b => {
-    const lc = `l-${b.language}`;
-    const ll = b.language === 'ar' ? 'عربي' : b.language === 'fr' ? 'Français' : 'English';
-    const date = b.publication_date ? new Date(b.publication_date).toLocaleDateString('en-US', { year:'numeric', month:'short' }) : '';
+    const coverHTML=b.cover
+      ?`<img src="${b.cover}" alt="${esc(b.title)}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/150x200/1a1a1a/ffffff?text=🇵🇸'">`
+      :`<div style="width:130px;height:180px;background:linear-gradient(135deg,#c8102e,#007a3d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:4em">🇵🇸</div>`;
 
-    const coverHTML = b.cover
-      ? `<img src="${b.cover}" alt="${esc(b.title)}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/150x200/1a1a1a/ffffff?text=🇵🇸'">`
-      : `<div style="width:130px;height:180px;background:linear-gradient(135deg,#c8102e,#007a3d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:4em">🇵🇸</div>`;
-
-    const tagsHTML = b.topics.slice(0,5).map(t =>
+    const tagsHTML=b.topics.slice(0,5).map(t=>
       `<span class="tag ${hotTopics.some(h=>t.includes(h))?'hot':''}">${esc(t)}</span>`
     ).join('');
 
-    return `
+    return`
     <div class="book-card">
       <div class="cover-wrap">
         ${coverHTML}
@@ -762,99 +858,79 @@ function renderBooks(books) {
       </div>
       <div class="book-body" dir="rtl">
         <div class="book-title">${esc(b.title)}</div>
-        <div class="book-author">✍ ${esc(b.authors.slice(0,3).join('، ') || 'غير محدد')}</div>
-        <div class="book-pub">🏛 ${esc(b.publisher || 'غير محدد')}</div>
+        <div class="book-author">✍ ${esc(b.authors.slice(0,3).join('، ')||'غير محدد')}</div>
+        <div class="book-pub">🏛 ${esc(b.publisher||'غير محدد')}</div>
         <div class="book-meta">
-          ${date ? `<span>📅 ${date}</span>` : ''}
-          ${b.pages ? `<span>📄 ${b.pages} صفحة</span>` : ''}
-          ${b.rating ? `<span>⭐ ${b.rating.toFixed(1)}</span>` : ''}
-          ${b.isbn ? `<span>📋 ISBN</span>` : ''}
+          ${date?`<span>📅 ${date}</span>`:''}
+          ${b.pages?`<span>📄 ${b.pages} صفحة</span>`:''}
+          ${b.rating?`<span>⭐ ${b.rating.toFixed(1)}</span>`:''}
+          ${b.isbn?`<span>📋 ISBN</span>`:''}
         </div>
         <div class="topics">${tagsHTML}</div>
-        ${b.description ? `<div class="book-desc">${esc(b.description)}</div>` : ''}
+        ${b.description?`<div class="book-desc">${esc(b.description)}</div>`:''}
         <div class="book-actions">
-          ${b.book_url ? `<a href="${esc(b.book_url)}" target="_blank" rel="noopener" class="blink bp">🔗 رابط الكتاب</a>` : ''}
-          ${b.isbn ? `<a href="https://www.worldcat.org/isbn/${b.isbn}" target="_blank" rel="noopener" class="blink bs">📚 WorldCat</a>` : ''}
+          ${b.book_url?`<a href="${esc(b.book_url)}" target="_blank" rel="noopener" class="blink bp">🔗 رابط الكتاب</a>`:''}
+          ${b.isbn?`<a href="https://www.worldcat.org/isbn/${b.isbn}" target="_blank" rel="noopener" class="blink bs">📚 WorldCat</a>`:''}
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // الإحصائيات
-// ═══════════════════════════════════════════
-function updateStats() {
-  document.getElementById('sTotal').textContent = ALL_BOOKS.length;
-  document.getElementById('sAr').textContent = ALL_BOOKS.filter(b => b.language === 'ar').length;
-  document.getElementById('sEn').textContent = ALL_BOOKS.filter(b => b.language === 'en').length;
-  document.getElementById('sFr').textContent = ALL_BOOKS.filter(b => b.language === 'fr').length;
-  document.getElementById('sPub').textContent = new Set(ALL_BOOKS.map(b => b.publisher).filter(Boolean)).size;
-  document.getElementById('sSrc').textContent = activeSources.size || '-';
+// ═══════════════════════════════════════════════════
+function updateStats(){
+  document.getElementById('sTotal').textContent=ALL_BOOKS.length;
+  document.getElementById('sAr').textContent=ALL_BOOKS.filter(b=>b.language==='ar').length;
+  document.getElementById('sEn').textContent=ALL_BOOKS.filter(b=>b.language==='en').length;
+  document.getElementById('sFr').textContent=ALL_BOOKS.filter(b=>b.language==='fr').length;
+  document.getElementById('sPub').textContent=new Set(ALL_BOOKS.map(b=>b.publisher).filter(Boolean)).size;
+  document.getElementById('sSrc').textContent=activeSources.size||'-';
 }
 
-function updateTime() {
-  document.getElementById('lastUp').textContent = 'آخر تحديث: ' +
-    new Date().toLocaleString('ar-EG', { year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+function updateTime(){
+  document.getElementById('lastUp').textContent='آخر تحديث: '+
+    new Date().toLocaleString('ar-EG',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
 }
 
-// ═══════════════════════════════════════════
-// التحديث اليدوي
-// ═══════════════════════════════════════════
-function manualRefresh() {
-  log('🔄 تحديث يدوي بواسطة المستخدم');
-  fetchAllBooks();
-}
+function manualRefresh(){log('🔄 تحديث يدوي');fetchAllBooks()}
 
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // نقطة البداية
-// ═══════════════════════════════════════════
-(async function init() {
-  log('🚀 بدء تشغيل مرصد كتب فلسطين v6');
+// ═══════════════════════════════════════════════════
+(async function init(){
+  log('🚀 مرصد كتب فلسطين v7 — فلترة صارمة — من 2023 فقط');
 
-  // ★ تحميل الكتب المحفوظة وعرضها فوراً
-  try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    if (raw) {
-      const cache = JSON.parse(raw);
-      if (cache && cache.books && cache.books.length > 0) {
-        ALL_BOOKS = cache.books;
-        if (cache.sources) cache.sources.forEach(s => activeSources.add(s));
+  try{
+    const raw=localStorage.getItem(CACHE_KEY);
+    if(raw){
+      const cache=JSON.parse(raw);
+      if(cache&&cache.books&&cache.books.length>0){
+        ALL_BOOKS=cache.books;
+        if(cache.sources)cache.sources.forEach(s=>activeSources.add(s));
+        updateStats();filterBooks();updateTime();
+        log(`✅ تم تحميل ${ALL_BOOKS.length} كتاب من الذاكرة`,'success');
 
-        updateStats();
-        filterBooks();
-        updateTime();
-
-        log(`✅ تم تحميل ${ALL_BOOKS.length} كتاب من الذاكرة`, 'success');
-
-        // التحقق: هل مر يوم؟
-        const elapsed = Date.now() - (cache.timestamp || 0);
-        if (elapsed < DAILY_MS) {
-          const hrs = Math.round((DAILY_MS - elapsed) / 3600000);
+        const elapsed=Date.now()-(cache.timestamp||0);
+        if(elapsed<DAILY_MS){
+          const hrs=Math.round((DAILY_MS-elapsed)/3600000);
           log(`⏰ التحديث القادم بعد ~${hrs} ساعة`);
-          setTimeout(() => fetchAllBooks(), DAILY_MS - elapsed);
+          setTimeout(()=>fetchAllBooks(),DAILY_MS-elapsed);
           return;
         }
-
-        log('🔄 مر يوم كامل، جاري البحث عن كتب جديدة في الخلفية...');
+        log('🔄 مر يوم، جاري البحث عن جديد...');
         fetchAllBooks();
         return;
       }
     }
-  } catch (e) {
-    log('خطأ في قراءة الذاكرة: ' + e.message, 'error');
-  }
+  }catch(e){log('خطأ ذاكرة: '+e.message,'error')}
 
-  // لا توجد كتب محفوظة
-  log('📭 لا توجد كتب محفوظة، جلب من الصفر...');
+  log('📭 لا توجد كتب، جلب من الصفر...');
   await fetchAllBooks();
 })();
 
-// تحديث يومي تلقائي
-setInterval(() => {
-  log('🔄 تحديث يومي تلقائي...');
-  fetchAllBooks();
-}, DAILY_MS);
+setInterval(()=>{log('🔄 تحديث يومي تلقائي');fetchAllBooks()},DAILY_MS);
 </script>
 </body>
 </html>
