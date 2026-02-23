@@ -1,2565 +1,974 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📚 مرصد كتب الشأن العربي - آخر 12 شهراً</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap');
-
-        :root {
-            --primary: #d4a017;
-            --primary-light: #f0c040;
-            --secondary: #c0392b;
-            --accent: #e8b829;
-            --dark: #0a0a0f;
-            --darker: #050508;
-            --card-bg: rgba(12, 12, 20, 0.92);
-            --card-border: rgba(212, 160, 23, 0.08);
-            --text: #e8e8e8;
-            --text-muted: #7a8a9a;
-            --text-bright: #ffffff;
-            --success: #2ecc71;
-            --info: #3498db;
-            --warning: #f39c12;
-            --danger: #e74c3c;
-            --gradient-gold: linear-gradient(135deg, #d4a017, #f0c040, #d4a017);
-            --gradient-fire: linear-gradient(135deg, #e74c3c, #f39c12);
-            --gradient-ocean: linear-gradient(135deg, #1a5276, #2980b9);
-            --gradient-emerald: linear-gradient(135deg, #145a32, #27ae60);
-            --shadow-gold: 0 0 30px rgba(212, 160, 23, 0.15);
-            --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background: var(--darker);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* === خلفية متحركة === */
-        .bg-animation {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            overflow: hidden;
-            background:
-                radial-gradient(ellipse at 15% 30%, rgba(212, 160, 23, 0.06) 0%, transparent 60%),
-                radial-gradient(ellipse at 85% 70%, rgba(192, 57, 43, 0.05) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 50%, rgba(26, 82, 118, 0.04) 0%, transparent 70%);
-        }
-
-        .bg-animation .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            animation: orbFloat 25s ease-in-out infinite;
-        }
-
-        .bg-animation .orb:nth-child(1) {
-            width: 500px; height: 500px;
-            background: rgba(212, 160, 23, 0.04);
-            top: -10%; right: -5%;
-            animation-delay: 0s;
-        }
-
-        .bg-animation .orb:nth-child(2) {
-            width: 400px; height: 400px;
-            background: rgba(192, 57, 43, 0.03);
-            bottom: -10%; left: -5%;
-            animation-delay: -8s;
-        }
-
-        .bg-animation .orb:nth-child(3) {
-            width: 350px; height: 350px;
-            background: rgba(26, 82, 118, 0.04);
-            top: 40%; left: 40%;
-            animation-delay: -16s;
-        }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(50px, -30px) scale(1.1); }
-            50% { transform: translate(-30px, 50px) scale(0.95); }
-            75% { transform: translate(30px, 30px) scale(1.05); }
-        }
-
-        .particles {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .particles span {
-            position: absolute;
-            width: 3px; height: 3px;
-            background: rgba(212, 160, 23, 0.3);
-            border-radius: 50%;
-            animation: particleFall linear infinite;
-        }
-
-        @keyframes particleFall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-        }
-
-        /* === Header === */
-        .hero-header {
-            position: relative;
-            z-index: 10;
-            padding: 50px 20px 40px;
-            text-align: center;
-            background: linear-gradient(180deg,
-                rgba(212, 160, 23, 0.08) 0%,
-                rgba(12, 12, 20, 0) 100%);
-            border-bottom: 1px solid rgba(212, 160, 23, 0.1);
-        }
-
-        .hero-header .live-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(231, 76, 60, 0.15);
-            border: 1px solid rgba(231, 76, 60, 0.3);
-            color: #e74c3c;
-            padding: 6px 18px;
-            border-radius: 25px;
-            font-size: 0.85em;
-            font-weight: 700;
-            margin-bottom: 20px;
-            animation: livePulse 2s infinite;
-        }
-
-        .hero-header .live-badge .dot {
-            width: 8px; height: 8px;
-            background: #e74c3c;
-            border-radius: 50%;
-            animation: dotPulse 1.5s infinite;
-        }
-
-        @keyframes livePulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        @keyframes dotPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.5); }
-            50% { transform: scale(1.2); box-shadow: 0 0 0 6px rgba(231, 76, 60, 0); }
-        }
-
-        .hero-header h1 {
-            font-size: 3em;
-            font-weight: 900;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-
-        .hero-header .subtitle {
-            font-size: 1.15em;
-            color: var(--text-muted);
-            max-width: 750px;
-            margin: 0 auto 20px;
-            line-height: 1.7;
-        }
-
-        .hero-header .update-info {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(212, 160, 23, 0.08);
-            border: 1px solid rgba(212, 160, 23, 0.15);
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 0.9em;
-            color: var(--accent);
-        }
-
-        .hero-header .update-info .date-display {
-            font-weight: 800;
-            color: var(--primary-light);
-        }
-
-        /* === شريط الإحصائيات === */
-        .stats-strip {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            gap: 0;
-            background: rgba(10, 10, 15, 0.9);
-            border-bottom: 1px solid rgba(212, 160, 23, 0.08);
-            flex-wrap: wrap;
-            backdrop-filter: blur(20px);
-        }
-
-        .stat-box {
-            padding: 22px 35px;
-            text-align: center;
-            border-left: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.3s;
-            cursor: default;
-        }
-
-        .stat-box:last-child {
-            border-left: none;
-        }
-
-        .stat-box:hover {
-            background: rgba(212, 160, 23, 0.05);
-        }
-
-        .stat-box .stat-num {
-            font-size: 2.2em;
-            font-weight: 900;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-        }
-
-        .stat-box .stat-lbl {
-            font-size: 0.82em;
-            color: var(--text-muted);
-            margin-top: 4px;
-            font-weight: 500;
-        }
-
-        /* === أدوات التحكم === */
-        .controls-area {
-            position: relative;
-            z-index: 10;
-            max-width: 1500px;
-            margin: 0 auto;
-            padding: 30px 25px 10px;
-        }
-
-        .search-row {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 18px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .search-wrapper {
-            flex: 1;
-            min-width: 280px;
-            position: relative;
-        }
-
-        .search-wrapper input {
-            width: 100%;
-            padding: 14px 22px 14px 50px;
-            border-radius: 16px;
-            border: 1px solid rgba(212, 160, 23, 0.12);
-            background: rgba(12, 12, 20, 0.95);
-            color: var(--text);
-            font-family: 'Tajawal', sans-serif;
-            font-size: 1em;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
-        }
-
-        .search-wrapper input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 25px rgba(212, 160, 23, 0.12);
-        }
-
-        .search-wrapper input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .search-wrapper .search-icon {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.1em;
-            opacity: 0.5;
-        }
-
-        .sort-select {
-            padding: 14px 20px;
-            border-radius: 16px;
-            border: 1px solid rgba(212, 160, 23, 0.12);
-            background: rgba(12, 12, 20, 0.95);
-            color: var(--text);
-            font-family: 'Tajawal', sans-serif;
-            font-size: 0.95em;
-            cursor: pointer;
-            min-width: 180px;
-        }
-
-        .sort-select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .view-switcher {
-            display: flex;
-            gap: 4px;
-            background: rgba(12, 12, 20, 0.95);
-            padding: 4px;
-            border-radius: 14px;
-            border: 1px solid rgba(212, 160, 23, 0.08);
-        }
-
-        .view-btn {
-            padding: 10px 14px;
-            border: none;
-            border-radius: 11px;
-            background: transparent;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 1.1em;
-            transition: all 0.3s;
-        }
-
-        .view-btn.active {
-            background: rgba(212, 160, 23, 0.15);
-            color: var(--primary-light);
-        }
-
-        .filters-row {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 12px;
-        }
-
-        .filter-chip {
-            padding: 9px 20px;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            background: rgba(12, 12, 20, 0.8);
-            color: var(--text-muted);
-            cursor: pointer;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 0.88em;
-            font-weight: 500;
-            transition: all 0.3s;
-            user-select: none;
-        }
-
-        .filter-chip:hover {
-            border-color: var(--primary);
-            color: var(--primary-light);
-            transform: translateY(-1px);
-        }
-
-        .filter-chip.active {
-            background: var(--gradient-gold);
-            color: var(--dark);
-            border-color: transparent;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgba(212, 160, 23, 0.2);
-        }
-
-        .region-chips {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-
-        .region-chip {
-            padding: 7px 16px;
-            border-radius: 20px;
-            border: 1px solid rgba(26, 82, 118, 0.15);
-            background: rgba(26, 82, 118, 0.08);
-            color: var(--text-muted);
-            cursor: pointer;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 0.83em;
-            transition: all 0.3s;
-        }
-
-        .region-chip:hover,
-        .region-chip.active {
-            background: rgba(26, 82, 118, 0.25);
-            border-color: var(--info);
-            color: #5dade2;
-        }
-
-        .results-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0 15px;
-            color: var(--text-muted);
-            font-size: 0.9em;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .results-bar .count-text span {
-            color: var(--primary-light);
-            font-weight: 800;
-        }
-
-        .results-bar .time-range {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.85em;
-            color: var(--success);
-        }
-
-        .results-bar .time-range .pulse-dot {
-            width: 6px; height: 6px;
-            background: var(--success);
-            border-radius: 50%;
-            animation: dotPulse 2s infinite;
-        }
-
-        /* === شبكة الكتب === */
-        .books-container {
-            position: relative;
-            z-index: 10;
-            max-width: 1500px;
-            margin: 0 auto;
-            padding: 0 25px 40px;
-        }
-
-        .books-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
-            gap: 22px;
-        }
-
-        .books-grid.list-mode {
-            grid-template-columns: 1fr;
-        }
-
-        /* === بطاقة الكتاب === */
-        .book-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 22px;
-            overflow: hidden;
-            transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-
-        .book-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 3px;
-            background: var(--gradient-gold);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .book-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(212, 160, 23, 0.2);
-            box-shadow: var(--shadow-gold), var(--shadow-card);
-        }
-
-        .book-card:hover::before {
-            opacity: 1;
-        }
-
-        .book-card .card-top {
-            display: flex;
-            gap: 18px;
-            padding: 22px 22px 12px;
-        }
-
-        .book-card .book-cover-wrap {
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .book-card .book-cover {
-            width: 105px;
-            height: 150px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3em;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-        }
-
-        .book-card .book-cover .spine {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 4px;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .book-card .book-cover .shine {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.05) 50%, transparent 60%);
-            animation: shineMove 4s ease-in-out infinite;
-        }
-
-        @keyframes shineMove {
-            0%, 100% { transform: translateX(-30%) translateY(-30%); }
-            50% { transform: translateX(30%) translateY(30%); }
-        }
-
-        .book-card .days-badge {
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            background: var(--gradient-fire);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 0.65em;
-            font-weight: 800;
-            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.3);
-            white-space: nowrap;
-        }
-
-        .book-card .card-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .book-card .book-title {
-            font-size: 1.15em;
-            font-weight: 800;
-            color: var(--text-bright);
-            line-height: 1.5;
-            margin-bottom: 4px;
-        }
-
-        .book-card .book-title-en {
-            font-size: 0.82em;
-            color: var(--primary);
-            font-style: italic;
-            margin-bottom: 8px;
-            direction: ltr;
-            text-align: right;
-            opacity: 0.8;
-        }
-
-        .book-card .author-line {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.92em;
-            margin-bottom: 3px;
-        }
-
-        .book-card .author-line .author-name {
-            color: var(--info);
-            font-weight: 600;
-        }
-
-        .book-card .publisher-line {
-            font-size: 0.82em;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-
-        .book-card .card-body {
-            padding: 0 22px 12px;
-        }
-
-        .book-card .meta-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
-            margin-bottom: 10px;
-        }
-
-        .book-card .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.82em;
-            color: var(--text-muted);
-        }
-
-        .book-card .meta-item .meta-val {
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        .book-card .tags-row {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-        }
-
-        .tag {
-            padding: 3px 10px;
-            border-radius: 10px;
-            font-size: 0.72em;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-        }
-
-        .tag-cat {
-            background: rgba(52, 152, 219, 0.12);
-            color: #5dade2;
-            border: 1px solid rgba(52, 152, 219, 0.15);
-        }
-
-        .tag-lang {
-            background: rgba(46, 204, 113, 0.12);
-            color: #58d68d;
-            border: 1px solid rgba(46, 204, 113, 0.15);
-        }
-
-        .tag-region {
-            background: rgba(243, 156, 18, 0.12);
-            color: #f5b041;
-            border: 1px solid rgba(243, 156, 18, 0.15);
-        }
-
-        .tag-new {
-            background: rgba(231, 76, 60, 0.15);
-            color: #ec7063;
-            border: 1px solid rgba(231, 76, 60, 0.2);
-            animation: livePulse 2s infinite;
-        }
-
-        .tag-best {
-            background: rgba(212, 160, 23, 0.15);
-            color: var(--primary-light);
-            border: 1px solid rgba(212, 160, 23, 0.2);
-        }
-
-        .book-card .desc-box {
-            font-size: 0.85em;
-            color: var(--text-muted);
-            line-height: 1.65;
-            padding: 10px 14px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 10px;
-            border-right: 3px solid var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .book-card .countries-row {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-        }
-
-        .country-tag {
-            padding: 2px 8px;
-            border-radius: 8px;
-            font-size: 0.72em;
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--text-muted);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .book-card .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 22px 18px;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .rating-display {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .rating-display .stars {
-            color: var(--accent);
-            font-size: 0.85em;
-            letter-spacing: 1px;
-        }
-
-        .rating-display .r-val {
-            color: var(--text-muted);
-            font-size: 0.82em;
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 6px;
-        }
-
-        .act-btn {
-            padding: 6px 14px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: transparent;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 0.78em;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .act-btn:hover {
-            background: rgba(212, 160, 23, 0.1);
-            border-color: var(--primary);
-            color: var(--primary-light);
-        }
-
-        .act-btn.saved {
-            background: rgba(231, 76, 60, 0.12);
-            border-color: rgba(231, 76, 60, 0.25);
-            color: var(--danger);
-        }
-
-        .act-btn.share-btn:hover {
-            background: rgba(52, 152, 219, 0.1);
-            border-color: var(--info);
-            color: var(--info);
-        }
-
-        /* === خريطة الدول === */
-        .map-section {
-            position: relative;
-            z-index: 10;
-            max-width: 1500px;
-            margin: 20px auto 40px;
-            padding: 0 25px;
-        }
-
-        .map-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 22px;
-            padding: 35px;
-        }
-
-        .map-card .map-title {
-            text-align: center;
-            font-size: 1.6em;
-            font-weight: 800;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-        }
-
-        .map-card .map-subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9em;
-            margin-bottom: 25px;
-        }
-
-        .countries-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 10px;
-        }
-
-        .country-card {
-            padding: 15px 10px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            text-align: center;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .country-card:hover {
-            background: rgba(212, 160, 23, 0.08);
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .country-card .c-flag {
-            font-size: 2.2em;
-            margin-bottom: 6px;
-        }
-
-        .country-card .c-name {
-            font-weight: 700;
-            color: var(--text-bright);
-            font-size: 0.88em;
-        }
-
-        .country-card .c-count {
-            font-size: 0.75em;
-            color: var(--primary);
-            margin-top: 3px;
-            font-weight: 600;
-        }
-
-        /* === لا نتائج === */
-        .no-results {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 80px 20px;
-        }
-
-        .no-results .nr-icon {
-            font-size: 4em;
-            margin-bottom: 15px;
-            opacity: 0.5;
-        }
-
-        .no-results h3 {
-            font-size: 1.5em;
-            color: var(--text-bright);
-            margin-bottom: 8px;
-        }
-
-        .no-results p {
-            color: var(--text-muted);
-        }
-
-        /* === زر القائمة === */
-        .reading-fab {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 24px;
-            border-radius: 30px;
-            background: var(--gradient-ocean);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 0.95em;
-            font-weight: 700;
-            box-shadow: 0 8px 30px rgba(26, 82, 118, 0.4);
-            transition: all 0.3s;
-        }
-
-        .reading-fab:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 40px rgba(26, 82, 118, 0.5);
-        }
-
-        .reading-fab .fab-badge {
-            background: var(--danger);
-            padding: 2px 9px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            font-weight: 800;
-        }
-
-        /* === زر الصعود === */
-        .scroll-up {
-            position: fixed;
-            bottom: 25px;
-            left: 25px;
-            z-index: 500;
-            width: 48px; height: 48px;
-            border-radius: 50%;
-            background: var(--gradient-gold);
-            color: var(--dark);
-            border: none;
-            cursor: pointer;
-            font-size: 1.2em;
-            font-weight: 900;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 20px rgba(212, 160, 23, 0.3);
-            transition: all 0.3s;
-        }
-
-        .scroll-up.show {
-            display: flex;
-        }
-
-        .scroll-up:hover {
-            transform: translateY(-3px);
-        }
-
-        /* === إشعار === */
-        .toast-msg {
-            position: fixed;
-            top: 25px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-120px);
-            padding: 14px 35px;
-            border-radius: 16px;
-            color: white;
-            font-weight: 700;
-            z-index: 3000;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            font-size: 0.95em;
-            backdrop-filter: blur(15px);
-        }
-
-        .toast-msg.success {
-            background: linear-gradient(135deg, rgba(39, 174, 96, 0.95), rgba(46, 204, 113, 0.95));
-        }
-
-        .toast-msg.info {
-            background: linear-gradient(135deg, rgba(41, 128, 185, 0.95), rgba(52, 152, 219, 0.95));
-        }
-
-        .toast-msg.visible {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* === النافذة المنبثقة === */
-        .modal-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(12px);
-        }
-
-        .modal-bg.open {
-            display: flex;
-        }
-
-        .modal-panel {
-            background: var(--dark);
-            border: 1px solid rgba(212, 160, 23, 0.15);
-            border-radius: 22px;
-            padding: 30px;
-            max-width: 620px;
-            width: 92%;
-            max-height: 82vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-panel::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .modal-panel::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .modal-panel::-webkit-scrollbar-thumb {
-            background: rgba(212, 160, 23, 0.2);
-            border-radius: 3px;
-        }
-
-        .modal-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 22px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(212, 160, 23, 0.1);
-        }
-
-        .modal-head h2 {
-            font-size: 1.35em;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .modal-head .close-modal {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.6em;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 40px; height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-head .close-modal:hover {
-            background: rgba(231, 76, 60, 0.1);
-            color: var(--danger);
-        }
-
-        .rl-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.02);
-            margin-bottom: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.3s;
-        }
-
-        .rl-item:hover {
-            background: rgba(212, 160, 23, 0.04);
-            border-color: rgba(212, 160, 23, 0.1);
-        }
-
-        .rl-item .rl-info .rl-title {
-            font-weight: 700;
-            color: var(--text-bright);
-            font-size: 0.95em;
-        }
-
-        .rl-item .rl-info .rl-meta {
-            font-size: 0.78em;
-            color: var(--text-muted);
-            margin-top: 3px;
-        }
-
-        .rl-item .rl-remove {
-            background: rgba(231, 76, 60, 0.1);
-            border: 1px solid rgba(231, 76, 60, 0.2);
-            color: var(--danger);
-            padding: 6px 14px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 0.78em;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .rl-item .rl-remove:hover {
-            background: rgba(231, 76, 60, 0.2);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 50px 20px;
-        }
-
-        .empty-state .es-icon {
-            font-size: 3.5em;
-            margin-bottom: 12px;
-            opacity: 0.4;
-        }
-
-        .empty-state p {
-            color: var(--text-muted);
-            font-size: 0.95em;
-        }
-
-        .empty-state .es-hint {
-            font-size: 0.82em;
-            margin-top: 8px;
-            color: var(--primary);
-        }
-
-        /* === التذييل === */
-        .site-footer {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            padding: 40px 20px;
-            background: rgba(10, 10, 15, 0.95);
-            border-top: 1px solid rgba(212, 160, 23, 0.08);
-        }
-
-        .site-footer .footer-title {
-            font-size: 1.1em;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .site-footer .footer-desc {
-            color: var(--text-muted);
-            font-size: 0.88em;
-            max-width: 600px;
-            margin: 0 auto 15px;
-            line-height: 1.7;
-        }
-
-        .site-footer .footer-note {
-            font-size: 0.78em;
-            color: rgba(255, 255, 255, 0.2);
-            margin-top: 15px;
-        }
-
-        .footer-links-row {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links-row a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85em;
-            transition: color 0.3s;
-        }
-
-        .footer-links-row a:hover {
-            color: var(--primary-light);
-        }
-
-        /* === Responsive === */
-        @media (max-width: 900px) {
-            .books-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-header h1 {
-                font-size: 2em;
-            }
-
-            .hero-header .subtitle {
-                font-size: 1em;
-            }
-
-            .stat-box {
-                padding: 15px 20px;
-            }
-
-            .stat-box .stat-num {
-                font-size: 1.6em;
-            }
-
-            .search-row {
-                flex-direction: column;
-            }
-
-            .sort-select {
-                width: 100%;
-            }
-
-            .book-card .card-top {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .book-card .book-title-en {
-                text-align: center;
-            }
-
-            .book-card .meta-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .countries-grid {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            }
-
-            .reading-fab {
-                bottom: 15px;
-                right: 15px;
-                padding: 12px 18px;
-                font-size: 0.85em;
-            }
-
-            .scroll-up {
-                bottom: 15px;
-                left: 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-header h1 {
-                font-size: 1.6em;
-            }
-
-            .hero-header {
-                padding: 30px 15px;
-            }
-
-            .controls-area {
-                padding: 20px 15px 10px;
-            }
-
-            .books-container {
-                padding: 0 15px 30px;
-            }
-
-            .filter-chip {
-                padding: 7px 14px;
-                font-size: 0.8em;
-            }
-
-            .book-card .book-cover {
-                width: 85px;
-                height: 120px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مرصد كتب فلسطين 🇵🇸</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f5f5f5;--card:#fff;--text:#1a1a1a;--text2:#666;
+  --red:#c8102e;--green:#007a3d;--black:#000;
+  --ar:#007a3d;--fr:#2563eb;--en:#7c3aed;
+  --shadow:0 2px 24px rgba(0,0,0,.08);--radius:18px
+}
+body{font-family:'Segoe UI','Cairo',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
+.hero{background:linear-gradient(135deg,var(--black) 0%,var(--red) 50%,var(--green) 100%);color:#fff;padding:50px 20px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--black) 0%,var(--black) 33%,#fff 33%,#fff 50%,var(--green) 50%,var(--green) 100%);opacity:.08;pointer-events:none}
+.hero-c{position:relative;z-index:2}
+.hero h1{font-size:2.5em;font-weight:900;margin-bottom:12px;text-shadow:2px 2px 8px rgba(0,0,0,.3)}
+.hero .sub{font-size:1.2em;opacity:.95;margin-bottom:20px;font-weight:500}
+.hero .info{font-size:.95em;opacity:.9;max-width:800px;margin:0 auto}
+.badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.badges span{padding:8px 20px;border-radius:50px;font-size:.9em;font-weight:700;border:2px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);backdrop-filter:blur(8px)}
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;max-width:1400px;margin:-35px auto 30px;padding:0 20px;position:relative;z-index:10}
+.stat-card{background:var(--card);border-radius:var(--radius);padding:22px 16px;text-align:center;box-shadow:var(--shadow);border-top:4px solid var(--red);transition:transform .3s}
+.stat-card:hover{transform:translateY(-4px)}
+.stat-card .icon{font-size:2em;margin-bottom:6px}
+.stat-card .num{font-size:2em;font-weight:900;color:var(--red);line-height:1}
+.stat-card .lbl{font-size:.85em;color:var(--text2);margin-top:6px;font-weight:600}
+.controls{max-width:1400px;margin:0 auto 28px;padding:0 20px}
+.search-row{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.search-box{flex:1;min-width:280px;padding:14px 24px;border-radius:50px;border:2px solid #e0e0e0;font-size:1.05em;outline:none;transition:all .3s;background:#fff;direction:rtl}
+.search-box:focus{border-color:var(--red);box-shadow:0 0 0 4px rgba(200,16,46,.1)}
+.filter-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter-label{font-size:.95em;font-weight:700;color:var(--text);margin-left:8px}
+.fbtn{padding:10px 24px;border-radius:50px;border:2px solid #e0e0e0;background:#fff;cursor:pointer;font-size:.95em;font-weight:700;transition:all .3s;color:var(--text)}
+.fbtn:hover{border-color:var(--red);color:var(--red)}
+.fbtn.active{background:var(--red);color:#fff;border-color:var(--red)}
+.fbtn.a-ar{background:var(--ar);color:#fff;border-color:var(--ar)}
+.fbtn.a-fr{background:var(--fr);color:#fff;border-color:var(--fr)}
+.fbtn.a-en{background:var(--en);color:#fff;border-color:var(--en)}
+.sel{padding:10px 20px;border-radius:50px;border:2px solid #e0e0e0;background:#fff;font-size:.95em;font-weight:600;cursor:pointer;outline:none}
+.sel:focus{border-color:var(--red)}
+.update-bar{max-width:1400px;margin:0 auto 20px;padding:0 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.live{display:flex;align-items:center;gap:8px;font-size:.9em;color:var(--green);font-weight:700}
+.live-dot{width:10px;height:10px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
+.time{font-size:.85em;color:var(--text2)}
+.rbtn{padding:10px 24px;border-radius:50px;border:none;background:var(--red);color:#fff;cursor:pointer;font-size:.9em;font-weight:700;transition:all .3s;box-shadow:0 2px 8px rgba(200,16,46,.2)}
+.rbtn:hover{background:#a00c24}
+.rbtn:disabled{opacity:.5;cursor:not-allowed}
+.pbar{max-width:1400px;margin:0 auto 16px;padding:0 20px;display:none}
+.ptrack{height:6px;background:#e0e0e0;border-radius:6px;overflow:hidden}
+.pfill{height:100%;background:linear-gradient(90deg,var(--red),var(--green));border-radius:6px;transition:width .5s;width:0}
+.ptxt{font-size:.8em;color:var(--text2);margin-top:6px;text-align:center;font-weight:600}
+.debug-panel{max-width:1400px;margin:0 auto 20px;padding:0 20px;display:none}
+.debug-panel.show{display:block}
+.debug-log{background:#1a1a1a;color:#0f0;padding:16px;border-radius:12px;font-family:'Courier New',monospace;font-size:.78em;max-height:300px;overflow-y:auto;direction:ltr;text-align:left;line-height:1.8}
+.debug-toggle{padding:8px 20px;border-radius:50px;border:2px solid #e0e0e0;background:#fff;cursor:pointer;font-size:.85em;font-weight:600}
+.books-grid{max-width:1400px;margin:0 auto;padding:0 20px 50px;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
+.book-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border-top:4px solid var(--red);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column}
+.book-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,.15)}
+.cover-wrap{position:relative;height:240px;background:linear-gradient(135deg,#1a1a1a,#2c2c2c);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cover-wrap::before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--black) 0%,transparent 40%),linear-gradient(180deg,var(--green) 0%,transparent 40%);opacity:.2}
+.cover-wrap img{height:200px;max-width:150px;object-fit:cover;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.5);transition:transform .4s;position:relative;z-index:2}
+.book-card:hover .cover-wrap img{transform:scale(1.05)}
+.lang-badge{position:absolute;top:14px;right:14px;padding:6px 16px;border-radius:30px;font-size:.8em;font-weight:800;color:#fff;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.l-ar{background:var(--ar)}.l-fr{background:var(--fr)}.l-en{background:var(--en)}
+.src-badge{position:absolute;bottom:12px;left:12px;padding:4px 12px;border-radius:12px;font-size:.7em;background:rgba(255,255,255,.2);color:rgba(255,255,255,.9);backdrop-filter:blur(6px);font-weight:700;z-index:3}
+.book-body{padding:20px;flex:1;display:flex;flex-direction:column}
+.book-title{font-size:1.1em;font-weight:800;line-height:1.5;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:10px}
+.book-author{font-size:.95em;color:var(--red);font-weight:700;margin-bottom:6px}
+.book-pub{font-size:.85em;color:var(--text2);margin-bottom:10px}
+.book-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:.8em;color:var(--text2);margin-bottom:12px}
+.book-meta span{display:flex;align-items:center;gap:5px;font-weight:600}
+.topics{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.tag{padding:4px 14px;border-radius:30px;font-size:.75em;background:#f0f9f4;color:var(--green);font-weight:700;border:1px solid #d1f0dd}
+.tag.hot{background:#fef2f2;color:var(--red);border-color:#fecaca}
+.book-desc{font-size:.88em;color:var(--text2);line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:14px}
+.book-actions{margin-top:auto;display:flex;gap:10px}
+.blink{flex:1;padding:12px;text-align:center;border-radius:14px;font-size:.9em;font-weight:700;text-decoration:none;transition:all .3s}
+.bp{background:var(--black);color:#fff}.bp:hover{background:var(--red);transform:translateY(-2px)}
+.bs{background:#f5f5f5;color:var(--text);border:2px solid #e0e0e0}.bs:hover{background:#eee;border-color:var(--green)}
+.loader{text-align:center;padding:80px;grid-column:1/-1}
+.spinner{width:60px;height:60px;border:5px solid #e0e0e0;border-top-color:var(--red);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader p{font-size:1.1em;color:var(--text2);font-weight:600}
+.no-res{text-align:center;padding:80px;grid-column:1/-1;color:var(--text2)}
+.no-res .emoji{font-size:5em;margin-bottom:16px}
+.notif{position:fixed;bottom:20px;right:20px;background:var(--green);color:#fff;padding:16px 24px;border-radius:14px;font-weight:700;font-size:.95em;box-shadow:0 8px 32px rgba(0,0,0,.3);z-index:1000;display:none;animation:slideUp .5s ease-out}
+@keyframes slideUp{from{transform:translateY(100px);opacity:0}to{transform:translateY(0);opacity:1}}
+footer{background:linear-gradient(135deg,var(--black),#2c2c2c);color:#fff;text-align:center;padding:40px 20px;margin-top:40px}
+footer h3{font-size:1.5em;margin-bottom:12px;font-weight:800}
+footer p{font-size:.95em;opacity:.85;margin-bottom:8px;line-height:1.8}
+@media(max-width:768px){.hero h1{font-size:1.8em}.books-grid{grid-template-columns:1fr}.stats-bar{grid-template-columns:repeat(2,1fr)}.filter-row{justify-content:center}}
+</style>
 </head>
 <body>
-
-    <!-- خلفية -->
-    <div class="bg-animation">
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
+<div class="hero">
+  <div class="hero-c">
+    <h1>🇵🇸 مرصد كتب فلسطين</h1>
+    <p class="sub">Palestine Books Observatory</p>
+    <p class="info">مرصد متخصص يجمع تلقائيا الكتب المتعلقة مباشرة بالقضية الفلسطينية (من 2023)<br>بالعربية والانجليزية والفرنسية - فلترة صارمة للمحتوى</p>
+    <div class="badges">
+      <span>📅 من 2023</span>
+      <span>🔄 تحديث يومي</span>
+      <span>🌍 3 لغات</span>
+      <span>🎯 فلسطين فقط</span>
     </div>
-    <div class="particles" id="particles"></div>
+  </div>
+</div>
 
-    <!-- إشعار -->
-    <div class="toast-msg" id="toastMsg"></div>
+<div class="stats-bar">
+  <div class="stat-card"><div class="icon">📚</div><div class="num" id="sTotal">-</div><div class="lbl">اجمالي</div></div>
+  <div class="stat-card"><div class="icon">🇵🇸</div><div class="num" id="sAr">-</div><div class="lbl">عربي</div></div>
+  <div class="stat-card"><div class="icon">🇬🇧</div><div class="num" id="sEn">-</div><div class="lbl">English</div></div>
+  <div class="stat-card"><div class="icon">🇫🇷</div><div class="num" id="sFr">-</div><div class="lbl">Francais</div></div>
+  <div class="stat-card"><div class="icon">🏛</div><div class="num" id="sPub">-</div><div class="lbl">ناشر</div></div>
+  <div class="stat-card"><div class="icon">🔍</div><div class="num" id="sSrc">-</div><div class="lbl">مصدر</div></div>
+</div>
 
-    <!-- الهيدر -->
-    <header class="hero-header">
-        <div class="live-badge">
-            <span class="dot"></span>
-            يُحدّث يومياً - تلقائي
-        </div>
-        <h1>📚 مرصد كتب الشأن العربي</h1>
-        <p class="subtitle">
-            رصد يومي وتلقائي لأحدث الكتب الصادرة عن العالم العربي خلال الـ 12 شهراً الأخيرة.
-            يتم استبعاد الكتب التي تجاوزت السنة تلقائياً والإبقاء على الأحدث.
-        </p>
-        <div class="update-info">
-            📅 آخر تحديث: <span class="date-display" id="lastUpdate"></span>
-            &nbsp;|&nbsp;
-            ⏰ التحديث القادم: غداً
-        </div>
-    </header>
+<div class="controls">
+  <div class="search-row">
+    <input type="text" class="search-box" id="searchInput" placeholder="🔍 ابحث عن كتاب، مؤلف، او ناشر..." oninput="filterBooks()">
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">اللغة:</span>
+    <button class="fbtn active" onclick="setLang('all',this)">الكل</button>
+    <button class="fbtn" onclick="setLang('ar',this)">🇵🇸 عربي</button>
+    <button class="fbtn" onclick="setLang('en',this)">🇬🇧 English</button>
+    <button class="fbtn" onclick="setLang('fr',this)">🇫🇷 Francais</button>
+    <span class="filter-label" style="margin-right:20px">الموضوع:</span>
+    <select class="sel" id="topicSel" onchange="filterBooks()">
+      <option value="">كل المواضيع</option>
+      <option value="Gaza">غزة</option>
+      <option value="History">التاريخ</option>
+      <option value="Nakba">النكبة</option>
+      <option value="Genocide">الابادة</option>
+      <option value="Occupation">الاحتلال</option>
+      <option value="Resistance">المقاومة</option>
+      <option value="Jerusalem">القدس</option>
+      <option value="Refugees">اللاجئون</option>
+      <option value="International Law">القانون الدولي</option>
+      <option value="Literature">الادب</option>
+      <option value="Apartheid">الابارتهايد</option>
+      <option value="Zionism">الصهيونية</option>
+    </select>
+    <span class="filter-label" style="margin-right:20px">ترتيب:</span>
+    <select class="sel" id="sortSel" onchange="filterBooks()">
+      <option value="date">الاحدث</option>
+      <option value="title">العنوان</option>
+    </select>
+  </div>
+</div>
 
-    <!-- الإحصائيات -->
-    <div class="stats-strip">
-        <div class="stat-box">
-            <div class="stat-num" id="statTotal">0</div>
-            <div class="stat-lbl">كتاب متاح</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-num" id="statCountries">22</div>
-            <div class="stat-lbl">دولة عربية</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-num" id="statNew">0</div>
-            <div class="stat-lbl">جديد هذا الشهر</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-num" id="statAuthors">0</div>
-            <div class="stat-lbl">مؤلف</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-num" id="statFavs">0</div>
-            <div class="stat-lbl">في قائمتك</div>
-        </div>
-    </div>
+<div class="update-bar">
+  <div class="live"><span class="live-dot"></span><span>تحديث يومي</span></div>
+  <span class="time" id="lastUp">جاري التحميل...</span>
+  <button class="rbtn" id="rBtn" onclick="manualRefresh()">🔄 تحديث الان</button>
+  <button class="debug-toggle" onclick="toggleDebug()">🐛 سجل التتبع</button>
+</div>
 
-    <!-- أدوات التحكم -->
-    <div class="controls-area">
-        <div class="search-row">
-            <div class="search-wrapper">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" placeholder="ابحث بالعنوان، المؤلف، الدولة، الموضوع، الناشر...">
-            </div>
-            <select class="sort-select" id="sortSelect" onchange="handleSort()">
-                <option value="newest">📅 الأحدث أولاً</option>
-                <option value="oldest">📅 الأقدم أولاً</option>
-                <option value="rating">⭐ الأعلى تقييماً</option>
-                <option value="pages-desc">📄 الأكثر صفحات</option>
-                <option value="pages-asc">📄 الأقل صفحات</option>
-                <option value="title">🔤 أبجدياً</option>
-            </select>
-            <div class="view-switcher">
-                <button class="view-btn active" onclick="toggleView('grid')" title="شبكي">▦</button>
-                <button class="view-btn" onclick="toggleView('list')" title="قائمة">☰</button>
-            </div>
-        </div>
+<div class="pbar" id="pbar">
+  <div class="ptrack"><div class="pfill" id="pfill"></div></div>
+  <div class="ptxt" id="ptxt">جاري البحث...</div>
+</div>
 
-        <div class="filters-row" id="catFilters">
-            <button class="filter-chip active" onclick="setCategory('all', this)">📚 الكل</button>
-            <button class="filter-chip" onclick="setCategory('تاريخ', this)">🏛️ تاريخ</button>
-            <button class="filter-chip" onclick="setCategory('سياسة', this)">🏛️ سياسة</button>
-            <button class="filter-chip" onclick="setCategory('اقتصاد', this)">💰 اقتصاد</button>
-            <button class="filter-chip" onclick="setCategory('مجتمع', this)">👥 مجتمع</button>
-            <button class="filter-chip" onclick="setCategory('صراعات', this)">⚔️ صراعات</button>
-            <button class="filter-chip" onclick="setCategory('فكر', this)">💡 فكر</button>
-            <button class="filter-chip" onclick="setCategory('حقوق', this)">⚖️ حقوق</button>
-            <button class="filter-chip" onclick="setCategory('ثقافة', this)">🎭 ثقافة</button>
-        </div>
+<div class="debug-panel" id="debugPanel">
+  <div class="debug-log" id="debugLog"></div>
+</div>
 
-        <div class="region-chips" id="regFilters">
-            <button class="region-chip active" onclick="setRegion('all', this)">🌍 كل المناطق</button>
-            <button class="region-chip" onclick="setRegion('المشرق', this)">🌅 المشرق</button>
-            <button class="region-chip" onclick="setRegion('الخليج', this)">🛢️ الخليج</button>
-            <button class="region-chip" onclick="setRegion('المغرب العربي', this)">🌄 المغرب العربي</button>
-            <button class="region-chip" onclick="setRegion('وادي النيل', this)">🏞️ وادي النيل</button>
-            <button class="region-chip" onclick="setRegion('القرن الإفريقي', this)">🌍 القرن الإفريقي</button>
-            <button class="region-chip" onclick="setRegion('شامل', this)">🌐 شامل</button>
-        </div>
+<div class="books-grid" id="grid">
+  <div class="loader"><div class="spinner"></div><p>جار تحميل الكتب...</p></div>
+</div>
 
-        <div class="results-bar">
-            <div class="count-text" id="resultsText">عرض <span>0</span> كتاب</div>
-            <div class="time-range">
-                <span class="pulse-dot"></span>
-                النطاق: آخر 12 شهراً
-            </div>
-        </div>
-    </div>
+<div class="notif" id="notif"></div>
 
-    <!-- شبكة الكتب -->
-    <div class="books-container">
-        <div class="books-grid" id="booksGrid"></div>
-    </div>
-
-    <!-- خريطة الدول -->
-    <div class="map-section">
-        <div class="map-card">
-            <h2 class="map-title">🗺️ خريطة التغطية - الدول العربية</h2>
-            <p class="map-subtitle">اضغط على أي دولة للبحث عن كتبها</p>
-            <div class="countries-grid" id="countriesGrid"></div>
-        </div>
-    </div>
-
-    <!-- التذييل -->
-    <footer class="site-footer">
-        <div class="footer-title">📚 مرصد كتب الشأن العربي</div>
-        <p class="footer-desc">
-            مرصد يومي تلقائي يتتبع أحدث الإصدارات عن العالم العربي.
-            تُستبعد الكتب التي تجاوزت 12 شهراً من تاريخ نشرها تلقائياً.
-        </p>
-        <div class="footer-links-row">
-            <a href="#">📖 اقتراح كتاب</a>
-            <a href="#">📧 تواصل معنا</a>
-            <a href="#">📋 عن المرصد</a>
-            <a href="#">🔗 المصادر</a>
-        </div>
-        <p class="footer-note">يُنصح بالتحقق من الناشر الرسمي لأحدث المعلومات • جميع البيانات مبنية على مصادر متاحة</p>
-    </footer>
-
-    <!-- زر قائمة القراءة -->
-    <button class="reading-fab" onclick="openModal()">
-        📋 قائمة القراءة
-        <span class="fab-badge" id="fabBadge">0</span>
-    </button>
-
-    <!-- زر الصعود -->
-    <button class="scroll-up" id="scrollUp" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
-
-    <!-- نافذة قائمة القراءة -->
-    <div class="modal-bg" id="modalBg">
-        <div class="modal-panel">
-            <div class="modal-head">
-                <h2>📋 قائمة القراءة</h2>
-                <button class="close-modal" onclick="closeModal()">✕</button>
-            </div>
-            <div id="modalBody"></div>
-        </div>
-    </div>
+<footer>
+  <h3>🇵🇸 مرصد كتب فلسطين</h3>
+  <p>يجمع تلقائيا من Google Books, Open Library, Crossref</p>
+  <p>🎯 فقط الكتب المتعلقة مباشرة بفلسطين</p>
+  <p style="font-size:.85em;margin-top:12px">© 2024 - Palestine Books Observatory</p>
+</footer>
 
 <script>
-// ===== بيانات الكتب =====
-// كل كتاب له تاريخ نشر محدد (publishDate) بالصيغة YYYY-MM-DD
-// النظام يستبعد تلقائياً أي كتاب تجاوز 365 يوماً من اليوم
+// ══════════════════════════════════════════════════════════
+// مرصد كتب فلسطين v8 - مصادر موسعة + ارقام عادية
+// ══════════════════════════════════════════════════════════
 
-const allBooks = [
-    {
-        id: 1,
-        titleAr: "حرب المئة عام على فلسطين - طبعة محدثة 2024",
-        titleEn: "The Hundred Years' War on Palestine (Updated Edition)",
-        author: "رشيد الخالدي",
-        authorEn: "Rashid Khalidi",
-        publishDate: "2024-03-15",
-        publisher: "Picador / Metropolitan Books",
-        pages: 368,
-        language: "الإنجليزية",
-        categories: ["تاريخ", "سياسة"],
-        region: "المشرق",
-        countries: ["فلسطين"],
-        coverColor: "linear-gradient(135deg, #0d1b2a, #1b263b, #415a77)",
-        coverIcon: "🇵🇸",
-        rating: 4.9,
-        description: "طبعة محدثة 2024 مع فصل جديد يغطي أحداث غزة. يوثق 100 عام من الاستعمار الاستيطاني من منظور عائلة فلسطينية عريقة. الأكثر مبيعاً عالمياً.",
-        isBestseller: true,
-        isNew: true,
-        tags: ["الأكثر مبيعاً", "طبعة محدثة", "غزة"]
-    },
-    {
-        id: 2,
-        titleAr: "المسألة العربية",
-        titleEn: "The Arab Question",
-        author: "رشيد الخالدي",
-        authorEn: "Rashid Khalidi",
-        publishDate: "2024-09-10",
-        publisher: "Princeton University Press",
-        pages: 352,
-        language: "الإنجليزية",
-        categories: ["تاريخ", "فكر"],
-        region: "شامل",
-        countries: ["العالم العربي"],
-        coverColor: "linear-gradient(135deg, #003049, #005f73, #0a9396)",
-        coverIcon: "❓",
-        rating: 4.6,
-        description: "أحدث كتب الخالدي. يتناول القومية العربية والهوية من المنظور التاريخي المعاصر ويطرح أسئلة جوهرية عن مستقبل العروبة.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["قومية", "هوية", "جديد"]
-    },
-    {
-        id: 3,
-        titleAr: "التطهير العرقي في فلسطين - طبعة جديدة",
-        titleEn: "The Ethnic Cleansing of Palestine (New Edition 2024)",
-        author: "إيلان بابيه",
-        authorEn: "Ilan Pappé",
-        publishDate: "2024-01-20",
-        publisher: "Oneworld Publications",
-        pages: 380,
-        language: "الإنجليزية والعربية",
-        categories: ["تاريخ", "حقوق"],
-        region: "المشرق",
-        countries: ["فلسطين"],
-        coverColor: "linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)",
-        coverIcon: "📕",
-        rating: 4.8,
-        description: "طبعة 2024 مع مقدمة جديدة تربط أحداث النكبة بما يحدث اليوم. من أهم الكتب التوثيقية بقلم مؤرخ إسرائيلي. ترجم لـ 25 لغة.",
-        isBestseller: true,
-        isNew: false,
-        tags: ["نكبة", "توثيق", "مؤرخ إسرائيلي"]
-    },
-    {
-        id: 4,
-        titleAr: "غزة: سجل الإبادة",
-        titleEn: "Gaza: A Chronicle of Genocide",
-        author: "نورمان فينكلشتاين",
-        authorEn: "Norman Finkelstein",
-        publishDate: "2024-06-01",
-        publisher: "OR Books",
-        pages: 310,
-        language: "الإنجليزية",
-        categories: ["حقوق", "سياسة"],
-        region: "المشرق",
-        countries: ["فلسطين", "غزة"],
-        coverColor: "linear-gradient(135deg, #6b0000, #a00000, #cc3300)",
-        coverIcon: "🔴",
-        rating: 4.7,
-        description: "أحدث كتب فينكلشتاين يوثق الحرب على غزة 2023-2024 بأدلة قانونية دولية. يحلل التواطؤ الدولي والقانون الإنساني.",
-        isBestseller: true,
-        isNew: true,
-        tags: ["إبادة", "قانون دولي", "2024"]
-    },
-    {
-        id: 5,
-        titleAr: "فلسطين: أرض الوعد والصراع",
-        titleEn: "Palestine: A Land of Promise and Conflict",
-        author: "عدنان أبو عامر",
-        authorEn: "Adnan Abu Amer",
-        publishDate: "2024-04-12",
-        publisher: "دار الشروق - القاهرة",
-        pages: 420,
-        language: "العربية",
-        categories: ["تاريخ", "سياسة"],
-        region: "المشرق",
-        countries: ["فلسطين"],
-        coverColor: "linear-gradient(135deg, #0b3d0b, #1a5c1a, #2d8a2d)",
-        coverIcon: "🫒",
-        rating: 4.5,
-        description: "رؤية عربية شاملة للصراع من الداخل الفلسطيني. يغطي من النكبة حتى الحرب الأخيرة على غزة بتوثيق دقيق.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["رؤية فلسطينية", "توثيق"]
-    },
-    {
-        id: 6,
-        titleAr: "السودان: حرب بلا نهاية",
-        titleEn: "Sudan: War Without End",
-        author: "أليكس دو وال",
-        authorEn: "Alex de Waal",
-        publishDate: "2024-05-20",
-        publisher: "Hurst Publishers",
-        pages: 384,
-        language: "الإنجليزية",
-        categories: ["صراعات", "سياسة"],
-        region: "وادي النيل",
-        countries: ["السودان"],
-        coverColor: "linear-gradient(135deg, #1a0a00, #3d1f00, #6b3500)",
-        coverIcon: "🇸🇩",
-        rating: 4.4,
-        description: "أشمل توثيق لحرب السودان 2023-2024 بين الجيش وقوات الدعم السريع. يكشف الأبعاد الإقليمية والدولية للصراع.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["حرب 2023", "دعم سريع", "توثيق"]
-    },
-    {
-        id: 7,
-        titleAr: "محمد بن سلمان: رؤية وسلطة - طبعة محدثة",
-        titleEn: "MBS: Vision and Power (Updated 2024)",
-        author: "بن هيوبارد",
-        authorEn: "Ben Hubbard",
-        publishDate: "2024-02-10",
-        publisher: "Tim Duggan Books",
-        pages: 432,
-        language: "الإنجليزية",
-        categories: ["سياسة", "اقتصاد"],
-        region: "الخليج",
-        countries: ["السعودية"],
-        coverColor: "linear-gradient(135deg, #003d00, #006400, #008800)",
-        coverIcon: "🇸🇦",
-        rating: 4.3,
-        description: "طبعة محدثة تغطي أحدث التطورات في رؤية 2030 والتطبيع والدور السعودي الإقليمي المتنامي.",
-        isBestseller: false,
-        isNew: false,
-        tags: ["رؤية 2030", "تحديث"]
-    },
-    {
-        id: 8,
-        titleAr: "لبنان: دولة على حافة الهاوية",
-        titleEn: "Lebanon: A State on the Brink",
-        author: "كيم غطاس",
-        authorEn: "Kim Ghattas",
-        publishDate: "2024-07-15",
-        publisher: "Henry Holt & Co",
-        pages: 344,
-        language: "الإنجليزية",
-        categories: ["سياسة", "مجتمع"],
-        region: "المشرق",
-        countries: ["لبنان"],
-        coverColor: "linear-gradient(135deg, #8b0000, #cc0000, #006600)",
-        coverIcon: "🇱🇧",
-        rating: 4.5,
-        description: "تحليل عميق للانهيار اللبناني المتعدد الأبعاد: اقتصادي وسياسي واجتماعي. يوثق تأثير حرب غزة على لبنان.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["انهيار", "حزب الله", "أزمة"]
-    },
-    {
-        id: 9,
-        titleAr: "سوريا بعد الأسد: مستقبل مجهول",
-        titleEn: "Syria After Assad: An Uncertain Future",
-        author: "سام داغر",
-        authorEn: "Sam Dagher",
-        publishDate: "2024-08-01",
-        publisher: "Yale University Press",
-        pages: 396,
-        language: "الإنجليزية",
-        categories: ["سياسة", "صراعات"],
-        region: "المشرق",
-        countries: ["سوريا"],
-        coverColor: "linear-gradient(135deg, #2d0000, #5c0000, #8b0000)",
-        coverIcon: "🇸🇾",
-        rating: 4.4,
-        description: "يحلل سيناريوهات مستقبل سوريا بعد تغير المعادلة الإقليمية. يوثق سقوط نظام الأسد والتحولات الجذرية.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["ما بعد الأسد", "إعادة إعمار"]
-    },
-    {
-        id: 10,
-        titleAr: "العراق: الدولة المنقسمة",
-        titleEn: "Iraq: The Divided State",
-        author: "توبي دودج",
-        authorEn: "Toby Dodge",
-        publishDate: "2024-03-25",
-        publisher: "Cambridge University Press",
-        pages: 368,
-        language: "الإنجليزية",
-        categories: ["سياسة", "تاريخ"],
-        region: "المشرق",
-        countries: ["العراق"],
-        coverColor: "linear-gradient(135deg, #0a0a1a, #1a1a3a, #2a2a5a)",
-        coverIcon: "🇮🇶",
-        rating: 4.3,
-        description: "تحليل معمق للانقسامات العراقية الطائفية والسياسية والاقتصادية بعد 20 عاماً من الغزو الأمريكي.",
-        isBestseller: false,
-        isNew: false,
-        tags: ["طائفية", "نفوذ إيراني"]
-    },
-    {
-        id: 11,
-        titleAr: "مصر: الجمهورية الجديدة",
-        titleEn: "Egypt: The New Republic",
-        author: "عمرو حمزاوي",
-        authorEn: "Amr Hamzawy",
-        publishDate: "2024-04-01",
-        publisher: "دار الشروق - القاهرة",
-        pages: 340,
-        language: "العربية",
-        categories: ["سياسة", "اقتصاد"],
-        region: "وادي النيل",
-        countries: ["مصر"],
-        coverColor: "linear-gradient(135deg, #3d2813, #654321, #8b6914)",
-        coverIcon: "🇪🇬",
-        rating: 4.2,
-        description: "قراءة نقدية في المشروع المصري الجديد: التحديات الاقتصادية والسياسية والاجتماعية في عهد السيسي.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["اقتصاد", "سيسي"]
-    },
-    {
-        id: 12,
-        titleAr: "الإمارات: القوة الصاعدة",
-        titleEn: "The UAE: The Rising Power",
-        author: "أندرياس كريج",
-        authorEn: "Andreas Krieg",
-        publishDate: "2024-05-15",
-        publisher: "I.B. Tauris / Bloomsbury",
-        pages: 328,
-        language: "الإنجليزية",
-        categories: ["سياسة", "اقتصاد"],
-        region: "الخليج",
-        countries: ["الإمارات"],
-        coverColor: "linear-gradient(135deg, #000050, #00008b, #0000cc)",
-        coverIcon: "🇦🇪",
-        rating: 4.3,
-        description: "تحليل صعود الإمارات كقوة إقليمية وعالمية: الذكاء الاصطناعي والطاقة المتجددة والدبلوماسية الجديدة.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["قوة ناعمة", "تكنولوجيا"]
-    },
-    {
-        id: 13,
-        titleAr: "اليمن: الحرب المنسية والأمل المفقود",
-        titleEn: "Yemen: The Forgotten War",
-        author: "هيلين لاكنر",
-        authorEn: "Helen Lackner",
-        publishDate: "2024-01-10",
-        publisher: "Hurst Publishers",
-        pages: 352,
-        language: "الإنجليزية",
-        categories: ["صراعات", "مجتمع"],
-        region: "الخليج",
-        countries: ["اليمن"],
-        coverColor: "linear-gradient(135deg, #4a3013, #6b4420, #8b5a2d)",
-        coverIcon: "🇾🇪",
-        rating: 4.3,
-        description: "طبعة محدثة تغطي مستجدات الهدنة ومفاوضات السلام والأزمة الإنسانية الأسوأ في العالم.",
-        isBestseller: false,
-        isNew: false,
-        tags: ["أزمة إنسانية", "حوثي"]
-    },
-    {
-        id: 14,
-        titleAr: "حال الأمة العربية 2024-2025",
-        titleEn: "The State of the Arab Nation 2024-2025",
-        author: "المركز العربي للأبحاث ودراسة السياسات",
-        authorEn: "Arab Center for Research and Policy Studies",
-        publishDate: "2024-11-01",
-        publisher: "المركز العربي - الدوحة",
-        pages: 520,
-        language: "العربية",
-        categories: ["سياسة", "مجتمع", "اقتصاد"],
-        region: "شامل",
-        countries: ["جميع الدول العربية"],
-        coverColor: "linear-gradient(135deg, #001a33, #003366, #004d99)",
-        coverIcon: "🌍",
-        rating: 4.7,
-        description: "التقرير السنوي الأشمل: يغطي 22 دولة عربية سياسياً واقتصادياً واجتماعياً. يتضمن فصلاً خاصاً عن حرب غزة وتأثيرها.",
-        isBestseller: true,
-        isNew: true,
-        tags: ["تقرير سنوي", "شامل", "22 دولة"]
-    },
-    {
-        id: 15,
-        titleAr: "المؤشر العربي 2024",
-        titleEn: "Arab Opinion Index 2024",
-        author: "المركز العربي للأبحاث ودراسة السياسات",
-        authorEn: "Arab Center for Research and Policy Studies",
-        publishDate: "2024-10-15",
-        publisher: "المركز العربي - الدوحة",
-        pages: 550,
-        language: "العربية والإنجليزية",
-        categories: ["مجتمع"],
-        region: "شامل",
-        countries: ["14 دولة عربية"],
-        coverColor: "linear-gradient(135deg, #250040, #4a0080, #6600b3)",
-        coverIcon: "📊",
-        rating: 4.8,
-        description: "أكبر استطلاع رأي عربي: 28,000 مستجيب من 14 دولة. يقيس اتجاهات الشعوب العربية تجاه القضايا الكبرى بما فيها الحرب على غزة.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["استطلاع رأي", "28 ألف مستجيب"]
-    },
-    {
-        id: 16,
-        titleAr: "الجزائر: الجمهورية الجديدة",
-        titleEn: "Algeria: The New Republic",
-        author: "ديروك كيلر",
-        authorEn: "Derick Keller",
-        publishDate: "2024-06-20",
-        publisher: "Éditions Karthala",
-        pages: 312,
-        language: "الفرنسية",
-        categories: ["سياسة", "مجتمع"],
-        region: "المغرب العربي",
-        countries: ["الجزائر"],
-        coverColor: "linear-gradient(135deg, #003d1f, #006233, #008844)",
-        coverIcon: "🇩🇿",
-        rating: 4.1,
-        description: "يحلل المشهد الجزائري بعد الحراك: الانتخابات والإصلاحات والتحديات الاقتصادية والعلاقة مع فرنسا.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["حراك", "إصلاحات"]
-    },
-    {
-        id: 17,
-        titleAr: "تونس: ديمقراطية في خطر",
-        titleEn: "Tunisia: Democracy in Danger",
-        author: "مونيكا ماركس",
-        authorEn: "Monica Marks",
-        publishDate: "2024-03-01",
-        publisher: "Oxford University Press",
-        pages: 296,
-        language: "الإنجليزية",
-        categories: ["سياسة"],
-        region: "المغرب العربي",
-        countries: ["تونس"],
-        coverColor: "linear-gradient(135deg, #7a0a17, #ce1126, #e8334a)",
-        coverIcon: "🇹🇳",
-        rating: 4.2,
-        description: "تحليل أكاديمي للانقلاب على المسار الديمقراطي التونسي: كيف تحولت منارة الربيع العربي.",
-        isBestseller: false,
-        isNew: false,
-        tags: ["ديمقراطية", "قيس سعيد"]
-    },
-    {
-        id: 18,
-        titleAr: "المغرب: المملكة المتجددة",
-        titleEn: "Morocco: The Renewing Kingdom",
-        author: "شنتال مايل",
-        authorEn: "Chantal Maille",
-        publishDate: "2024-07-01",
-        publisher: "La Découverte - باريس",
-        pages: 288,
-        language: "الفرنسية",
-        categories: ["سياسة", "مجتمع"],
-        region: "المغرب العربي",
-        countries: ["المغرب"],
-        coverColor: "linear-gradient(135deg, #5c0000, #c1272d, #e83535)",
-        coverIcon: "🇲🇦",
-        rating: 4.0,
-        description: "يغطي التحولات المغربية الأخيرة: زلزال الحوز وإعادة الإعمار ومونديال 2030 والإصلاحات الاجتماعية.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["مونديال 2030", "زلزال الحوز"]
-    },
-    {
-        id: 19,
-        titleAr: "ليبيا: عقد من الفوضى",
-        titleEn: "Libya: A Decade of Chaos",
-        author: "وولفرام لاخر",
-        authorEn: "Wolfram Lacher",
-        publishDate: "2024-04-20",
-        publisher: "Hurst Publishers",
-        pages: 336,
-        language: "الإنجليزية",
-        categories: ["سياسة", "صراعات"],
-        region: "المغرب العربي",
-        countries: ["ليبيا"],
-        coverColor: "linear-gradient(135deg, #3d2200, #6b3d00, #996600)",
-        coverIcon: "🇱🇾",
-        rating: 4.2,
-        description: "تحليل الانقسام الليبي المستمر بين حكومتين والتدخلات الخارجية والمليشيات وثروة النفط.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["انقسام", "حفتر", "نفط"]
-    },
-    {
-        id: 20,
-        titleAr: "الأردن في مواجهة العواصف",
-        titleEn: "Jordan: Weathering the Storms",
-        author: "كورتيس ريان",
-        authorEn: "Curtis Ryan",
-        publishDate: "2024-02-15",
-        publisher: "Indiana University Press",
-        pages: 284,
-        language: "الإنجليزية",
-        categories: ["سياسة"],
-        region: "المشرق",
-        countries: ["الأردن"],
-        coverColor: "linear-gradient(135deg, #1a1a1a, #cc0000, #006600)",
-        coverIcon: "🇯🇴",
-        rating: 4.1,
-        description: "يحلل كيف يواجه الأردن تداعيات حرب غزة والضغوط الاقتصادية والتحديات الإقليمية المتراكمة.",
-        isBestseller: false,
-        isNew: false,
-        tags: ["صمود", "لاجئون"]
-    },
-    {
-        id: 21,
-        titleAr: "الكويت وقطر: ديمقراطيات خليجية؟",
-        titleEn: "Kuwait and Qatar: Gulf Democracies?",
-        author: "مايكل هيرب",
-        authorEn: "Michael Herb",
-        publishDate: "2024-05-01",
-        publisher: "Cambridge University Press",
-        pages: 308,
-        language: "الإنجليزية",
-        categories: ["سياسة"],
-        region: "الخليج",
-        countries: ["الكويت", "قطر"],
-        coverColor: "linear-gradient(135deg, #004d20, #007a33, #00a845)",
-        coverIcon: "🇰🇼",
-        rating: 4.0,
-        description: "مقارنة بين النموذجين الكويتي والقطري في المشاركة السياسية: هل يوجد نموذج ديمقراطي خليجي؟",
-        isBestseller: false,
-        isNew: true,
-        tags: ["برلمان", "مشاركة سياسية"]
-    },
-    {
-        id: 22,
-        titleAr: "البحرين وعُمان: التحديات الصامتة",
-        titleEn: "Bahrain and Oman: Silent Challenges",
-        author: "مارك فالري",
-        authorEn: "Marc Valeri",
-        publishDate: "2024-06-10",
-        publisher: "Hurst Publishers",
-        pages: 276,
-        language: "الإنجليزية",
-        categories: ["سياسة", "اقتصاد"],
-        region: "الخليج",
-        countries: ["البحرين", "عمان"],
-        coverColor: "linear-gradient(135deg, #8b0000, #cc0000, #006233)",
-        coverIcon: "🇧🇭",
-        rating: 3.9,
-        description: "دراسة مقارنة للتحديات التي تواجه البحرين وعُمان: التنويع الاقتصادي والمشاركة السياسية والخلافة.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["تنويع اقتصادي", "خلافة"]
-    },
-    {
-        id: 23,
-        titleAr: "موريتانيا: جسر بين العرب وأفريقيا",
-        titleEn: "Mauritania: Bridge Between Arabs and Africa",
-        author: "عبد الودود ولد الشيخ",
-        authorEn: "Abdel Wedoud Ould Cheikh",
-        publishDate: "2024-08-15",
-        publisher: "L'Harmattan - باريس",
-        pages: 268,
-        language: "الفرنسية",
-        categories: ["مجتمع", "سياسة"],
-        region: "المغرب العربي",
-        countries: ["موريتانيا"],
-        coverColor: "linear-gradient(135deg, #004d20, #006633, #009944)",
-        coverIcon: "🇲🇷",
-        rating: 3.8,
-        description: "يتناول الهوية الموريتانية بين العروبة والأفريقانية والتحديات المعاصرة في الساحل.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["هوية", "ساحل"]
-    },
-    {
-        id: 24,
-        titleAr: "الصومال: من الانهيار إلى الأمل",
-        titleEn: "Somalia: From Collapse to Hope",
-        author: "ماري هاربر",
-        authorEn: "Mary Harper",
-        publishDate: "2024-04-05",
-        publisher: "Hurst Publishers",
-        pages: 320,
-        language: "الإنجليزية",
-        categories: ["سياسة", "صراعات"],
-        region: "القرن الإفريقي",
-        countries: ["الصومال"],
-        coverColor: "linear-gradient(135deg, #1a4a7a, #4189dd, #62a8f0)",
-        coverIcon: "🇸🇴",
-        rating: 4.1,
-        description: "يوثق محاولات إعادة بناء الدولة الصومالية ومكافحة حركة الشباب والتحديات المناخية.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["إعادة بناء", "الشباب"]
-    },
-    {
-        id: 25,
-        titleAr: "جيبوتي وجزر القمر: البوابات العربية المنسية",
-        titleEn: "Djibouti and Comoros: Forgotten Arab Gates",
-        author: "جان-بيير فيليو",
-        authorEn: "Jean-Pierre Filiu",
-        publishDate: "2024-09-01",
-        publisher: "La Découverte - باريس",
-        pages: 248,
-        language: "الفرنسية",
-        categories: ["سياسة", "ثقافة"],
-        region: "القرن الإفريقي",
-        countries: ["جيبوتي", "جزر القمر"],
-        coverColor: "linear-gradient(135deg, #1a5276, #2980b9, #3498db)",
-        coverIcon: "🏝️",
-        rating: 3.7,
-        description: "نادر: يسلط الضوء على أصغر الدول في الجامعة العربية وموقعها الاستراتيجي والتنافس الدولي عليها.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["قواعد عسكرية", "استراتيجية"]
-    },
-    {
-        id: 26,
-        titleAr: "الاستشراق في القرن 21",
-        titleEn: "Orientalism in the 21st Century",
-        author: "جوزيف مسعد",
-        authorEn: "Joseph Massad",
-        publishDate: "2024-02-28",
-        publisher: "Columbia University Press",
-        pages: 400,
-        language: "الإنجليزية",
-        categories: ["فكر", "ثقافة"],
-        region: "شامل",
-        countries: ["العالم العربي"],
-        coverColor: "linear-gradient(135deg, #4a0000, #8b0000, #bb0000)",
-        coverIcon: "💡",
-        rating: 4.5,
-        description: "يستكمل إرث إدوارد سعيد ويحلل الأشكال الجديدة للاستشراق في الإعلام والسياسة والأكاديميا المعاصرة.",
-        isBestseller: false,
-        isNew: false,
-        tags: ["إدوارد سعيد", "إسلاموفوبيا"]
-    },
-    {
-        id: 27,
-        titleAr: "المرأة العربية في 2024: نضال ومكتسبات",
-        titleEn: "Arab Women 2024: Struggles and Gains",
-        author: "ريم الكيلاني وآخرون",
-        authorEn: "Reem Al-Kilani et al.",
-        publishDate: "2024-03-08",
-        publisher: "I.B. Tauris / Bloomsbury",
-        pages: 336,
-        language: "الإنجليزية والعربية",
-        categories: ["مجتمع", "حقوق"],
-        region: "شامل",
-        countries: ["السعودية", "مصر", "تونس", "المغرب", "الأردن"],
-        coverColor: "linear-gradient(135deg, #400040, #800080, #b300b3)",
-        coverIcon: "👩‍💼",
-        rating: 4.3,
-        description: "صدر في يوم المرأة العالمي. يوثق مكتسبات المرأة العربية والتحديات المتبقية في 10 دول عربية.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["نسوية", "مكتسبات", "يوم المرأة"]
-    },
-    {
-        id: 28,
-        titleAr: "الاقتصاد العربي 2024: التحولات الكبرى",
-        titleEn: "Arab Economy 2024: Major Transformations",
-        author: "صندوق النقد العربي",
-        authorEn: "Arab Monetary Fund",
-        publishDate: "2024-09-20",
-        publisher: "صندوق النقد العربي - أبوظبي",
-        pages: 460,
-        language: "العربية والإنجليزية",
-        categories: ["اقتصاد"],
-        region: "شامل",
-        countries: ["22 دولة عربية"],
-        coverColor: "linear-gradient(135deg, #003200, #006400, #009600)",
-        coverIcon: "💰",
-        rating: 4.4,
-        description: "تقرير اقتصادي شامل يغطي كل الاقتصادات العربية: النمو والتضخم والبطالة والتنويع والطاقة المتجددة.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["تقرير سنوي", "اقتصاد كلي"]
-    },
-    {
-        id: 29,
-        titleAr: "الشباب العربي: جيل التغيير",
-        titleEn: "Arab Youth: Generation of Change",
-        author: "مروان المعشر",
-        authorEn: "Marwan Muasher",
-        publishDate: "2024-08-20",
-        publisher: "Carnegie Endowment",
-        pages: 292,
-        language: "الإنجليزية",
-        categories: ["مجتمع", "سياسة"],
-        region: "شامل",
-        countries: ["العالم العربي"],
-        coverColor: "linear-gradient(135deg, #0a3a5a, #1a6a9a, #2a9ada)",
-        coverIcon: "👨‍💻",
-        rating: 4.2,
-        description: "يحلل تطلعات 200 مليون شاب عربي والفجوة بين الأجيال والهجرة الرقمية وريادة الأعمال.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["شباب", "تكنولوجيا", "ريادة"]
-    },
-    {
-        id: 30,
-        titleAr: "الذكاء الاصطناعي في العالم العربي",
-        titleEn: "AI in the Arab World",
-        author: "أيمن الصياد وآخرون",
-        authorEn: "Ayman Al-Sayyad et al.",
-        publishDate: "2024-10-01",
-        publisher: "مؤسسة الفكر العربي - بيروت",
-        pages: 380,
-        language: "العربية",
-        categories: ["اقتصاد", "ثقافة"],
-        region: "شامل",
-        countries: ["الإمارات", "السعودية", "مصر", "تونس"],
-        coverColor: "linear-gradient(135deg, #0a0a3a, #1a1a6a, #2a2a9a)",
-        coverIcon: "🤖",
-        rating: 4.3,
-        description: "أول كتاب عربي شامل عن الذكاء الاصطناعي: الفرص والتحديات والاستراتيجيات العربية. يغطي تجارب 8 دول.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["ذكاء اصطناعي", "تحول رقمي"]
-    },
-    {
-        id: 31,
-        titleAr: "فلسطين: الإبادة والمقاومة",
-        titleEn: "Palestine: Genocide and Resistance",
-        author: "إيلان بابيه",
-        authorEn: "Ilan Pappé",
-        publishDate: "2024-11-15",
-        publisher: "Verso Books",
-        pages: 290,
-        language: "الإنجليزية",
-        categories: ["سياسة", "حقوق"],
-        region: "المشرق",
-        countries: ["فلسطين", "غزة"],
-        coverColor: "linear-gradient(135deg, #0d0d0d, #2d0000, #5c0000)",
-        coverIcon: "✊",
-        rating: 4.8,
-        description: "أحدث كتب إيلان بابيه: يوثق ما يصفه بالإبادة الجماعية في غزة 2024 ويحلل أشكال المقاومة الفلسطينية.",
-        isBestseller: true,
-        isNew: true,
-        tags: ["إبادة", "مقاومة", "أحدث"]
-    },
-    {
-        id: 32,
-        titleAr: "النظام العربي الجديد: ما بعد أكتوبر 2023",
-        titleEn: "The New Arab Order: After October 2023",
-        author: "فواز جرجس",
-        authorEn: "Fawaz Gerges",
-        publishDate: "2024-10-07",
-        publisher: "Cambridge University Press",
-        pages: 412,
-        language: "الإنجليزية",
-        categories: ["سياسة", "تاريخ"],
-        region: "شامل",
-        countries: ["العالم العربي"],
-        coverColor: "linear-gradient(135deg, #1a0a2e, #2e1a5e, #4a2a8e)",
-        coverIcon: "🌐",
-        rating: 4.6,
-        description: "يحلل كيف غيّر 7 أكتوبر النظام الإقليمي العربي: التطبيع والمقاومة والمحاور الجديدة.",
-        isBestseller: true,
-        isNew: true,
-        tags: ["7 أكتوبر", "نظام إقليمي", "تطبيع"]
-    },
-    {
-        id: 33,
-        titleAr: "العربية في العصر الرقمي",
-        titleEn: "Arabic in the Digital Age",
-        author: "نبيل علي وآخرون",
-        authorEn: "Nabil Ali et al.",
-        publishDate: "2024-07-20",
-        publisher: "المنظمة العربية للتربية والثقافة والعلوم",
-        pages: 310,
-        language: "العربية",
-        categories: ["ثقافة"],
-        region: "شامل",
-        countries: ["العالم العربي"],
-        coverColor: "linear-gradient(135deg, #0a2a4a, #1a4a7a, #2a6aaa)",
-        coverIcon: "📱",
-        rating: 4.0,
-        description: "يدرس حال اللغة العربية في الفضاء الرقمي: المحتوى العربي على الإنترنت والذكاء الاصطناعي والترجمة الآلية.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["لغة عربية", "رقمنة"]
-    },
-    {
-        id: 34,
-        titleAr: "الطاقة المتجددة في الخليج العربي",
-        titleEn: "Renewable Energy in the Arabian Gulf",
-        author: "ماري غريي",
-        authorEn: "Mari Luomi",
-        publishDate: "2024-06-15",
-        publisher: "Oxford University Press",
-        pages: 288,
-        language: "الإنجليزية",
-        categories: ["اقتصاد"],
-        region: "الخليج",
-        countries: ["السعودية", "الإمارات", "قطر", "الكويت", "البحرين", "عمان"],
-        coverColor: "linear-gradient(135deg, #004d00, #008800, #00cc00)",
-        coverIcon: "☀️",
-        rating: 4.1,
-        description: "يحلل التحول الطاقوي في دول الخليج: نيوم ومشاريع الطاقة الشمسية والهيدروجين الأخضر.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["نيوم", "هيدروجين أخضر"]
-    },
-    {
-        id: 35,
-        titleAr: "الأكاديميا العربية: أزمة وتحولات",
-        titleEn: "Arab Academia: Crisis and Transformation",
-        author: "ساري حنفي",
-        authorEn: "Sari Hanafi",
-        publishDate: "2024-09-15",
-        publisher: "المركز العربي للأبحاث - الدوحة",
-        pages: 356,
-        language: "العربية والإنجليزية",
-        categories: ["ثقافة", "مجتمع"],
-        region: "شامل",
-        countries: ["لبنان", "مصر", "تونس", "الأردن", "السعودية"],
-        coverColor: "linear-gradient(135deg, #2a1a0a, #5a3a1a, #8a5a2a)",
-        coverIcon: "🎓",
-        rating: 4.2,
-        description: "يحلل واقع الجامعات العربية والبحث العلمي: التصنيفات والتمويل وهجرة الأدمغة والحرية الأكاديمية.",
-        isBestseller: false,
-        isNew: true,
-        tags: ["جامعات", "بحث علمي"]
-    }
+let ALL_BOOKS=[];
+let currentLang='all';
+let isUpdating=false;
+let activeSources=new Set();
+const DAILY_MS=24*60*60*1000;
+const CACHE_KEY='pbooks_v8';
+const MIN_YEAR=2023;
+
+// ★★★ تحويل الارقام الهندية الى عادية ★★★
+function toWesternNums(str){
+  if(!str)return str;
+  return String(str)
+    .replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+    .replace(/[۰-۹]/g,d=>String.fromCharCode(d.charCodeAt(0)-1728));
+}
+
+// تنسيق التاريخ بارقام عادية
+function fmtDate(dateStr){
+  if(!dateStr)return '';
+  try{
+    const d=new Date(dateStr);
+    if(isNaN(d.getTime()))return '';
+    const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${months[d.getMonth()]} ${d.getFullYear()}`;
+  }catch(e){return ''}
+}
+
+// تنسيق التاريخ والوقت بارقام عادية
+function fmtDateTime(){
+  const d=new Date();
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const h=String(d.getHours()).padStart(2,'0');
+  const m=String(d.getMinutes()).padStart(2,'0');
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}, ${h}:${m}`;
+}
+
+// ══════════ فلتر فلسطين الصارم ══════════
+
+const PALESTINE_KEYWORDS=[
+  'palestine','palestinian','palestinians','gaza','gazan',
+  'west bank','nakba','intifada',
+  'ramallah','nablus','hebron','jenin','bethlehem','jericho','tulkarm',
+  'al-aqsa','al aqsa','hamas','plo','pflp','fatah',
+  'israeli occupation','israeli apartheid',
+  'ethnic cleansing of palestine','settler colonialism palestine',
+  'palestinien','palestinienne','palestiniens',
+  'cisjordanie','bande de gaza','mosquee al-aqsa',
+  'occupation israelienne','colonisation sioniste',
+  'nettoyage ethnique palestine','apartheid israelien',
+  'refugies palestiniens','resistance palestinienne',
+  'فلسطين','فلسطيني','فلسطينية','فلسطينيون','فلسطينيين',
+  'غزة','غزّة','الضفة الغربية','الضفة',
+  'النكبة','نكبة','الانتفاضة','انتفاضة',
+  'القدس','الاقصى','المسجد الاقصى',
+  'رام الله','نابلس','الخليل','جنين','بيت لحم','اريحا','طولكرم',
+  'حماس','الاحتلال الاسرائيلي','الاحتلال الصهيوني',
+  'المقاومة الفلسطينية','حق العودة',
+  'اللاجئون الفلسطينيون','اللاجئين الفلسطينيين',
+  'طوفان الاقصى','التطهير العرقي',
+  'الاستيطان','المستوطنات',
+  'جرائم الحرب الاسرائيلية','الابادة',
 ];
 
-// بيانات خريطة الدول
-const arabCountriesMap = [
-    { flag: "🇵🇸", name: "فلسطين", region: "المشرق" },
-    { flag: "🇸🇦", name: "السعودية", region: "الخليج" },
-    { flag: "🇦🇪", name: "الإمارات", region: "الخليج" },
-    { flag: "🇪🇬", name: "مصر", region: "وادي النيل" },
-    { flag: "🇮🇶", name: "العراق", region: "المشرق" },
-    { flag: "🇸🇾", name: "سوريا", region: "المشرق" },
-    { flag: "🇱🇧", name: "لبنان", region: "المشرق" },
-    { flag: "🇯🇴", name: "الأردن", region: "المشرق" },
-    { flag: "🇾🇪", name: "اليمن", region: "الخليج" },
-    { flag: "🇸🇩", name: "السودان", region: "وادي النيل" },
-    { flag: "🇱🇾", name: "ليبيا", region: "المغرب العربي" },
-    { flag: "🇹🇳", name: "تونس", region: "المغرب العربي" },
-    { flag: "🇩🇿", name: "الجزائر", region: "المغرب العربي" },
-    { flag: "🇲🇦", name: "المغرب", region: "المغرب العربي" },
-    { flag: "🇲🇷", name: "موريتانيا", region: "المغرب العربي" },
-    { flag: "🇰🇼", name: "الكويت", region: "الخليج" },
-    { flag: "🇧🇭", name: "البحرين", region: "الخليج" },
-    { flag: "🇶🇦", name: "قطر", region: "الخليج" },
-    { flag: "🇴🇲", name: "عمان", region: "الخليج" },
-    { flag: "🇸🇴", name: "الصومال", region: "القرن الإفريقي" },
-    { flag: "🇩🇯", name: "جيبوتي", region: "القرن الإفريقي" },
-    { flag: "🇰🇲", name: "جزر القمر", region: "القرن الإفريقي" }
+const SECONDARY_KEYWORDS=[
+  'occupation','apartheid','settler colonial','settler-colonial',
+  'ethnic cleansing','genocide','war crimes','blockade','siege',
+  'احتلال','ابارتهايد','استعمار استيطاني','ابادة جماعية',
+  'حصار','جرائم حرب',
+  'colonisation','nettoyage ethnique','genocide','crimes de guerre','blocus',
 ];
 
-// ===== الحالة =====
-let activeCat = 'all';
-let activeRegion = 'all';
-let searchQuery = '';
-let sortBy = 'newest';
-let savedList = JSON.parse(localStorage.getItem('arabBooksSaved') || '[]');
+const KNOWN_AUTHORS=[
+  'edward said','ilan pappe','ilan pappe','rashid khalidi',
+  'norman finkelstein','noam chomsky','nur masalha',
+  'joseph massad','sara roy','gideon levy','amira hass',
+  'avi shlaim','benny morris','shlomo sand',
+  'judith butler','angela davis',
+  'mahmoud darwish','mahmoud darwich','محمود درويش',
+  'ghassan kanafani','غسان كنفاني',
+  'ادوارد سعيد','ايلان بابه','ايلان بابيه',
+  'رشيد الخالدي','نورمان فينكلشتاين',
+  'نور مصالحة','جوزيف مسعد',
+  'عزمي بشارة','azmi bishara',
+  'elias sanbar','elias khoury','الياس خوري',
+  'leila shahid','ليلى شهيد',
+  'jean-pierre filiu','alain gresh',
+  'dominique vidal','sylvain cypel',
+  'farouk mardam-bey','فاروق مردم بك',
+  'henry laurens',
+  'عبد الباري عطوان','وليد الخالدي',
+  'سلمان ابو ستة','مصطفى البرغوثي',
+  'عبد الوهاب المسيري',
+];
 
-// ===== الدوال الرئيسية =====
+function isPalestineBook(title,description,authors){
+  const tl=(title||'').toLowerCase();
+  const dl=(description||'').toLowerCase();
+  const al=(authors||[]).join(' ').toLowerCase();
+  const all=tl+' '+dl;
 
-function getToday() {
-    return new Date();
-}
+  for(const kw of PALESTINE_KEYWORDS){
+    if(tl.includes(kw.toLowerCase()))return{pass:true,reason:'title: "'+kw+'"'};
+  }
 
-function formatArabicDate(date) {
-    const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-    const days = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-    return `${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
-}
+  let hits=0;const found=[];
+  for(const kw of PALESTINE_KEYWORDS){
+    if(dl.includes(kw.toLowerCase())){hits++;found.push(kw)}
+  }
+  if(hits>=2)return{pass:true,reason:'desc: '+found.slice(0,3).join(', ')};
 
-function daysSincePublish(dateStr) {
-    const pub = new Date(dateStr);
-    const now = getToday();
-    const diff = Math.floor((now - pub) / (1000 * 60 * 60 * 24));
-    return diff;
-}
-
-function isWithin12Months(dateStr) {
-    const days = daysSincePublish(dateStr);
-    return days >= 0 && days <= 365;
-}
-
-function getActiveBooks() {
-    return allBooks.filter(b => isWithin12Months(b.publishDate));
-}
-
-function getFilteredBooks() {
-    let books = getActiveBooks();
-
-    if (activeCat !== 'all') {
-        books = books.filter(b => b.categories.some(c => c.includes(activeCat)));
+  if(/israel|اسرائيل|israel/i.test(tl)){
+    for(const kw of SECONDARY_KEYWORDS){
+      if(all.includes(kw.toLowerCase()))return{pass:true,reason:'israel+"'+kw+'"'};
     }
+  }
 
-    if (activeRegion !== 'all') {
-        books = books.filter(b => b.region === activeRegion);
+  for(const author of KNOWN_AUTHORS){
+    if(al.includes(author)){
+      const hasHint=PALESTINE_KEYWORDS.concat(SECONDARY_KEYWORDS).some(kw=>all.includes(kw.toLowerCase()));
+      if(hasHint)return{pass:true,reason:'author: "'+author+'"'};
     }
+  }
 
-    if (searchQuery) {
-        const q = searchQuery.toLowerCase();
-        books = books.filter(b =>
-            b.titleAr.toLowerCase().includes(q) ||
-            b.titleEn.toLowerCase().includes(q) ||
-            b.author.toLowerCase().includes(q) ||
-            b.authorEn.toLowerCase().includes(q) ||
-            b.publisher.toLowerCase().includes(q) ||
-            b.description.toLowerCase().includes(q) ||
-            b.countries.some(c => c.toLowerCase().includes(q)) ||
-            b.tags.some(t => t.toLowerCase().includes(q))
-        );
+  return{pass:false,reason:'not directly about Palestine'};
+}
+
+// ══════════ سجل التتبع ══════════
+const debugLines=[];
+function log(msg,type='info'){
+  const t=new Date().toLocaleTimeString('en-US',{hour12:false});
+  const p=type==='error'?'X':type==='success'?'OK':type==='warn'?'!!':type==='filter'?'--':'..';
+  const line=`[${t}] ${p} ${msg}`;
+  debugLines.push(line);
+  console.log(line);
+  const el=document.getElementById('debugLog');
+  if(el){el.textContent=debugLines.slice(-200).join('\n');el.scrollTop=el.scrollHeight}
+}
+function toggleDebug(){document.getElementById('debugPanel').classList.toggle('show')}
+
+// ══════════════════════════════════════════════════════════
+// ★★★ استعلامات موسعة - خاصة الفرنسية والعربية ★★★
+// ══════════════════════════════════════════════════════════
+
+const QUERIES={
+  en:[
+    "palestine book 2024","palestine book 2023","palestine book 2025",
+    "palestinian history book","palestinian resistance",
+    "gaza war book 2024","gaza war book 2023","gaza genocide book",
+    "nakba 1948 book","nakba palestine book",
+    "israeli occupation palestine","west bank settlements book",
+    "israeli apartheid book","palestinian refugees book",
+    "right of return palestine","jerusalem al-quds book",
+    "ethnic cleansing palestine book","settler colonialism palestine",
+    "BDS movement palestine","intifada palestine",
+    "october 7 book 2024","hamas book",
+    "war crimes israel gaza","ICJ genocide palestine",
+    "ICC israel palestine","palestinian literature",
+    "mahmoud darwish","ghassan kanafani book",
+    "edward said palestine","ilan pappe book",
+    "rashid khalidi book","norman finkelstein",
+    "noam chomsky palestine","one state solution palestine",
+    "blockade gaza","siege gaza book",
+    "palestinian cinema","palestinian art resistance",
+    "zionism critique book","anti-zionism",
+    "gaza humanitarian crisis 2024","gaza famine",
+    "israel genocide ICJ 2024","ceasefire gaza",
+    "palestine solidarity movement","free palestine book",
+    "decolonize palestine","palestinian identity",
+    "oslo accords failure","palestinian statehood",
+    "UN palestine","UNRWA palestine",
+  ],
+
+  // ★★★ فرنسية موسعة بشكل كبير ★★★
+  fr:[
+    // عام فلسطين
+    "palestine livre 2024","palestine livre 2023","palestine livre 2025",
+    "question palestinienne livre","conflit israelo-palestinien livre",
+    "cause palestinienne","peuple palestinien",
+    // غزة
+    "gaza guerre livre 2024","gaza genocide 2024","gaza bombardement",
+    "guerre gaza 2023 livre","blocus gaza livre","siege gaza",
+    "gaza crise humanitaire","gaza famine 2024",
+    "7 octobre hamas livre","7 octobre 2023",
+    // تاريخ
+    "histoire palestine livre","histoire palestinienne",
+    "nakba 1948 livre","nakba palestine",
+    "mandat britannique palestine","creation israel 1948",
+    // احتلال واستيطان
+    "occupation israelienne livre","colonies israeliennes",
+    "colonisation israelienne","apartheid israelien livre",
+    "nettoyage ethnique palestine","mur separation palestine",
+    // مقاومة ولاجئين
+    "resistance palestinienne livre","intifada livre",
+    "refugies palestiniens livre","droit retour palestinien",
+    "UNRWA livre","camps refugies palestiniens",
+    // القدس
+    "jerusalem livre","al-quds livre","mosquee al-aqsa",
+    "jerusalem orientale occupation",
+    // قانون دولي
+    "droit international palestine","CIJ genocide israel",
+    "CPI crimes guerre israel","crimes guerre gaza",
+    "genocide gaza droit international",
+    // BDS وسياسة
+    "BDS palestine boycott","boycott israel livre",
+    "solidarite palestine","sionisme colonialisme livre",
+    "antisionisme livre","sionisme histoire critique",
+    // مؤلفون فرنسيون
+    "elias sanbar palestine","jean-pierre filiu gaza",
+    "alain gresh palestine","dominique vidal palestine",
+    "sylvain cypel israel","henry laurens palestine",
+    "farouk mardam-bey","leila shahid livre",
+    "rene backmann mur israel","pierre stambul palestine",
+    "thomas vescovi palestine","rachid benzine",
+    "shlomo sand invention","ilan pappe nettoyage",
+    // ادب ثقافة
+    "litterature palestinienne","mahmoud darwich poesie",
+    "ghassan kanafani livre","cinema palestinien",
+    "culture palestinienne","art palestinien",
+    "poesie palestinienne","roman palestinien",
+    // ناشرون فرنسيون
+    "palestine la decouverte","palestine editions fabrique",
+    "palestine actes sud","palestine karthala",
+    "palestine sindbad","palestine CNRS editions",
+    "palestine puf","palestine seuil",
+    "palestine fayard","palestine libertalia",
+    // مواضيع خاصة
+    "eau palestine","agriculture palestine",
+    "femmes palestiniennes","prisonniers palestiniens",
+    "enfants gaza","hopitaux gaza",
+    "nakba continue","depossession palestine",
+    "societe civile palestinienne","diaspora palestinienne",
+  ],
+
+  // ★★★ عربية موسعة بشكل كبير ★★★
+  ar:[
+    // عام
+    "فلسطين كتاب 2024","فلسطين كتاب 2023","فلسطين كتاب 2025",
+    "القضية الفلسطينية كتاب","الصراع العربي الاسرائيلي",
+    "تاريخ فلسطين الحديث","فلسطين التاريخ والجغرافيا",
+    // غزة
+    "غزة حرب 2024","غزة حرب 2023","غزة ابادة كتاب",
+    "العدوان على غزة","حصار غزة كتاب",
+    "غزة الكارثة الانسانية","غزة المجاعة",
+    "غزة الحرب والمقاومة","قطاع غزة",
+    "طوفان الاقصى كتاب","طوفان الاقصى 2023",
+    "السابع من اكتوبر","عملية طوفان الاقصى",
+    // نكبة
+    "النكبة الفلسطينية كتاب","نكبة 1948",
+    "التطهير العرقي فلسطين","تهجير الفلسطينيين",
+    "المجازر الصهيونية","دير ياسين",
+    // احتلال واستيطان
+    "الاحتلال الاسرائيلي كتاب","الاستيطان الصهيوني كتاب",
+    "المستوطنات الاسرائيلية","جدار الفصل العنصري",
+    "الضفة الغربية كتاب","الاغوار الفلسطينية",
+    "الابارتهايد الاسرائيلي","نظام الفصل العنصري",
+    // القدس
+    "القدس المحتلة كتاب","القدس تاريخ",
+    "المسجد الاقصى كتاب","تهويد القدس",
+    "القدس العربية","البلدة القديمة القدس",
+    // مقاومة
+    "المقاومة الفلسطينية كتاب","حركة حماس كتاب",
+    "الجهاد الاسلامي فلسطين","كتائب القسام",
+    "المقاومة المسلحة فلسطين","الانتفاضة الفلسطينية",
+    "الانتفاضة الاولى","الانتفاضة الثانية",
+    "الكفاح الفلسطيني","النضال الفلسطيني",
+    // لاجئون وعودة
+    "اللاجئون الفلسطينيون كتاب","حق العودة كتاب",
+    "مخيمات اللاجئين الفلسطينيين","الاونروا",
+    "الشتات الفلسطيني","المهجر الفلسطيني",
+    // قانون دولي
+    "جرائم الحرب الاسرائيلية كتاب","محكمة العدل الدولية فلسطين",
+    "المحكمة الجنائية الدولية اسرائيل","القانون الدولي فلسطين",
+    "الابادة الجماعية غزة","جرائم ضد الانسانية اسرائيل",
+    // ادب وثقافة
+    "الادب الفلسطيني كتاب","محمود درويش كتاب",
+    "غسان كنفاني كتاب","الشعر الفلسطيني",
+    "الرواية الفلسطينية","السينما الفلسطينية",
+    "الثقافة الفلسطينية","الهوية الفلسطينية",
+    "الفن الفلسطيني","المسرح الفلسطيني",
+    "ادب المقاومة","سميح القاسم","توفيق زياد",
+    "فدوى طوقان","ادوارد سعيد",
+    // فكر وسياسة
+    "الصهيونية كتاب","تاريخ الصهيونية",
+    "الاستعمار الاستيطاني فلسطين","الحركة الوطنية الفلسطينية",
+    "منظمة التحرير الفلسطينية","اتفاقيات اوسلو",
+    "السلطة الفلسطينية","الدولة الفلسطينية",
+    "حل الدولتين","حل الدولة الواحدة",
+    // مؤلفون عرب
+    "ايلان بابه كتاب","نورمان فينكلشتاين كتاب",
+    "نعوم تشومسكي فلسطين","رشيد الخالدي كتاب",
+    "نور مصالحة كتاب","عبد الوهاب المسيري",
+    "عزمي بشارة كتاب","وليد الخالدي",
+    "سلمان ابو ستة","الياس خوري كتاب",
+    "عبد الباري عطوان","مصطفى البرغوثي",
+    "ماهر الشريف","خليل السكاكيني",
+    // ناشرون عرب
+    "فلسطين مؤسسة الدراسات الفلسطينية",
+    "فلسطين المركز العربي للابحاث",
+    "فلسطين مركز دراسات الوحدة العربية",
+    "فلسطين دار الشروق","فلسطين دار الاداب",
+    "فلسطين دار الساقي","فلسطين دار الفارابي",
+    // مواضيع خاصة
+    "المراة الفلسطينية","الاسرى الفلسطينيون",
+    "اطفال فلسطين","التعليم في فلسطين",
+    "الاقتصاد الفلسطيني","المياه فلسطين",
+    "الزراعة فلسطين","البيئة فلسطين",
+    "المجتمع المدني الفلسطيني","الاعلام الفلسطيني",
+  ]
+};
+
+// ══════════ كشف اللغة + موضوعات ══════════
+function detectLang(text){
+  if(!text)return'en';
+  if(/[\u0600-\u06FF]/.test(text))return'ar';
+  if(/[àâéèêëïîôùûüÿçœæ]/i.test(text))return'fr';
+  if(/\b(le|la|les|du|des|une?|et|ou|qui|que|dans|pour|avec|sur|par|livre|histoire)\b/i.test(text))return'fr';
+  return'en';
+}
+
+function detectTopics(title,desc){
+  const t=((title||'')+' '+(desc||'')).toLowerCase();
+  const out=[];
+  const map=[
+    [/غز|gaza/i,'Gaza'],[/نكب|nakba/i,'Nakba'],
+    [/اباد|genocide|genocid/i,'Genocide'],[/احتلال|occupation/i,'Occupation'],
+    [/مقاوم|resistance|résistance/i,'Resistance'],[/تاريخ|history|histoire/i,'History'],
+    [/قدس|jerusalem|jérusalem/i,'Jerusalem'],[/لاج|refugee|réfugié/i,'Refugees'],
+    [/قانون.*دول|international.law|droit.inter/i,'International Law'],
+    [/ادب|literature|littérature/i,'Literature'],
+    [/حقوق|human.right|droits/i,'Human Rights'],
+    [/ابارتهايد|apartheid/i,'Apartheid'],[/صهيون|zionism|sionisme/i,'Zionism'],
+    [/استيطان|settlement|coloni/i,'Settlements'],[/انتفاض|intifada/i,'Intifada'],
+    [/تطهير|ethnic.cleansing|nettoyage/i,'Ethnic Cleansing'],
+    [/حماس|hamas/i,'Hamas'],[/حصار|blockade|blocus|siege/i,'Blockade'],
+    [/عود|return|retour/i,'Right of Return'],
+    [/ضف|west.bank|cisjordanie/i,'West Bank'],
+    [/اسر[ىي]|prisoner|prisonnier/i,'Prisoners'],
+    [/شعر|poetry|poésie|poesie/i,'Poetry'],
+  ];
+  for(const[rx,label]of map)if(rx.test(t))out.push(label);
+  if(/palestin|فلسط/i.test(t)&&!out.includes('Palestine'))out.unshift('Palestine');
+  return out.length?out.slice(0,5):['Palestine'];
+}
+
+// ══════════ ازالة التكرار ══════════
+function normT(s){return(s||'').toLowerCase().replace(/[^\w\s\u0600-\u06FF]/g,' ').replace(/\s+/g,' ').trim().substring(0,80)}
+function dedup(books){
+  const seen=new Set(),titles=[],out=[];
+  for(const b of books){
+    const nt=normT(b.title);
+    if(!nt||nt.length<5)continue;
+    const isbn=(b.isbn||'').replace(/[^0-9X]/gi,'');
+    if(isbn.length>=10){if(seen.has('i:'+isbn))continue;seen.add('i:'+isbn)}
+    let dup=false;
+    for(const et of titles){
+      if(nt===et||nt.includes(et)||et.includes(nt)){dup=true;break}
+      const w1=new Set(nt.split(' ').filter(w=>w.length>2));
+      const w2=new Set(et.split(' ').filter(w=>w.length>2));
+      if(w1.size&&w2.size){
+        const inter=[...w1].filter(x=>w2.has(x)).length;
+        if(inter/new Set([...w1,...w2]).size>.8){dup=true;break}
+      }
     }
-
-    // Sort
-    switch (sortBy) {
-        case 'newest':
-            books.sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate));
-            break;
-        case 'oldest':
-            books.sort((a, b) => new Date(a.publishDate) - new Date(b.publishDate));
-            break;
-        case 'rating':
-            books.sort((a, b) => b.rating - a.rating);
-            break;
-        case 'pages-desc':
-            books.sort((a, b) => b.pages - a.pages);
-            break;
-        case 'pages-asc':
-            books.sort((a, b) => a.pages - b.pages);
-            break;
-        case 'title':
-            books.sort((a, b) => a.titleAr.localeCompare(b.titleAr, 'ar'));
-            break;
-    }
-
-    return books;
+    if(dup)continue;
+    titles.push(nt);out.push(b);
+  }
+  log(`Dedup: ${books.length} -> ${out.length}`);
+  return out;
 }
 
-function getDaysLabel(days) {
-    if (days === 0) return 'اليوم';
-    if (days === 1) return 'أمس';
-    if (days <= 7) return `منذ ${days} أيام`;
-    if (days <= 30) return `منذ ${Math.floor(days / 7)} أسابيع`;
-    if (days <= 365) return `منذ ${Math.floor(days / 30)} شهر`;
-    return 'أكثر من سنة';
-}
+// ══════════════════════════════════════════════════════════
+// Google Books
+// ══════════════════════════════════════════════════════════
+async function fetchGoogle(query,langRestrict){
+  const books=[];
+  try{
+    const params=new URLSearchParams({q:query,printType:'books',orderBy:'newest',maxResults:'40'});
+    if(langRestrict==='ar'||langRestrict==='fr')params.set('langRestrict',langRestrict);
+    const url=`https://www.googleapis.com/books/v1/volumes?${params}`;
+    log(`Google: "${query}" [${langRestrict||'any'}]`);
 
-function renderStars(rating) {
-    const full = Math.floor(rating);
-    const half = rating % 1 >= 0.5 ? 1 : 0;
-    return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(5 - full - half);
-}
+    const resp=await fetch(url);
+    if(resp.status===429){log('Google: Rate limit!','warn');await sleep(5000);return books}
+    if(!resp.ok){log(`Google: HTTP ${resp.status}`,'error');return books}
 
-// ===== العرض =====
+    const data=await resp.json();
+    const items=data.items||[];
+    let ok=0,no=0;
 
-function renderBooks() {
-    const grid = document.getElementById('booksGrid');
-    const filtered = getFilteredBooks();
-    const active = getActiveBooks();
+    for(const item of items){
+      try{
+        const v=item.volumeInfo||{};
+        const title=v.title||'';
+        if(!title||title.length<3)continue;
 
-    // تحديث الإحصائيات
-    document.getElementById('statTotal').textContent = active.length;
-    const thisMonth = active.filter(b => daysSincePublish(b.publishDate) <= 30).length;
-    document.getElementById('statNew').textContent = thisMonth;
-    const authors = new Set(active.map(b => b.author));
-    document.getElementById('statAuthors').textContent = authors.size;
-    document.getElementById('statFavs').textContent = savedList.length;
+        const pubDate=v.publishedDate||'';
+        let year=0;
+        if(pubDate)year=parseInt(pubDate.substring(0,4));
+        if(year>0&&year<MIN_YEAR){no++;continue}
+        if(!year){no++;continue}
 
-    document.getElementById('resultsText').innerHTML = `عرض <span>${filtered.length}</span> كتاب من أصل ${active.length}`;
+        const desc=(v.description||'').substring(0,500);
+        const authors=v.authors||[];
 
-    if (filtered.length === 0) {
-        grid.innerHTML = `
-            <div class="no-results">
-                <div class="nr-icon">📭</div>
-                <h3>لم يتم العثور على نتائج</h3>
-                <p>حاول تعديل البحث أو تغيير الفلاتر</p>
-            </div>`;
-        return;
-    }
+        const check=isPalestineBook(title+(v.subtitle?': '+v.subtitle:''),desc,authors);
+        if(!check.pass){no++;continue}
 
-    grid.innerHTML = filtered.map(book => {
-        const days = daysSincePublish(book.publishDate);
-        const isSaved = savedList.includes(book.id);
-        const pubDate = new Date(book.publishDate);
-        const monthNames = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+        const lang=v.language==='ar'?'ar':v.language==='fr'?'fr':detectLang(title);
+        const isbns=v.industryIdentifiers||[];
 
-        return `
-        <div class="book-card">
-            <div class="card-top">
-                <div class="book-cover-wrap">
-                    <div class="book-cover" style="background: ${book.coverColor}">
-                        <span class="spine"></span>
-                        <span class="shine"></span>
-                        <span style="position:relative;z-index:2">${book.coverIcon}</span>
-                    </div>
-                    ${days <= 30 ? `<span class="days-badge">🆕 ${getDaysLabel(days)}</span>` : `<span class="days-badge" style="background: var(--gradient-ocean)">${getDaysLabel(days)}</span>`}
-                </div>
-                <div class="card-info">
-                    <div class="book-title">${book.titleAr}</div>
-                    <div class="book-title-en">${book.titleEn}</div>
-                    <div class="author-line">
-                        <span>✍️</span>
-                        <span class="author-name">${book.author}</span>
-                    </div>
-                    <div class="publisher-line">🏢 ${book.publisher}</div>
-                </div>
-            </div>
-
-            <div class="card-body">
-                <div class="meta-grid">
-                    <div class="meta-item">
-                        <span>📅</span>
-                        <span class="meta-val">${pubDate.getDate()} ${monthNames[pubDate.getMonth()]} ${pubDate.getFullYear()}</span>
-                    </div>
-                    <div class="meta-item">
-                        <span>📄</span>
-                        <span class="meta-val">${book.pages} صفحة</span>
-                    </div>
-                    <div class="meta-item">
-                        <span>🌐</span>
-                        <span class="meta-val">${book.language}</span>
-                    </div>
-                    <div class="meta-item">
-                        <span>⏱️</span>
-                        <span class="meta-val">${getDaysLabel(days)}</span>
-                    </div>
-                </div>
-
-                <div class="tags-row">
-                    ${book.categories.map(c => `<span class="tag tag-cat">${c}</span>`).join('')}
-                    <span class="tag tag-region">📍 ${book.region}</span>
-                    ${book.isBestseller ? '<span class="tag tag-best">⭐ الأكثر مبيعاً</span>' : ''}
-                    ${book.isNew && days <= 30 ? '<span class="tag tag-new">🔥 جديد</span>' : ''}
-                    ${book.tags.map(t => `<span class="tag tag-lang">${t}</span>`).join('')}
-                </div>
-
-                <div class="desc-box">${book.description}</div>
-
-                <div class="countries-row">
-                    ${book.countries.map(c => `<span class="country-tag">📍 ${c}</span>`).join('')}
-                </div>
-            </div>
-
-            <div class="card-footer">
-                <div class="rating-display">
-                    <span class="stars">${renderStars(book.rating)}</span>
-                    <span class="r-val">${book.rating}/5</span>
-                </div>
-                <div class="card-actions">
-                    <button class="act-btn ${isSaved ? 'saved' : ''}" onclick="toggleSave(${book.id})">
-                        ${isSaved ? '❤️ محفوظ' : '🤍 حفظ'}
-                    </button>
-                    <button class="act-btn share-btn" onclick="shareBook(${book.id})">
-                        📤 مشاركة
-                    </button>
-                </div>
-            </div>
-        </div>`;
-    }).join('');
-}
-
-function renderCountries() {
-    const grid = document.getElementById('countriesGrid');
-    const active = getActiveBooks();
-
-    grid.innerHTML = arabCountriesMap.map(country => {
-        const count = active.filter(b =>
-            b.countries.some(c => c.includes(country.name)) ||
-            b.countries.includes('جميع الدول العربية') ||
-            b.countries.includes('العالم العربي') ||
-            b.countries.includes('22 دولة عربية') ||
-            b.countries.includes('14 دولة عربية')
-        ).length;
-
-        return `
-            <div class="country-card" onclick="searchCountry('${country.name}')">
-                <div class="c-flag">${country.flag}</div>
-                <div class="c-name">${country.name}</div>
-                <div class="c-count">📚 ${count} كتب</div>
-            </div>`;
-    }).join('');
-}
-
-function createParticles() {
-    const container = document.getElementById('particles');
-    for (let i = 0; i < 30; i++) {
-        const span = document.createElement('span');
-        span.style.left = Math.random() * 100 + '%';
-        span.style.animationDuration = (10 + Math.random() * 20) + 's';
-        span.style.animationDelay = Math.random() * 15 + 's';
-        span.style.width = (2 + Math.random() * 3) + 'px';
-        span.style.height = span.style.width;
-        container.appendChild(span);
-    }
-}
-
-// ===== أحداث =====
-
-function setCategory(cat, btn) {
-    activeCat = cat;
-    document.querySelectorAll('#catFilters .filter-chip').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderBooks();
-}
-
-function setRegion(region, btn) {
-    activeRegion = region;
-    document.querySelectorAll('#regFilters .region-chip').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderBooks();
-}
-
-function handleSort() {
-    sortBy = document.getElementById('sortSelect').value;
-    renderBooks();
-}
-
-function toggleView(mode) {
-    const grid = document.getElementById('booksGrid');
-    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-
-    if (mode === 'list') {
-        grid.classList.add('list-mode');
-        document.querySelectorAll('.view-btn')[1].classList.add('active');
-    } else {
-        grid.classList.remove('list-mode');
-        document.querySelectorAll('.view-btn')[0].classList.add('active');
-    }
-}
-
-function searchCountry(name) {
-    document.getElementById('searchInput').value = name;
-    searchQuery = name.toLowerCase();
-    renderBooks();
-    window.scrollTo({ top: 500, behavior: 'smooth' });
-}
-
-function toggleSave(id) {
-    const idx = savedList.indexOf(id);
-    if (idx > -1) {
-        savedList.splice(idx, 1);
-        showToast('تم إزالة الكتاب من القائمة', 'info');
-    } else {
-        savedList.push(id);
-        showToast('✓ تم إضافة الكتاب إلى قائمة القراءة', 'success');
-    }
-    localStorage.setItem('arabBooksSaved', JSON.stringify(savedList));
-    updateFavUI();
-    renderBooks();
-}
-
-function shareBook(id) {
-    const book = allBooks.find(b => b.id === id);
-    const text = `📚 ${book.titleAr}\n✍️ ${book.author}\n🏢 ${book.publisher}\n\nمن مرصد كتب الشأن العربي`;
-    if (navigator.share) {
-        navigator.share({ title: book.titleAr, text: text });
-    } else {
-        navigator.clipboard.writeText(text).then(() => {
-            showToast('📋 تم نسخ معلومات الكتاب', 'info');
+        books.push({
+          id:item.id,
+          title:title+(v.subtitle?': '+v.subtitle:''),
+          authors,publisher:v.publisher||'',
+          publication_date:pubDate,
+          pages:v.pageCount||null,
+          isbn:(isbns.find(i=>i.type==='ISBN_13')||isbns.find(i=>i.type==='ISBN_10')||{}).identifier||'',
+          book_url:v.infoLink||'',
+          cover:((v.imageLinks&&v.imageLinks.thumbnail)||'').replace('http:','https:'),
+          description:desc,language:lang,
+          topics:detectTopics(title,desc),
+          source:'Google Books',rating:v.averageRating||null,
+          addedAt:Date.now()
         });
+        ok++;
+      }catch(e){}
     }
+    log(`Google: "${query.substring(0,25)}" => ${ok} ok, ${no} rejected`,ok>0?'success':'warn');
+    if(ok>0)activeSources.add('Google Books');
+  }catch(e){log(`Google err: ${e.message}`,'error')}
+  return books;
 }
 
-function updateFavUI() {
-    document.getElementById('fabBadge').textContent = savedList.length;
-    document.getElementById('statFavs').textContent = savedList.length;
-}
+// ══════════════════════════════════════════════════════════
+// Open Library
+// ══════════════════════════════════════════════════════════
+async function fetchOpenLib(query){
+  const books=[];
+  try{
+    const params=new URLSearchParams({q:query,limit:'30',sort:'new'});
+    log(`OpenLib: "${query}"`);
+    const resp=await fetch(`https://openlibrary.org/search.json?${params}`);
+    if(!resp.ok){log(`OpenLib: HTTP ${resp.status}`,'error');return books}
+    const data=await resp.json();
+    const docs=data.docs||[];
+    let ok=0,no=0;
 
-function openModal() {
-    const modal = document.getElementById('modalBg');
-    const body = document.getElementById('modalBody');
-    const active = getActiveBooks();
+    for(const doc of docs){
+      try{
+        const title=doc.title||'';
+        if(!title)continue;
+        const year=doc.first_publish_year||0;
+        if(year>0&&year<MIN_YEAR){no++;continue}
+        if(!year){no++;continue}
 
-    if (savedList.length === 0) {
-        body.innerHTML = `
-            <div class="empty-state">
-                <div class="es-icon">📭</div>
-                <p>قائمة القراءة فارغة</p>
-                <p class="es-hint">اضغط 🤍 على أي كتاب لإضافته</p>
-            </div>`;
-    } else {
-        const validSaved = savedList.filter(id => active.find(b => b.id === id));
-        if (validSaved.length === 0) {
-            body.innerHTML = `
-                <div class="empty-state">
-                    <div class="es-icon">📭</div>
-                    <p>الكتب المحفوظة تجاوزت فترة الـ 12 شهراً</p>
-                    <p class="es-hint">أضف كتباً جديدة من القائمة الحالية</p>
-                </div>`;
-        } else {
-            body.innerHTML = validSaved.map(id => {
-                const book = active.find(b => b.id === id);
-                if (!book) return '';
-                return `
-                    <div class="rl-item">
-                        <div class="rl-info">
-                            <div class="rl-title">${book.coverIcon} ${book.titleAr}</div>
-                            <div class="rl-meta">✍️ ${book.author} • 🏢 ${book.publisher}</div>
-                        </div>
-                        <button class="rl-remove" onclick="toggleSave(${book.id}); openModal();">إزالة ✕</button>
-                    </div>`;
-            }).join('');
-        }
+        const subjects=(doc.subject||[]).join(' ');
+        const authors=doc.author_name||[];
+
+        const check=isPalestineBook(title,subjects,authors);
+        if(!check.pass){no++;continue}
+
+        const coverId=doc.cover_i;
+        books.push({
+          id:'ol_'+doc.key,title,authors,
+          publisher:(doc.publisher||[])[0]||'',
+          publication_date:year+'-01-01',
+          pages:doc.number_of_pages_median||null,
+          isbn:(doc.isbn||[])[0]||'',
+          book_url:'https://openlibrary.org'+doc.key,
+          cover:coverId?`https://covers.openlibrary.org/b/id/${coverId}-M.jpg`:'',
+          description:'',language:detectLang(title),
+          topics:detectTopics(title,subjects),
+          source:'Open Library',rating:null,addedAt:Date.now()
+        });
+        ok++;
+      }catch(e){}
     }
-
-    modal.classList.add('open');
+    log(`OpenLib: "${query.substring(0,25)}" => ${ok} ok, ${no} rej`,ok>0?'success':'warn');
+    if(ok>0)activeSources.add('Open Library');
+  }catch(e){log(`OpenLib err: ${e.message}`,'error')}
+  return books;
 }
 
-function closeModal() {
-    document.getElementById('modalBg').classList.remove('open');
-}
-
-function showToast(msg, type = 'success') {
-    const toast = document.getElementById('toastMsg');
-    toast.textContent = msg;
-    toast.className = `toast-msg ${type} visible`;
-    setTimeout(() => toast.classList.remove('visible'), 2800);
-}
-
-// ===== التهيئة =====
-
-document.addEventListener('DOMContentLoaded', () => {
-    // تاريخ اليوم
-    document.getElementById('lastUpdate').textContent = formatArabicDate(getToday());
-
-    // إنشاء الجسيمات
-    createParticles();
-
-    // عرض الكتب
-    renderBooks();
-    renderCountries();
-    updateFavUI();
-
-    // البحث
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-        searchQuery = e.target.value.toLowerCase();
-        renderBooks();
+// ══════════════════════════════════════════════════════════
+// Crossref
+// ══════════════════════════════════════════════════════════
+async function fetchCrossref(query){
+  const books=[];
+  try{
+    const params=new URLSearchParams({
+      query,filter:'type:book,from-pub-date:2023-01-01',
+      rows:'20',sort:'published',order:'desc'
     });
+    log(`Crossref: "${query}"`);
+    const resp=await fetch(`https://api.crossref.org/works?${params}`,{
+      headers:{'User-Agent':'PalestineBooks/2.0 (mailto:r@example.com)'}
+    });
+    if(!resp.ok){log(`Crossref: HTTP ${resp.status}`,'error');return books}
+    const data=await resp.json();
+    const items=(data.message&&data.message.items)||[];
+    let ok=0,no=0;
 
-    // زر الصعود
-    window.addEventListener('scroll', () => {
-        const btn = document.getElementById('scrollUp');
-        if (window.scrollY > 600) {
-            btn.classList.add('show');
-        } else {
-            btn.classList.remove('show');
+    for(const item of items){
+      try{
+        const title=(item.title||[])[0]||'';
+        if(!title)continue;
+        const authors=(item.author||[]).map(a=>`${a.given||''} ${a.family||''}`.trim());
+
+        const check=isPalestineBook(title,(item.subject||[]).join(' '),authors);
+        if(!check.pass){no++;continue}
+
+        const dp=(item['published-print']&&item['published-print']['date-parts']&&item['published-print']['date-parts'][0])||
+                 (item['published-online']&&item['published-online']['date-parts']&&item['published-online']['date-parts'][0]);
+        const yr=dp?dp[0]:0;
+        if(yr>0&&yr<MIN_YEAR){no++;continue}
+        const pubDate=dp?`${dp[0]}-${String(dp[1]||1).padStart(2,'0')}-${String(dp[2]||1).padStart(2,'0')}`:'2024-01-01';
+
+        books.push({
+          id:'cr_'+(item.DOI||Math.random().toString(36).substr(2,9)),
+          title,authors,publisher:item.publisher||'',
+          publication_date:pubDate,
+          pages:item.page?parseInt(item.page):null,
+          isbn:(item.ISBN||[])[0]||'',
+          book_url:item.URL||(item.DOI?`https://doi.org/${item.DOI}`:''),
+          cover:'',description:'',
+          language:detectLang(title),
+          topics:detectTopics(title,(item.subject||[]).join(' ')),
+          source:'Crossref',rating:null,addedAt:Date.now()
+        });
+        ok++;
+      }catch(e){}
+    }
+    log(`Crossref: "${query.substring(0,25)}" => ${ok} ok, ${no} rej`,ok>0?'success':'warn');
+    if(ok>0)activeSources.add('Crossref');
+  }catch(e){log(`Crossref err: ${e.message}`,'error')}
+  return books;
+}
+
+// ══════════════════════════════════════════════════════════
+// المحرك الرئيسي
+// ══════════════════════════════════════════════════════════
+async function fetchAllBooks(){
+  if(isUpdating){log('Already updating','warn');return}
+  isUpdating=true;
+  activeSources.clear();
+  const prevCount=ALL_BOOKS.length;
+
+  document.getElementById('pbar').style.display='block';
+  document.getElementById('rBtn').disabled=true;
+
+  if(ALL_BOOKS.length===0){
+    document.getElementById('grid').innerHTML='<div class="loader"><div class="spinner"></div><p>جار جلب الكتب...</p></div>';
+  }
+
+  log('========================================');
+  log('Start fetching - strict filter - from 2023');
+  log(`EN: ${QUERIES.en.length} queries, FR: ${QUERIES.fr.length} queries, AR: ${QUERIES.ar.length} queries`);
+  log('========================================');
+
+  const newBooks=[];
+  const tasks=[];
+
+  // ★ Google Books - الثلاث لغات
+  for(const q of QUERIES.en)tasks.push({api:'google',q,lang:'en'});
+  for(const q of QUERIES.fr)tasks.push({api:'google',q,lang:'fr'});
+  for(const q of QUERIES.ar)tasks.push({api:'google',q,lang:'ar'});
+
+  // ★ Open Library - الثلاث لغات (موسع)
+  for(const q of QUERIES.en.slice(0,15))tasks.push({api:'openlib',q,lang:'en'});
+  for(const q of QUERIES.fr.slice(0,15))tasks.push({api:'openlib',q,lang:'fr'});
+  for(const q of QUERIES.ar.slice(0,15))tasks.push({api:'openlib',q,lang:'ar'});
+
+  // ★ Crossref - انجليزي + فرنسي
+  for(const q of QUERIES.en.slice(0,10))tasks.push({api:'crossref',q,lang:'en'});
+  for(const q of QUERIES.fr.slice(0,8))tasks.push({api:'crossref',q,lang:'fr'});
+
+  const total=tasks.length;
+  let done=0;
+
+  for(const task of tasks){
+    done++;
+    const pct=Math.round((done/total)*100);
+    document.getElementById('pfill').style.width=pct+'%';
+    document.getElementById('ptxt').textContent=`${pct}% - ${task.api} [${task.lang}]: ${task.q.substring(0,30)}...`;
+
+    let result=[];
+    try{
+      if(task.api==='google')result=await fetchGoogle(task.q,task.lang);
+      else if(task.api==='openlib')result=await fetchOpenLib(task.q);
+      else if(task.api==='crossref')result=await fetchCrossref(task.q);
+    }catch(e){log(`Error ${task.api}: ${e.message}`,'error')}
+
+    if(result.length>0)newBooks.push(...result);
+
+    const delay=task.api==='google'?600:task.api==='crossref'?1200:500;
+    await sleep(delay);
+  }
+
+  log('========================================');
+  log(`Fetch done: ${newBooks.length} new books passed filter`);
+
+  const combined=[...ALL_BOOKS,...newBooks];
+  ALL_BOOKS=dedup(combined);
+  ALL_BOOKS.sort((a,b)=>new Date(b.publication_date)-new Date(a.publication_date));
+
+  const addedCount=ALL_BOOKS.length-prevCount;
+  log(`Result: ${prevCount} -> ${ALL_BOOKS.length} (+${Math.max(0,addedCount)})`,'success');
+  log(`Sources: ${[...activeSources].join(', ')}`);
+
+  try{
+    localStorage.setItem(CACHE_KEY,JSON.stringify({
+      books:ALL_BOOKS,timestamp:Date.now(),sources:[...activeSources]
+    }));
+    log('Saved to cache','success');
+  }catch(e){log('Cache save error: '+e.message,'error')}
+
+  document.getElementById('pbar').style.display='none';
+  document.getElementById('rBtn').disabled=false;
+  isUpdating=false;
+
+  updateStats();filterBooks();updateTime();
+
+  if(addedCount>0&&prevCount>0)showNotif(`تم اضافة ${addedCount} كتاب جديد عن فلسطين!`);
+}
+
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+function showNotif(msg){const el=document.getElementById('notif');el.textContent=msg;el.style.display='block';setTimeout(()=>el.style.display='none',5000)}
+
+// ══════════════════════════════════════════════════════════
+// الفلترة والعرض
+// ══════════════════════════════════════════════════════════
+function setLang(lang,btn){
+  currentLang=lang;
+  document.querySelectorAll('.fbtn').forEach(b=>b.className='fbtn');
+  if(lang==='all')btn.classList.add('active');else btn.classList.add('a-'+lang);
+  filterBooks();
+}
+
+function filterBooks(){
+  const search=document.getElementById('searchInput').value.toLowerCase();
+  const topic=document.getElementById('topicSel').value;
+  const sort=document.getElementById('sortSel').value;
+
+  let list=ALL_BOOKS.filter(b=>{
+    if(currentLang!=='all'&&b.language!==currentLang)return false;
+    if(topic&&!b.topics.some(t=>t.toLowerCase().includes(topic.toLowerCase())))return false;
+    if(search){
+      const hay=(b.title+' '+b.authors.join(' ')+' '+b.publisher+' '+(b.description||'')).toLowerCase();
+      if(!hay.includes(search))return false;
+    }
+    return true;
+  });
+
+  if(sort==='title')list.sort((a,b)=>a.title.localeCompare(b.title,'ar'));
+  else list.sort((a,b)=>new Date(b.publication_date)-new Date(a.publication_date));
+  renderBooks(list);
+}
+
+function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+
+function renderBooks(books){
+  const grid=document.getElementById('grid');
+
+  if(!books.length&&ALL_BOOKS.length===0){
+    grid.innerHTML='<div class="loader"><div class="spinner"></div><p>جار جلب الكتب...</p></div>';
+    return;
+  }
+  if(!books.length){
+    grid.innerHTML=`<div class="no-res"><div class="emoji">📚</div><p>لا توجد كتب مطابقة</p><p style="font-size:.9em;margin-top:8px;opacity:.7">جرب تغيير الفلتر</p></div>`;
+    return;
+  }
+
+  const hotTopics=['Nakba','Gaza','Genocide','Occupation','Resistance','Hamas','Ethnic Cleansing','Prisoners'];
+
+  grid.innerHTML=books.map(b=>{
+    const lc=`l-${b.language}`;
+    const ll=b.language==='ar'?'عربي':b.language==='fr'?'Francais':'English';
+
+    // ★ تاريخ بارقام عادية
+    const date=fmtDate(b.publication_date);
+
+    // ★ صفحات بارقام عادية
+    const pagesStr=b.pages?String(b.pages):'';
+    const ratingStr=b.rating?b.rating.toFixed(1):'';
+
+    const coverHTML=b.cover
+      ?`<img src="${b.cover}" alt="${esc(b.title)}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/150x200/1a1a1a/ffffff?text=PS'">`
+      :`<div style="width:130px;height:180px;background:linear-gradient(135deg,#c8102e,#007a3d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:4em">🇵🇸</div>`;
+
+    const tagsHTML=b.topics.slice(0,5).map(t=>
+      `<span class="tag ${hotTopics.some(h=>t.includes(h))?'hot':''}">${esc(t)}</span>`
+    ).join('');
+
+    return`
+    <div class="book-card">
+      <div class="cover-wrap">
+        ${coverHTML}
+        <span class="lang-badge ${lc}">${ll}</span>
+        <span class="src-badge">${esc(b.source)}</span>
+      </div>
+      <div class="book-body" dir="rtl">
+        <div class="book-title">${esc(b.title)}</div>
+        <div class="book-author">✍ ${esc(b.authors.slice(0,3).join(', ')||'غير محدد')}</div>
+        <div class="book-pub">🏛 ${esc(b.publisher||'غير محدد')}</div>
+        <div class="book-meta">
+          ${date?`<span>📅 ${date}</span>`:''}
+          ${pagesStr?`<span>📄 ${pagesStr} p</span>`:''}
+          ${ratingStr?`<span>⭐ ${ratingStr}</span>`:''}
+          ${b.isbn?`<span>📋 ISBN</span>`:''}
+        </div>
+        <div class="topics">${tagsHTML}</div>
+        ${b.description?`<div class="book-desc">${esc(b.description)}</div>`:''}
+        <div class="book-actions">
+          ${b.book_url?`<a href="${esc(b.book_url)}" target="_blank" rel="noopener" class="blink bp">🔗 رابط الكتاب</a>`:''}
+          ${b.isbn?`<a href="https://www.worldcat.org/isbn/${b.isbn}" target="_blank" rel="noopener" class="blink bs">📚 WorldCat</a>`:''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════════
+// الاحصائيات - ★ ارقام عادية
+// ══════════════════════════════════════════════════════════
+function updateStats(){
+  document.getElementById('sTotal').textContent=String(ALL_BOOKS.length);
+  document.getElementById('sAr').textContent=String(ALL_BOOKS.filter(b=>b.language==='ar').length);
+  document.getElementById('sEn').textContent=String(ALL_BOOKS.filter(b=>b.language==='en').length);
+  document.getElementById('sFr').textContent=String(ALL_BOOKS.filter(b=>b.language==='fr').length);
+  document.getElementById('sPub').textContent=String(new Set(ALL_BOOKS.map(b=>b.publisher).filter(Boolean)).size);
+  document.getElementById('sSrc').textContent=String(activeSources.size)||'-';
+}
+
+function updateTime(){
+  // ★ ارقام عادية - بدون toLocaleString العربي
+  document.getElementById('lastUp').textContent='اخر تحديث: '+fmtDateTime();
+}
+
+function manualRefresh(){
+  log('Manual refresh');
+  // مسح الكاش لبداية نظيفة عند التحديث اليدوي
+  localStorage.removeItem(CACHE_KEY);
+  ALL_BOOKS=[];
+  fetchAllBooks();
+}
+
+// ══════════════════════════════════════════════════════════
+// نقطة البداية
+// ══════════════════════════════════════════════════════════
+(async function init(){
+  log('Palestine Books Observatory v8 - Extended sources');
+  log(`Queries: EN=${QUERIES.en.length} FR=${QUERIES.fr.length} AR=${QUERIES.ar.length}`);
+
+  try{
+    const raw=localStorage.getItem(CACHE_KEY);
+    if(raw){
+      const cache=JSON.parse(raw);
+      if(cache&&cache.books&&cache.books.length>0){
+        ALL_BOOKS=cache.books;
+        if(cache.sources)cache.sources.forEach(s=>activeSources.add(s));
+        updateStats();filterBooks();updateTime();
+        log(`Loaded ${ALL_BOOKS.length} books from cache`,'success');
+
+        const elapsed=Date.now()-(cache.timestamp||0);
+        if(elapsed<DAILY_MS){
+          const hrs=Math.round((DAILY_MS-elapsed)/3600000);
+          log(`Next update in ~${hrs}h`);
+          setTimeout(()=>fetchAllBooks(),DAILY_MS-elapsed);
+          return;
         }
-    });
+        log('24h passed, updating in background...');
+        fetchAllBooks();
+        return;
+      }
+    }
+  }catch(e){log('Cache read error: '+e.message,'error')}
 
-    // إغلاق النافذة بالضغط خارجها
-    document.getElementById('modalBg').addEventListener('click', (e) => {
-        if (e.target === e.currentTarget) closeModal();
-    });
+  log('No cache, fetching from scratch...');
+  await fetchAllBooks();
+})();
 
-    // محاكاة التحديث اليومي - عرض وقت التحديث
-    console.log(`📚 مرصد كتب الشأن العربي - تم التحديث: ${formatArabicDate(getToday())}`);
-    console.log(`📊 عدد الكتب المتاحة (آخر 12 شهراً): ${getActiveBooks().length}`);
-    console.log(`🗑️ عدد الكتب المستبعدة (تجاوزت السنة): ${allBooks.length - getActiveBooks().length}`);
-});
+setInterval(()=>{log('Daily auto-update');fetchAllBooks()},DAILY_MS);
 </script>
 </body>
 </html>
