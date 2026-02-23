@@ -177,7 +177,7 @@ footer p{font-size:.95em;opacity:.85;margin-bottom:8px;line-height:1.8}
   <h3>مرصد كتب فلسطين</h3>
   <p>Palestine Books Observatory</p>
   <p>يجمع تلقائيا من Google Books, Open Library, Crossref</p>
-  <p style="font-size:.85em;margin-top:12px">2024 - Palestine Books Observatory</p>
+  <p style="font-size:.85em;margin-top:12px">2026 - Palestine Books Observatory</p>
 </footer>
 
 <script>
@@ -218,56 +218,100 @@ const PALESTINE_KEYWORDS=[
   'palestine','palestinian','palestinians','gaza','gazan',
   'west bank','nakba','intifada',
   'ramallah','nablus','hebron','jenin','bethlehem','jericho','tulkarm',
-  'al-aqsa','al aqsa','hamas','plo','pflp','fatah',
+  'rafah','khan yunis','deir al-balah','beit hanoun','beit lahia',
+  'jerusalem','east jerusalem','old city of jerusalem',
+  'sheikh jarrah','silwan',
+  'area a','area b','area c',
+  'al-aqsa','al aqsa','jerusalem governorate',
+  'hamas','plo','pflp','fatah',
+  'bds movement','boycott divestment sanctions',
+  'great march of return','oslo accords',
+  'balfour declaration','sabra and shatila',
+  'right of return','two-state solution','one-state solution',
+  'administrative detention','collective punishment',
+  'forced displacement','annexation',
   'israeli occupation','israeli apartheid',
-  'ethnic cleansing of palestine','settler colonialism palestine',
+  'settler colonialism palestine','zionism','anti-zionism',
+  'idf','iron dome','settlers','outposts',
+
+  // French
   'palestinien','palestinienne','palestiniens',
-  'cisjordanie','bande de gaza','mosquee al-aqsa',
-  'occupation israelienne','colonisation sioniste',
-  'nettoyage ethnique palestine','apartheid israelien',
+  'cisjordanie','bande de gaza','jerusalem-est',
+  'mosquee al-aqsa','occupation israelienne',
+  'apartheid israelien','colonisation sioniste',
   'refugies palestiniens','resistance palestinienne',
+  'blocus de gaza','declaration balfour',
+
+  // Arabic
   'فلسطين','فلسطيني','فلسطينية','فلسطينيون','فلسطينيين',
   'غزة','غزّة','الضفة الغربية','الضفة',
+  'القدس','القدس الشرقية','القدس المحتلة',
+  'المدينة القديمة','حي الشيخ جراح','سلوان',
+  'رفح','خان يونس','دير البلح','بيت حانون','بيت لاهيا',
+  'منطقة أ','منطقة ب','منطقة ج',
   'النكبة','نكبة','الانتفاضة','انتفاضة',
-  'القدس','الاقصى','المسجد الاقصى',
-  'رام الله','نابلس','الخليل','جنين','بيت لحم','اريحا','طولكرم',
-  'حماس','الاحتلال الاسرائيلي','الاحتلال الصهيوني',
+  'انتفاضة الاقصى','مسيرة العودة الكبرى',
+  'اتفاق اوسلو','وعد بلفور',
+  'المسجد الاقصى','الاقصى',
+  'حماس','فتح','منظمة التحرير','الجبهة الشعبية',
+  'الاحتلال الاسرائيلي','الاحتلال الصهيوني',
   'المقاومة الفلسطينية','حق العودة',
-  'اللاجئون الفلسطينيون','اللاجئين الفلسطينيين',
-  'طوفان الاقصى','التطهير العرقي',
-  'الاستيطان','المستوطنات',
-  'جرائم الحرب الاسرائيلية','الابادة',
+  'الاعتقال الاداري','العقاب الجماعي',
+  'التهجير القسري','الضم',
+  'الصهيونية','معاداة الصهيونية',
+  'جيش الاحتلال','القبة الحديدية',
+  'المستوطنات','المستوطنون',
+  'التنسيق الامني'
 ];
 
 const SECONDARY_KEYWORDS=[
   'occupation','apartheid','settler colonial','settler-colonial',
   'ethnic cleansing','genocide','war crimes','blockade','siege',
-  'احتلال','ابارتهايد','استعمار استيطاني','ابادة جماعية',
-  'حصار','جرائم حرب',
-  'colonisation','nettoyage ethnique','genocide','crimes de guerre','blocus',
+  'forced eviction','land confiscation','home demolition',
+  'displacement','human rights violations',
+  'international humanitarian law',
+  'fourth geneva convention',
+  'international court of justice',
+  'international criminal court',
+
+  'colonisation','nettoyage ethnique','crimes de guerre','blocus',
+
+  'احتلال','ابارتهايد','استعمار استيطاني',
+  'ابادة جماعية','حصار','جرائم حرب',
+  'مصادرة الاراضي','هدم المنازل',
+  'انتهاكات حقوق الانسان',
+  'القانون الدولي الانساني',
+  'اتفاقية جنيف الرابعة',
+  'محكمة العدل الدولية',
+  'المحكمة الجنائية الدولية'
 ];
 
 const KNOWN_AUTHORS=[
-  'edward said','ilan pappe','ilan pappe','rashid khalidi',
+  'edward said','ilan pappe','rashid khalidi',
   'norman finkelstein','noam chomsky','nur masalha',
   'joseph massad','sara roy','gideon levy','amira hass',
   'avi shlaim','benny morris','shlomo sand',
   'judith butler','angela davis',
-  'mahmoud darwish','mahmoud darwich','محمود درويش',
-  'ghassan kanafani','غسان كنفاني',
+  'mahmoud darwish','mahmoud darwich',
+  'ghassan kanafani',
+  'azmi bishara','elias sanbar','elias khoury',
+  'leila shahid','jean-pierre filiu',
+  'alain gresh','dominique vidal',
+  'sylvain cypel','farouk mardam-bey',
+  'henry laurens','walid khalidi',
+  'salman abu sittah','mustafa barghouti',
+  'diana buttu','mouin rabbani',
+  'francesca albanese',
+
+  'محمود درويش','غسان كنفاني',
   'ادوارد سعيد','ايلان بابه','ايلان بابيه',
   'رشيد الخالدي','نورمان فينكلشتاين',
   'نور مصالحة','جوزيف مسعد',
-  'عزمي بشارة','azmi bishara',
-  'elias sanbar','elias khoury','الياس خوري',
-  'leila shahid','ليلى شهيد',
-  'jean-pierre filiu','alain gresh',
-  'dominique vidal','sylvain cypel',
-  'farouk mardam-bey','فاروق مردم بك',
-  'henry laurens',
+  'عزمي بشارة','الياس خوري',
+  'ليلى شهيد','فاروق مردم بك',
   'عبد الباري عطوان','وليد الخالدي',
   'سلمان ابو ستة','مصطفى البرغوثي',
-  'عبد الوهاب المسيري',
+  'عبد الوهاب المسيري'
 ];
 
 function isPalestineBook(title,description,authors){
