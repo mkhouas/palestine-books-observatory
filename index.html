@@ -3,59 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مرصد كتب فلسطين | Palestine Books Observatory 🇵🇸</title>
+<title>مرصد كتب الشأن الأفريقي | Africa Books Observatory 🌍</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#f5f5f5;--card:#fff;--text:#1a1a1a;--text2:#666;
-  --red:#c8102e;--green:#007a3d;--black:#000;
-  --ar:#007a3d;--fr:#2563eb;--en:#7c3aed;
-  --shadow:0 2px 24px rgba(0,0,0,.08);--radius:18px
+--bg:#f5f5f5;--card:#fff;--text:#1a1a1a;--text2:#666;
+--gold:#D4A017;--green:#009639;--black:#000;
+--ar:#009639;--fr:#2563eb;--en:#7c3aed;
+--shadow:0 2px 24px rgba(0,0,0,.08);--radius:18px
 }
 body{font-family:'Segoe UI','Cairo',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
-.hero{background:linear-gradient(135deg,var(--black) 0%,var(--red) 50%,var(--green) 100%);color:#fff;padding:50px 20px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--black) 0%,var(--black) 33%,#fff 33%,#fff 50%,var(--green) 50%,var(--green) 100%);opacity:.08;pointer-events:none}
+.hero{background:linear-gradient(135deg,#1B5E20 0%,#D4A017 50%,#E65100 100%);color:#fff;padding:50px 20px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#1B5E20 0%,#1B5E20 33%,#D4A017 33%,#D4A017 66%,#E65100 66%,#E65100 100%);opacity:.08;pointer-events:none}
 .hero-c{position:relative;z-index:2}
 .hero h1{font-size:2.5em;font-weight:900;margin-bottom:12px;text-shadow:2px 2px 8px rgba(0,0,0,.3)}
 .hero .sub{font-size:1.2em;opacity:.95;margin-bottom:20px;font-weight:500}
 .hero .info{font-size:.95em;opacity:.9;max-width:800px;margin:0 auto;line-height:1.8}
 .stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;max-width:1400px;margin:-35px auto 30px;padding:0 20px;position:relative;z-index:10}
-.stat-card{background:var(--card);border-radius:var(--radius);padding:22px 16px;text-align:center;box-shadow:var(--shadow);border-top:4px solid var(--red);transition:transform .3s}
+.stat-card{background:var(--card);border-radius:var(--radius);padding:22px 16px;text-align:center;box-shadow:var(--shadow);border-top:4px solid var(--green);transition:transform .3s}
 .stat-card:hover{transform:translateY(-4px)}
 .stat-card .icon{font-size:2em;margin-bottom:6px}
-.stat-card .num{font-size:2em;font-weight:900;color:var(--red);line-height:1}
+.stat-card .num{font-size:2em;font-weight:900;color:var(--green);line-height:1}
 .stat-card .lbl{font-size:.85em;color:var(--text2);margin-top:6px;font-weight:600}
 .controls{max-width:1400px;margin:0 auto 28px;padding:0 20px}
 .search-row{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
 .search-box{flex:1;min-width:280px;padding:14px 24px;border-radius:50px;border:2px solid #e0e0e0;font-size:1.05em;outline:none;transition:all .3s;background:#fff;direction:rtl}
-.search-box:focus{border-color:var(--red);box-shadow:0 0 0 4px rgba(200,16,46,.1)}
+.search-box:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(0,150,57,.1)}
 .filter-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .filter-label{font-size:.95em;font-weight:700;color:var(--text);margin-left:8px}
 .fbtn{padding:10px 24px;border-radius:50px;border:2px solid #e0e0e0;background:#fff;cursor:pointer;font-size:.95em;font-weight:700;transition:all .3s;color:var(--text)}
-.fbtn:hover{border-color:var(--red);color:var(--red)}
-.fbtn.active{background:var(--red);color:#fff;border-color:var(--red)}
+.fbtn:hover{border-color:var(--green);color:var(--green)}
+.fbtn.active{background:var(--green);color:#fff;border-color:var(--green)}
 .fbtn.a-ar{background:var(--ar);color:#fff;border-color:var(--ar)}
 .fbtn.a-fr{background:var(--fr);color:#fff;border-color:var(--fr)}
 .fbtn.a-en{background:var(--en);color:#fff;border-color:var(--en)}
 .sel{padding:10px 20px;border-radius:50px;border:2px solid #e0e0e0;background:#fff;font-size:.95em;font-weight:600;cursor:pointer;outline:none}
-.sel:focus{border-color:var(--red)}
+.sel:focus{border-color:var(--green)}
 .update-bar{max-width:1400px;margin:0 auto 20px;padding:0 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 .live{display:flex;align-items:center;gap:8px;font-size:.9em;color:var(--green);font-weight:700}
 .live-dot{width:10px;height:10px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
 .time{font-size:.85em;color:var(--text2)}
-.rbtn{padding:10px 24px;border-radius:50px;border:none;background:var(--red);color:#fff;cursor:pointer;font-size:.9em;font-weight:700;transition:all .3s;box-shadow:0 2px 8px rgba(200,16,46,.2)}
-.rbtn:hover{background:#a00c24}
+.rbtn{padding:10px 24px;border-radius:50px;border:none;background:var(--green);color:#fff;cursor:pointer;font-size:.9em;font-weight:700;transition:all .3s;box-shadow:0 2px 8px rgba(0,150,57,.2)}
+.rbtn:hover{background:#007a2e}
 .rbtn:disabled{opacity:.5;cursor:not-allowed}
 .pbar{max-width:1400px;margin:0 auto 16px;padding:0 20px;display:none}
 .ptrack{height:6px;background:#e0e0e0;border-radius:6px;overflow:hidden}
-.pfill{height:100%;background:linear-gradient(90deg,var(--red),var(--green));border-radius:6px;transition:width .5s;width:0}
+.pfill{height:100%;background:linear-gradient(90deg,var(--green),var(--gold));border-radius:6px;transition:width .5s;width:0}
 .ptxt{font-size:.8em;color:var(--text2);margin-top:6px;text-align:center;font-weight:600}
 .books-grid{max-width:1400px;margin:0 auto;padding:0 20px 50px;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
-.book-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border-top:4px solid var(--red);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column}
+.book-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border-top:4px solid var(--green);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column}
 .book-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,.15)}
 .cover-wrap{position:relative;height:240px;background:linear-gradient(135deg,#1a1a1a,#2c2c2c);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.cover-wrap::before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--black) 0%,transparent 40%),linear-gradient(180deg,var(--green) 0%,transparent 40%);opacity:.2}
+.cover-wrap::before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#1B5E20 0%,transparent 40%),linear-gradient(180deg,#D4A017 0%,transparent 40%);opacity:.2}
 .cover-wrap img{height:200px;max-width:150px;object-fit:cover;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.5);transition:transform .4s;position:relative;z-index:2}
 .book-card:hover .cover-wrap img{transform:scale(1.05)}
 .lang-badge{position:absolute;top:14px;right:14px;padding:6px 16px;border-radius:30px;font-size:.8em;font-weight:800;color:#fff;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,.3)}
@@ -63,27 +63,27 @@ body{font-family:'Segoe UI','Cairo',Tahoma,Arial,sans-serif;background:var(--bg)
 .src-badge{position:absolute;bottom:12px;left:12px;padding:4px 12px;border-radius:12px;font-size:.7em;background:rgba(255,255,255,.2);color:rgba(255,255,255,.9);backdrop-filter:blur(6px);font-weight:700;z-index:3}
 .book-body{padding:20px;flex:1;display:flex;flex-direction:column}
 .book-title{font-size:1.1em;font-weight:800;line-height:1.5;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:10px}
-.book-author{font-size:.95em;color:var(--red);font-weight:700;margin-bottom:6px}
+.book-author{font-size:.95em;color:var(--green);font-weight:700;margin-bottom:6px}
 .book-pub{font-size:.85em;color:var(--text2);margin-bottom:10px}
 .book-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:.8em;color:var(--text2);margin-bottom:12px}
 .book-meta span{display:flex;align-items:center;gap:5px;font-weight:600}
 .topics{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
 .tag{padding:4px 14px;border-radius:30px;font-size:.75em;background:#f0f9f4;color:var(--green);font-weight:700;border:1px solid #d1f0dd}
-.tag.hot{background:#fef2f2;color:var(--red);border-color:#fecaca}
+.tag.hot{background:#fff3e0;color:#E65100;border-color:#ffe0b2}
 .book-desc{font-size:.88em;color:var(--text2);line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:14px}
 .book-actions{margin-top:auto;display:flex;gap:10px}
 .blink{flex:1;padding:12px;text-align:center;border-radius:14px;font-size:.9em;font-weight:700;text-decoration:none;transition:all .3s}
-.bp{background:var(--black);color:#fff}.bp:hover{background:var(--red);transform:translateY(-2px)}
+.bp{background:var(--black);color:#fff}.bp:hover{background:var(--green);transform:translateY(-2px)}
 .bs{background:#f5f5f5;color:var(--text);border:2px solid #e0e0e0}.bs:hover{background:#eee;border-color:var(--green)}
 .loader{text-align:center;padding:80px;grid-column:1/-1}
-.spinner{width:60px;height:60px;border:5px solid #e0e0e0;border-top-color:var(--red);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
+.spinner{width:60px;height:60px;border:5px solid #e0e0e0;border-top-color:var(--green);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loader p{font-size:1.1em;color:var(--text2);font-weight:600}
 .no-res{text-align:center;padding:80px;grid-column:1/-1;color:var(--text2)}
 .no-res .emoji{font-size:5em;margin-bottom:16px}
 .notif{position:fixed;bottom:20px;right:20px;background:var(--green);color:#fff;padding:16px 24px;border-radius:14px;font-weight:700;font-size:.95em;box-shadow:0 8px 32px rgba(0,0,0,.3);z-index:1000;display:none;animation:slideUp .5s ease-out}
 @keyframes slideUp{from{transform:translateY(100px);opacity:0}to{transform:translateY(0);opacity:1}}
-footer{background:linear-gradient(135deg,var(--black),#2c2c2c);color:#fff;text-align:center;padding:40px 20px;margin-top:40px}
+footer{background:linear-gradient(135deg,#1B5E20,#2c2c2c);color:#fff;text-align:center;padding:40px 20px;margin-top:40px}
 footer h3{font-size:1.5em;margin-bottom:12px;font-weight:800}
 footer p{font-size:.95em;opacity:.85;margin-bottom:8px;line-height:1.8}
 @media(max-width:768px){.hero h1{font-size:1.8em}.books-grid{grid-template-columns:1fr}.stats-bar{grid-template-columns:repeat(2,1fr)}.filter-row{justify-content:center}}
@@ -93,107 +93,121 @@ footer p{font-size:.95em;opacity:.85;margin-bottom:8px;line-height:1.8}
 
 <!-- ══════════ الترويسة ══════════ -->
 <div class="hero">
-  <div class="hero-c">
-    <h1>مرصد كتب فلسطين</h1>
-    <p class="sub">Palestine Books Observatory</p>
-    <p class="info">مرصد متخصص يجمع تلقائيا الكتب المتعلقة بالقضية الفلسطينية المنشورة في الثلاث سنوات الأخيرة<br>بالعربية والانجليزية والفرنسية</p>
-  </div>
+<div class="hero-c">
+<h1>🌍 مرصد كتب الشأن الأفريقي</h1>
+<p class="sub">Africa Books Observatory</p>
+<p class="info">مرصد متخصص يجمع تلقائياً الكتب المتعلقة بالشأن الأفريقي المنشورة في آخر 12 شهراً<br>بالعربية والإنجليزية والفرنسية</p>
+</div>
 </div>
 
-<!-- ══════════ الاحصائيات ══════════ -->
+<!-- ══════════ الإحصائيات ══════════ -->
 <div class="stats-bar">
-  <div class="stat-card"><div class="icon">📚</div><div class="num" id="sTotal">-</div><div class="lbl">اجمالي الكتب</div></div>
-  <div class="stat-card"><div class="icon">🇵🇸</div><div class="num" id="sAr">-</div><div class="lbl">عربي</div></div>
-  <div class="stat-card"><div class="icon">🇬🇧</div><div class="num" id="sEn">-</div><div class="lbl">English</div></div>
-  <div class="stat-card"><div class="icon">🇫🇷</div><div class="num" id="sFr">-</div><div class="lbl">Francais</div></div>
-  <div class="stat-card"><div class="icon">🏛</div><div class="num" id="sPub">-</div><div class="lbl">ناشر</div></div>
-  <div class="stat-card"><div class="icon">🔍</div><div class="num" id="sSrc">-</div><div class="lbl">مصدر</div></div>
+<div class="stat-card"><div class="icon">📚</div><div class="num" id="sTotal">-</div><div class="lbl">إجمالي الكتب</div></div>
+<div class="stat-card"><div class="icon">🇸🇦</div><div class="num" id="sAr">-</div><div class="lbl">عربي</div></div>
+<div class="stat-card"><div class="icon">🇬🇧</div><div class="num" id="sEn">-</div><div class="lbl">English</div></div>
+<div class="stat-card"><div class="icon">🇫🇷</div><div class="num" id="sFr">-</div><div class="lbl">Français</div></div>
+<div class="stat-card"><div class="icon">🏛</div><div class="num" id="sPub">-</div><div class="lbl">ناشر</div></div>
+<div class="stat-card"><div class="icon">🔍</div><div class="num" id="sSrc">-</div><div class="lbl">مصدر</div></div>
 </div>
 
 <!-- ══════════ الفلاتر ══════════ -->
 <div class="controls">
-  <div class="search-row">
-    <input type="text" class="search-box" id="searchInput" placeholder="🔍 ابحث عن كتاب، مؤلف، او ناشر..." oninput="filterBooks()">
-  </div>
-  <div class="filter-row">
-    <span class="filter-label">اللغة:</span>
-    <button class="fbtn active" onclick="setLang('all',this)">الكل</button>
-    <button class="fbtn" onclick="setLang('ar',this)"> عربي</button>
-    <button class="fbtn" onclick="setLang('en',this)"> English</button>
-    <button class="fbtn" onclick="setLang('fr',this)"> Francais</button>
+<div class="search-row">
+<input type="text" class="search-box" id="searchInput" placeholder="🔍 ابحث عن كتاب، مؤلف، أو ناشر..." oninput="filterBooks()">
+</div>
+<div class="filter-row">
+<span class="filter-label">اللغة:</span>
+<button class="fbtn active" onclick="setLang('all',this)">الكل</button>
+<button class="fbtn" onclick="setLang('ar',this)">عربي</button>
+<button class="fbtn" onclick="setLang('en',this)">English</button>
+<button class="fbtn" onclick="setLang('fr',this)">Français</button>
 
-    <span class="filter-label" style="margin-right:20px">الموضوع:</span>
-    <select class="sel" id="topicSel" onchange="filterBooks()">
-      <option value="">كل المواضيع </option>
-      <option value="Gaza">غزة </option>
-      <option value="History">التاريخ </option>
-      <option value="Nakba">النكبة </option>
-      <option value="Genocide">الابادة </option>
-      <option value="Occupation">الاحتلال </option>
-      <option value="Resistance">المقاومة </option>
-      <option value="Jerusalem">القدس </option>
-      <option value="Refugees">اللاجئون </option>
-      <option value="International Law">القانون الدولي</option>
-      <option value="Literature">الادب </option>
-      <option value="Apartheid">الابارتهايد</option>
-      <option value="Zionism">الصهيونية </option>
-    </select>
+<span class="filter-label" style="margin-right:20px">الموضوع:</span>
+<select class="sel" id="topicSel" onchange="filterBooks()">
+<option value="">كل المواضيع</option>
+<option value="Politics">السياسة</option>
+<option value="History">التاريخ</option>
+<option value="Economy">الاقتصاد</option>
+<option value="Development">التنمية</option>
+<option value="Conflict">النزاعات</option>
+<option value="Sahel">الساحل</option>
+<option value="Horn of Africa">القرن الأفريقي</option>
+<option value="North Africa">شمال أفريقيا</option>
+<option value="West Africa">غرب أفريقيا</option>
+<option value="East Africa">شرق أفريقيا</option>
+<option value="Southern Africa">الجنوب الأفريقي</option>
+<option value="Central Africa">وسط أفريقيا</option>
+<option value="Migration">الهجرة</option>
+<option value="Security">الأمن</option>
+<option value="Culture">الثقافة</option>
+<option value="Literature">الأدب</option>
+<option value="Health">الصحة</option>
+<option value="Environment">البيئة</option>
+<option value="Governance">الحوكمة</option>
+<option value="Pan-Africanism">الوحدة الأفريقية</option>
+</select>
 
-    <span class="filter-label" style="margin-right:20px">الترتيب:</span>
-    <select class="sel" id="sortSel" onchange="filterBooks()">
-      <option value="newest">الاحدث </option>
-      <option value="oldest">الاقدم </option>
-      <option value="rating">التقييم </option>
-      <option value="most_pages">الأكثر صفحات </option>
-      <option value="least_pages">الأقل صفحات </option>
-      <option value="title">العنوان </option>
-    </select>
-  </div>
+<span class="filter-label" style="margin-right:20px">الترتيب:</span>
+<select class="sel" id="sortSel" onchange="filterBooks()">
+<option value="newest">الأحدث</option>
+<option value="oldest">الأقدم</option>
+<option value="rating">التقييم</option>
+<option value="most_pages">الأكثر صفحات</option>
+<option value="least_pages">الأقل صفحات</option>
+<option value="title">العنوان</option>
+</select>
+</div>
 </div>
 
 <!-- ══════════ شريط التحديث ══════════ -->
 <div class="update-bar">
-  <div class="live"><span class="live-dot"></span><span>تحديث يومي تلقائي</span></div>
-  <span class="time" id="lastUp">جاري التحميل...</span>
-  <button class="rbtn" id="rBtn" onclick="manualRefresh()">🔄 تحديث الان</button>
+<div class="live"><span class="live-dot"></span><span>تحديث يومي تلقائي</span></div>
+<span class="time" id="lastUp">جاري التحميل...</span>
+<button class="rbtn" id="rBtn" onclick="manualRefresh()">🔄 تحديث الآن</button>
 </div>
 
 <!-- ══════════ شريط التقدم ══════════ -->
 <div class="pbar" id="pbar">
-  <div class="ptrack"><div class="pfill" id="pfill"></div></div>
-  <div class="ptxt" id="ptxt">جاري البحث...</div>
+<div class="ptrack"><div class="pfill" id="pfill"></div></div>
+<div class="ptxt" id="ptxt">جاري البحث...</div>
 </div>
 
 <!-- ══════════ شبكة الكتب ══════════ -->
 <div class="books-grid" id="grid">
-  <div class="loader"><div class="spinner"></div><p>جار تحميل الكتب...</p></div>
+<div class="loader"><div class="spinner"></div><p>جار تحميل الكتب...</p></div>
 </div>
 
-<!-- ══════════ اشعار ══════════ -->
+<!-- ══════════ إشعار ══════════ -->
 <div class="notif" id="notif"></div>
 
 <!-- ══════════ Footer ══════════ -->
 <footer>
-  <h3>مرصد كتب فلسطين</h3>
-  <p>Palestine Books Observatory</p>
-  <p>يجمع تلقائيا من Google Books, Open Library, Crossref</p>
-  <p style="font-size:.85em;margin-top:12px">2026 - Palestine Books Observatory</p>
+<h3>🌍 مرصد كتب الشأن الأفريقي</h3>
+<p>Africa Books Observatory</p>
+<p>يجمع تلقائياً من Google Books, Open Library, Crossref</p>
+<p style="font-size:.85em;margin-top:12px">2025 - Africa Books Observatory</p>
 </footer>
 
 <script>
-// ══════════════════════════════════════════════════════════
-// مرصد كتب فلسطين v9
-// ══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// مرصد كتب الشأن الأفريقي v1
+// ═══════════════════════════════════════════════════════════
 
 let ALL_BOOKS=[];
 let currentLang='all';
 let isUpdating=false;
 let activeSources=new Set();
 const DAILY_MS=24*60*60*1000;
-const CACHE_KEY='pbooks_v9';
-const MIN_YEAR=2023;
+const CACHE_KEY='abooks_v1';
 
-// ★ ارقام عادية
+// ★ حد الـ 12 شهر: نحسب التاريخ الذي كان قبل 12 شهراً بالضبط
+function getMinDate(){
+  const d=new Date();
+  d.setMonth(d.getMonth()-12);
+  return d;
+}
+
+// ★ أرقام عادية
 function fmtDate(dateStr){
   if(!dateStr)return'';
   try{
@@ -212,133 +226,235 @@ function fmtDateTime(){
   return d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear()+', '+h+':'+m;
 }
 
-// ══════════ فلتر فلسطين الصارم ══════════
+// ══════════ فلتر الشأن الأفريقي الصارم ══════════
 
-const PALESTINE_KEYWORDS=[
-  'palestine','palestinian','palestinians','gaza','gazan',
-  'west bank','nakba','intifada',
-  'ramallah','nablus','hebron','jenin','bethlehem','jericho','tulkarm',
-  'rafah','khan yunis','deir al-balah','beit hanoun','beit lahia',
-  'jerusalem','east jerusalem','old city of jerusalem',
-  'sheikh jarrah','silwan',
-  'area a','area b','area c',
-  'al-aqsa','al aqsa','jerusalem governorate',
-  'hamas','plo','pflp','fatah',
-  'bds movement','boycott divestment sanctions',
-  'great march of return','oslo accords',
-  'balfour declaration','sabra and shatila',
-  'right of return','two-state solution','one-state solution',
-  'administrative detention','collective punishment',
-  'forced displacement','annexation',
-  'israeli occupation','israeli apartheid',
-  'settler colonialism palestine','zionism','anti-zionism',
-  'idf','iron dome','settlers','outposts',
+const AFRICA_KEYWORDS=[
+  // English
+  'africa','african','africans','sub-saharan','subsaharan',
+  'west africa','east africa','north africa','southern africa','central africa',
+  'sahel','saharan','maghreb','maghrib',
+  'african union','AU summit','pan-african','pan-africanism',
+  'afrocentrism','afropolitanism',
+  // Countries
+  'nigeria','nigerian','ethiopia','ethiopian','kenya','kenyan',
+  'south africa','south african','ghana','ghanaian',
+  'tanzania','tanzanian','uganda','ugandan',
+  'senegal','senegalese','cameroon','cameroonian',
+  'ivory coast','cote d\'ivoire','ivorian',
+  'mozambique','mozambican','madagascar','malagasy',
+  'angola','angolan','mali','malian',
+  'niger','nigerien','burkina faso','burkinabe',
+  'chad','chadian','sudan','sudanese','south sudan',
+  'somalia','somali','somaliland',
+  'eritrea','eritrean','djibouti','djiboutian',
+  'rwanda','rwandan','burundi','burundian',
+  'congo','congolese','drc','kinshasa','brazzaville',
+  'zimbabwe','zimbabwean','zambia','zambian',
+  'malawi','malawian','botswana','batswana',
+  'namibia','namibian','lesotho','basotho','eswatini','swazi',
+  'morocco','moroccan','algeria','algerian',
+  'tunisia','tunisian','libya','libyan','egypt','egyptian',
+  'mauritania','mauritanian','mauritius','mauritian',
+  'sierra leone','sierra leonean','liberia','liberian',
+  'guinea','guinean','guinea-bissau','bissau-guinean',
+  'gambia','gambian','cape verde','cabo verde',
+  'togo','togolese','benin','beninese',
+  'gabon','gabonese','equatorial guinea',
+  'sao tome','comoros','comorian','seychelles',
+  'horn of africa','great lakes africa','lake chad',
+  'sahara','western sahara','sahrawi',
+  'addis ababa','nairobi','lagos','johannesburg','cairo','casablanca',
+  'accra','dakar','abuja','pretoria','khartoum','mogadishu',
+  'kinshasa','luanda','maputo','dar es salaam','kampala',
+  'abidjan','douala','yaounde','bamako','ouagadougou','niamey',
+  'ndjamena','kigali','bujumbura','juba','asmara',
+  'tripoli','tunis','algiers','rabat',
+  // Organizations
+  'ecowas','sadc','igad','comesa','eac','cemac','uemoa','waemu',
+  'nepad','afdb','african development bank',
+  'african continental free trade','afcfta',
+  // Issues
+  'boko haram','al-shabaab','al shabaab',
+  'african migration','african diaspora',
+  'african governance','african democracy',
+  'african economy','african development',
+  'african conflict','african security',
+  'african literature','african cinema',
+  'african art','african culture','african music',
+  'african health','african agriculture',
+  'african trade','african integration',
+  'decolonization africa','colonialism africa',
+  'postcolonial africa','neocolonialism',
+  'apartheid','mandela','nelson mandela',
+  'african youth','african women',
+  'african education','african technology',
+  'african urbanization','african climate',
 
   // French
-  'palestinien','palestinienne','palestiniens',
-  'cisjordanie','bande de gaza','jerusalem-est',
-  'mosquee al-aqsa','occupation israelienne',
-  'apartheid israelien','colonisation sioniste',
-  'refugies palestiniens','resistance palestinienne',
-  'blocus de gaza','declaration balfour',
+  'afrique','africain','africaine','africains','africaines',
+  'afrique de l\'ouest','afrique de l\'est','afrique du nord',
+  'afrique australe','afrique centrale','afrique subsaharienne',
+  'union africaine','panafricain','panafricanisme',
+  'francophone africain','francophonie afrique',
+  'cedeao','uemoa','franc cfa',
+  'sahel','sahelien','sahelienne',
+  'migration africaine','diaspora africaine',
+  'gouvernance africaine','democratie africaine',
+  'economie africaine','developpement africain',
+  'conflit africain','securite africaine',
+  'litterature africaine','cinema africain',
+  'decolonisation','colonialisme','postcolonial',
+  'neocolonialisme','independence africaine',
+  'jeunesse africaine','femmes africaines',
 
   // Arabic
-  'فلسطين','فلسطيني','فلسطينية','فلسطينيون','فلسطينيين',
-  'غزة','غزّة','الضفة الغربية','الضفة',
-  'القدس','القدس الشرقية','القدس المحتلة',
-  'المدينة القديمة','حي الشيخ جراح','سلوان',
-  'رفح','خان يونس','دير البلح','بيت حانون','بيت لاهيا',
-  'منطقة أ','منطقة ب','منطقة ج',
-  'النكبة','نكبة','الانتفاضة','انتفاضة',
-  'انتفاضة الاقصى','مسيرة العودة الكبرى',
-  'اتفاق اوسلو','وعد بلفور',
-  'المسجد الاقصى','الاقصى',
-  'حماس','فتح','منظمة التحرير','الجبهة الشعبية',
-  'الاحتلال الاسرائيلي','الاحتلال الصهيوني',
-  'المقاومة الفلسطينية','حق العودة',
-  'الاعتقال الاداري','العقاب الجماعي',
-  'التهجير القسري','الضم',
-  'الصهيونية','معاداة الصهيونية',
-  'جيش الاحتلال','القبة الحديدية',
-  'المستوطنات','المستوطنون',
-  'التنسيق الامني'
+  'أفريقيا','أفريقي','أفريقية','الأفريقي','الأفريقية',
+  'افريقيا','افريقي','افريقية','الافريقي','الافريقية',
+  'غرب أفريقيا','شرق أفريقيا','شمال أفريقيا',
+  'جنوب أفريقيا','وسط أفريقيا',
+  'الاتحاد الأفريقي','الاتحاد الافريقي',
+  'الوحدة الأفريقية','الوحدة الافريقية',
+  'القارة الأفريقية','القارة الافريقية','القارة السمراء',
+  'الساحل الأفريقي','الساحل الافريقي','منطقة الساحل',
+  'القرن الأفريقي','القرن الافريقي',
+  'المغرب العربي','شمال افريقيا',
+  'نيجيريا','إثيوبيا','اثيوبيا','كينيا','غانا',
+  'تنزانيا','أوغندا','اوغندا','السنغال','الكاميرون',
+  'ساحل العاج','كوت ديفوار',
+  'موزمبيق','مدغشقر','أنغولا','انغولا',
+  'مالي','النيجر','بوركينا فاسو',
+  'تشاد','السودان','جنوب السودان',
+  'الصومال','صومالي','أرض الصومال',
+  'إريتريا','اريتريا','جيبوتي',
+  'رواندا','بوروندي','الكونغو',
+  'جمهورية الكونغو الديمقراطية',
+  'زيمبابوي','زامبيا','ملاوي',
+  'بوتسوانا','ناميبيا','ليسوتو','إسواتيني',
+  'المغرب','الجزائر','تونس','ليبيا','مصر',
+  'موريتانيا','موريشيوس',
+  'سيراليون','ليبيريا','غينيا','غامبيا',
+  'الرأس الأخضر','توغو','بنين',
+  'الغابون','غينيا الاستوائية',
+  'جزر القمر','سيشل',
+  'بوكو حرام','حركة الشباب',
+  'الهجرة الأفريقية','الشتات الأفريقي',
+  'التنمية الأفريقية','الاقتصاد الأفريقي',
+  'الحوكمة الأفريقية','الديمقراطية الأفريقية',
+  'الأدب الأفريقي','الثقافة الأفريقية',
+  'الاستعمار','ما بعد الاستعمار',
+  'الاستعمار الجديد','التحرر الأفريقي',
+  'مانديلا','نيلسون مانديلا',
+  'الشباب الأفريقي','المرأة الأفريقية',
+  'إيكواس','الإيكواس','سادك','إيغاد',
+  'البنك الأفريقي للتنمية',
+  'منطقة التجارة الحرة القارية الأفريقية'
 ];
 
-const SECONDARY_KEYWORDS=[
-  'occupation','apartheid','settler colonial','settler-colonial',
-  'ethnic cleansing','genocide','war crimes','blockade','siege',
-  'forced eviction','land confiscation','home demolition',
-  'displacement','human rights violations',
-  'international humanitarian law',
-  'fourth geneva convention',
-  'international court of justice',
-  'international criminal court',
+const AFRICA_SECONDARY_KEYWORDS=[
+  'decolonization','postcolonial','neocolonialism',
+  'colonialism','independence','liberation movement',
+  'tribal conflict','ethnic conflict','civil war',
+  'coup','military junta','state building',
+  'humanitarian crisis','famine','drought',
+  'natural resources','oil','minerals','mining',
+  'foreign aid','development aid','ngos',
+  'peacekeeping','un mission',
+  'terrorism','extremism','jihadism',
+  'climate change','desertification',
+  'urbanization','population growth',
+  'corruption','good governance',
+  'elections','political transition',
+  'human rights','democracy',
+  'trade agreement','economic integration',
+  'debt','structural adjustment',
+  'education','literacy',
+  'health systems','malaria','ebola',
+  'food security','agriculture',
 
-  'colonisation','nettoyage ethnique','crimes de guerre','blocus',
+  // French
+  'décolonisation','postcolonial','néocolonialisme',
+  'colonialisme','indépendance','mouvement de libération',
+  'conflit ethnique','guerre civile',
+  'coup d\'état','junte militaire',
+  'crise humanitaire','famine','sécheresse',
+  'ressources naturelles','pétrole','minerais',
+  'aide au développement','maintien de la paix',
+  'terrorisme','extrémisme','djihadisme',
+  'changement climatique','désertification',
+  'urbanisation','croissance démographique',
+  'corruption','bonne gouvernance',
+  'élections','transition politique',
+  'droits de l\'homme','démocratie',
 
-  'احتلال','ابارتهايد','استعمار استيطاني',
-  'ابادة جماعية','حصار','جرائم حرب',
-  'مصادرة الاراضي','هدم المنازل',
-  'انتهاكات حقوق الانسان',
-  'القانون الدولي الانساني',
-  'اتفاقية جنيف الرابعة',
-  'محكمة العدل الدولية',
-  'المحكمة الجنائية الدولية'
+  // Arabic
+  'استعمار','ما بعد الاستعمار','استعمار جديد',
+  'استقلال','حركة تحرر',
+  'نزاع عرقي','حرب أهلية','انقلاب','انقلاب عسكري',
+  'أزمة إنسانية','مجاعة','جفاف',
+  'موارد طبيعية','نفط','معادن','تعدين',
+  'مساعدات تنموية','حفظ السلام',
+  'إرهاب','تطرف','جهادية',
+  'تغير مناخي','تصحر',
+  'تحضر','نمو سكاني',
+  'فساد','حوكمة رشيدة',
+  'انتخابات','انتقال سياسي',
+  'حقوق الإنسان','ديمقراطية'
 ];
 
-const KNOWN_AUTHORS=[
-  'edward said','ilan pappe','rashid khalidi',
-  'norman finkelstein','noam chomsky','nur masalha',
-  'joseph massad','sara roy','gideon levy','amira hass',
-  'avi shlaim','benny morris','shlomo sand',
-  'judith butler','angela davis',
-  'mahmoud darwish','mahmoud darwich',
-  'ghassan kanafani',
-  'azmi bishara','elias sanbar','elias khoury',
-  'leila shahid','jean-pierre filiu',
-  'alain gresh','dominique vidal',
-  'sylvain cypel','farouk mardam-bey',
-  'henry laurens','walid khalidi',
-  'salman abu sittah','mustafa barghouti',
-  'diana buttu','mouin rabbani',
-  'francesca albanese',
+const KNOWN_AFRICA_AUTHORS=[
+  'chinua achebe','wole soyinka','ngugi wa thiong\'o',
+  'chimamanda ngozi adichie','achille mbembe',
+  'frantz fanon','ama ata aidoo','ben okri',
+  'nuruddin farah','nadine gordimer','j.m. coetzee',
+  'tsitsi dangarembga','alain mabanckou',
+  'leonora miano','fatou diome','aminata sow fall',
+  'ousmane sembene','cheikh anta diop',
+  'valentin mudimbe','mahmood mamdani',
+  'ali mazrui','kwame nkrumah','julius nyerere',
+  'patrice lumumba','thomas sankara',
+  'felwine sarr','kako nubukpo','carlos lopes',
+  'celestin monga','dambisa moyo',
+  'abdourahman waberi','boubacar boris diop',
+  'tierno monenembo','yambo ouologuem',
+  'ayi kwei armah','bessie head',
+  'pepetela','mia couto','jose eduardo agualusa',
+  'tahar ben jelloun','assia djebar',
+  'kateb yacine','mohammed dib',
+  'leila slimani','kamel daoud',
 
-  'محمود درويش','غسان كنفاني',
-  'ادوارد سعيد','ايلان بابه','ايلان بابيه',
-  'رشيد الخالدي','نورمان فينكلشتاين',
-  'نور مصالحة','جوزيف مسعد',
-  'عزمي بشارة','الياس خوري',
-  'ليلى شهيد','فاروق مردم بك',
-  'عبد الباري عطوان','وليد الخالدي',
-  'سلمان ابو ستة','مصطفى البرغوثي',
-  'عبد الوهاب المسيري'
+  'تشينوا أتشيبي','وول سوينكا',
+  'نغوغي وا ثيونغو','شيماماندا أديتشي',
+  'أشيل مبيمبي','فرانتز فانون',
+  'علي مزروعي','كوامي نكروما',
+  'توماس سانكارا','باتريس لومومبا',
+  'فلوين سار','محمود ممداني',
+  'شيخ أنتا ديوب','ألان مابانكو',
+  'الطاهر بن جلون','آسيا جبار','كاتب ياسين',
+  'ليلى سليماني','كمال داود'
 ];
 
-function isPalestineBook(title,description,authors){
+function isAfricaBook(title,description,authors){
   const tl=(title||'').toLowerCase();
   const dl=(description||'').toLowerCase();
   const al=(authors||[]).join(' ').toLowerCase();
   const all=tl+' '+dl;
 
-  for(const kw of PALESTINE_KEYWORDS){
+  // Primary keyword in title = strong match
+  for(const kw of AFRICA_KEYWORDS){
     if(tl.includes(kw.toLowerCase()))return{pass:true};
   }
 
+  // 2+ primary keywords in description
   let hits=0;
-  for(const kw of PALESTINE_KEYWORDS){
+  for(const kw of AFRICA_KEYWORDS){
     if(dl.includes(kw.toLowerCase()))hits++;
   }
   if(hits>=2)return{pass:true};
 
-  if(/israel|اسرائيل|israel/i.test(tl)){
-    for(const kw of SECONDARY_KEYWORDS){
-      if(all.includes(kw.toLowerCase()))return{pass:true};
-    }
-  }
-
-  for(const author of KNOWN_AUTHORS){
-    if(al.includes(author)){
-      const hasHint=PALESTINE_KEYWORDS.concat(SECONDARY_KEYWORDS).some(kw=>all.includes(kw.toLowerCase()));
+  // Known author + any hint
+  for(const author of KNOWN_AFRICA_AUTHORS){
+    if(al.includes(author.toLowerCase())){
+      const hasHint=AFRICA_KEYWORDS.concat(AFRICA_SECONDARY_KEYWORDS).some(kw=>all.includes(kw.toLowerCase()));
       if(hasHint)return{pass:true};
     }
   }
@@ -346,143 +462,172 @@ function isPalestineBook(title,description,authors){
   return{pass:false};
 }
 
+// ══════════ فلتر الـ 12 شهر ══════════
+function isWithin12Months(dateStr){
+  if(!dateStr)return false;
+  try{
+    const d=new Date(dateStr);
+    if(isNaN(d.getTime()))return false;
+    const minDate=getMinDate();
+    return d>=minDate;
+  }catch(e){return false}
+}
+
 // ══════════ استعلامات موسعة ══════════
 
 const QUERIES={
   en:[
-    "palestine book 2024","palestine book 2023","palestine book 2025",
-    "palestinian history book","palestinian resistance",
-    "gaza war book 2024","gaza war book 2023","gaza genocide book",
-    "nakba 1948 book","nakba palestine book",
-    "israeli occupation palestine","west bank settlements book",
-    "israeli apartheid book","palestinian refugees book",
-    "right of return palestine","jerusalem al-quds book",
-    "ethnic cleansing palestine book","settler colonialism palestine",
-    "BDS movement palestine","intifada palestine",
-    "october 7 book 2024","hamas book",
-    "war crimes israel gaza","ICJ genocide palestine",
-    "ICC israel palestine","palestinian literature",
-    "mahmoud darwish","ghassan kanafani book",
-    "edward said palestine","ilan pappe book",
-    "rashid khalidi book","norman finkelstein",
-    "noam chomsky palestine","one state solution palestine",
-    "blockade gaza","siege gaza book",
-    "palestinian cinema","palestinian art resistance",
-    "zionism critique book","anti-zionism",
-    "gaza humanitarian crisis 2024","gaza famine",
-    "israel genocide ICJ 2024","ceasefire gaza",
-    "palestine solidarity movement","free palestine book",
-    "decolonize palestine","palestinian identity",
-    "oslo accords failure","palestinian statehood",
-    "UN palestine","UNRWA palestine",
+    "africa book 2024","africa book 2025",
+    "african politics book","african history book",
+    "african economy book","african development",
+    "sub-saharan africa book","west africa book",
+    "east africa book","north africa book",
+    "southern africa book","central africa book",
+    "sahel crisis book","sahel security",
+    "horn of africa book","african union book",
+    "pan-africanism book","african governance",
+    "african democracy book","african elections",
+    "african conflict book","african civil war",
+    "african migration book","african diaspora book",
+    "african literature","african cinema book",
+    "african art book","african culture book",
+    "african youth book","african women book",
+    "nigeria book 2024","ethiopia book 2024",
+    "kenya book 2024","south africa book 2024",
+    "ghana book 2024","senegal book 2024",
+    "congo book 2024","sudan crisis book",
+    "south sudan book","somalia book 2024",
+    "cameroon book","uganda book 2024",
+    "tanzania book","mozambique book",
+    "rwanda book","mali book","niger book",
+    "burkina faso book","chad book",
+    "boko haram book","al-shabaab book",
+    "african terrorism book","african security book",
+    "ECOWAS book","SADC book","IGAD book",
+    "african trade book","AfCFTA book",
+    "african climate change","african environment book",
+    "african health book","ebola book africa",
+    "african education book","african technology",
+    "african urbanization","african agriculture book",
+    "decolonization africa book","colonialism africa book",
+    "postcolonial africa book","neocolonialism africa",
+    "apartheid book","mandela book",
+    "chinua achebe","chimamanda adichie book",
+    "achille mbembe book","frantz fanon book",
+    "wole soyinka book","ngugi wa thiongo",
+    "african coup","military junta africa",
+    "african natural resources","mining africa book",
+    "african oil book","african debt book",
+    "african peacekeeping","UN mission africa",
+    "african human rights","african corruption book",
+    "ethiopia tigray","sudan darfur",
+    "libyan crisis book","algeria hirak",
+    "morocco sahara book","tunisia revolution book",
+    "egypt politics book",
+    "african food security","african famine",
+    "african refugees book",
+    "great lakes africa book","lake chad crisis"
   ],
   fr:[
-    "palestine livre 2024","palestine livre 2023","palestine livre 2025",
-    "question palestinienne livre","conflit israelo-palestinien livre",
-    "cause palestinienne","peuple palestinien",
-    "gaza guerre livre 2024","gaza genocide 2024","gaza bombardement",
-    "guerre gaza 2023 livre","blocus gaza livre","siege gaza",
-    "gaza crise humanitaire","gaza famine 2024",
-    "7 octobre hamas livre","7 octobre 2023",
-    "histoire palestine livre","histoire palestinienne",
-    "nakba 1948 livre","nakba palestine",
-    "mandat britannique palestine","creation israel 1948",
-    "occupation israelienne livre","colonies israeliennes",
-    "colonisation israelienne","apartheid israelien livre",
-    "nettoyage ethnique palestine","mur separation palestine",
-    "resistance palestinienne livre","intifada livre",
-    "refugies palestiniens livre","droit retour palestinien",
-    "UNRWA livre","camps refugies palestiniens",
-    "jerusalem livre","al-quds livre","mosquee al-aqsa",
-    "jerusalem orientale occupation",
-    "droit international palestine","CIJ genocide israel",
-    "CPI crimes guerre israel","crimes guerre gaza",
-    "genocide gaza droit international",
-    "BDS palestine boycott","boycott israel livre",
-    "solidarite palestine","sionisme colonialisme livre",
-    "antisionisme livre","sionisme histoire critique",
-    "elias sanbar palestine","jean-pierre filiu gaza",
-    "alain gresh palestine","dominique vidal palestine",
-    "sylvain cypel israel","henry laurens palestine",
-    "farouk mardam-bey","leila shahid livre",
-    "rene backmann mur israel","pierre stambul palestine",
-    "thomas vescovi palestine","rachid benzine",
-    "shlomo sand invention","ilan pappe nettoyage",
-    "litterature palestinienne","mahmoud darwich poesie",
-    "ghassan kanafani livre","cinema palestinien",
-    "culture palestinienne","art palestinien",
-    "poesie palestinienne","roman palestinien",
-    "palestine la decouverte","palestine editions fabrique",
-    "palestine actes sud","palestine karthala",
-    "palestine sindbad","palestine CNRS editions",
-    "palestine puf","palestine seuil",
-    "palestine fayard","palestine libertalia",
-    "eau palestine","agriculture palestine",
-    "femmes palestiniennes","prisonniers palestiniens",
-    "enfants gaza","hopitaux gaza",
-    "nakba continue","depossession palestine",
-    "societe civile palestinienne","diaspora palestinienne",
+    "afrique livre 2024","afrique livre 2025",
+    "politique africaine livre","histoire africaine livre",
+    "économie africaine livre","développement africain livre",
+    "afrique subsaharienne livre","afrique de l'ouest livre",
+    "afrique de l'est livre","afrique du nord livre",
+    "afrique australe livre","afrique centrale livre",
+    "sahel crise livre","sahel sécurité livre",
+    "corne de l'afrique livre","union africaine livre",
+    "panafricanisme livre","gouvernance africaine livre",
+    "démocratie africaine livre","élections africaines",
+    "conflit africain livre","guerre civile afrique",
+    "migration africaine livre","diaspora africaine livre",
+    "littérature africaine","cinéma africain livre",
+    "art africain livre","culture africaine livre",
+    "jeunesse africaine livre","femmes africaines livre",
+    "nigeria livre 2024","ethiopie livre 2024",
+    "kenya livre 2024","afrique du sud livre 2024",
+    "sénégal livre 2024","cameroun livre 2024",
+    "congo livre 2024","soudan crise livre",
+    "somalie livre","mali livre 2024",
+    "niger livre 2024","burkina faso livre",
+    "tchad livre","boko haram livre",
+    "terrorisme afrique livre","sécurité afrique livre",
+    "CEDEAO livre","franc CFA livre",
+    "commerce africain livre","ZLECA livre",
+    "changement climatique afrique","environnement afrique livre",
+    "santé afrique livre","ebola livre afrique",
+    "éducation afrique livre","technologie afrique",
+    "urbanisation afrique","agriculture afrique livre",
+    "décolonisation afrique livre","colonialisme afrique livre",
+    "postcolonial afrique livre","néocolonialisme livre",
+    "apartheid livre","mandela livre",
+    "alain mabanckou livre","léonora miano livre",
+    "achille mbembe livre","frantz fanon livre",
+    "cheikh anta diop livre","felwine sarr livre",
+    "fatou diome livre","ousmane sembène livre",
+    "boubacar boris diop","tierno monénembo livre",
+    "coup d'état afrique","junte militaire afrique",
+    "ressources naturelles afrique","pétrole afrique livre",
+    "dette africaine livre","aide au développement afrique",
+    "maintien de la paix afrique",
+    "droits de l'homme afrique","corruption afrique livre",
+    "crise libyenne livre","algérie hirak livre",
+    "maroc sahara livre","tunisie révolution livre",
+    "égypte politique livre",
+    "sécurité alimentaire afrique","famine afrique",
+    "réfugiés africains livre",
+    "grands lacs afrique livre","lac tchad crise",
+    "kako nubukpo livre","carlos lopes afrique",
+    "dambisa moyo livre","abdourahman waberi livre",
+    "tahar ben jelloun livre","assia djebar livre",
+    "kamel daoud livre","leila slimani livre",
+    "afrique karthala","afrique la découverte",
+    "afrique harmattan","afrique présence africaine"
   ],
   ar:[
-    "فلسطين كتاب 2024","فلسطين كتاب 2023","فلسطين كتاب 2025",
-    "القضية الفلسطينية كتاب","الصراع العربي الاسرائيلي",
-    "تاريخ فلسطين الحديث","فلسطين التاريخ والجغرافيا",
-    "غزة حرب 2024","غزة حرب 2023","غزة ابادة كتاب",
-    "العدوان على غزة","حصار غزة كتاب",
-    "غزة الكارثة الانسانية","غزة المجاعة",
-    "غزة الحرب والمقاومة","قطاع غزة",
-    "طوفان الاقصى كتاب","طوفان الاقصى 2023",
-    "السابع من اكتوبر","عملية طوفان الاقصى",
-    "النكبة الفلسطينية كتاب","نكبة 1948",
-    "التطهير العرقي فلسطين","تهجير الفلسطينيين",
-    "المجازر الصهيونية","دير ياسين",
-    "الاحتلال الاسرائيلي كتاب","الاستيطان الصهيوني كتاب",
-    "المستوطنات الاسرائيلية","جدار الفصل العنصري",
-    "الضفة الغربية كتاب","الاغوار الفلسطينية",
-    "الابارتهايد الاسرائيلي","نظام الفصل العنصري",
-    "القدس المحتلة كتاب","القدس تاريخ",
-    "المسجد الاقصى كتاب","تهويد القدس",
-    "القدس العربية","البلدة القديمة القدس",
-    "المقاومة الفلسطينية كتاب","حركة حماس كتاب",
-    "الجهاد الاسلامي فلسطين","كتائب القسام",
-    "المقاومة المسلحة فلسطين","الانتفاضة الفلسطينية",
-    "الانتفاضة الاولى","الانتفاضة الثانية",
-    "الكفاح الفلسطيني","النضال الفلسطيني",
-    "اللاجئون الفلسطينيون كتاب","حق العودة كتاب",
-    "مخيمات اللاجئين الفلسطينيين","الاونروا",
-    "الشتات الفلسطيني","المهجر الفلسطيني",
-    "جرائم الحرب الاسرائيلية كتاب","محكمة العدل الدولية فلسطين",
-    "المحكمة الجنائية الدولية اسرائيل","القانون الدولي فلسطين",
-    "الابادة الجماعية غزة","جرائم ضد الانسانية اسرائيل",
-    "الادب الفلسطيني كتاب","محمود درويش كتاب",
-    "غسان كنفاني كتاب","الشعر الفلسطيني",
-    "الرواية الفلسطينية","السينما الفلسطينية",
-    "الثقافة الفلسطينية","الهوية الفلسطينية",
-    "الفن الفلسطيني","المسرح الفلسطيني",
-    "ادب المقاومة","سميح القاسم","توفيق زياد",
-    "فدوى طوقان","ادوارد سعيد",
-    "الصهيونية كتاب","تاريخ الصهيونية",
-    "الاستعمار الاستيطاني فلسطين","الحركة الوطنية الفلسطينية",
-    "منظمة التحرير الفلسطينية","اتفاقيات اوسلو",
-    "السلطة الفلسطينية","الدولة الفلسطينية",
-    "حل الدولتين","حل الدولة الواحدة",
-    "ايلان بابه كتاب","نورمان فينكلشتاين كتاب",
-    "نعوم تشومسكي فلسطين","رشيد الخالدي كتاب",
-    "نور مصالحة كتاب","عبد الوهاب المسيري",
-    "عزمي بشارة كتاب","وليد الخالدي",
-    "سلمان ابو ستة","الياس خوري كتاب",
-    "عبد الباري عطوان","مصطفى البرغوثي",
-    "ماهر الشريف","خليل السكاكيني",
-    "فلسطين مؤسسة الدراسات الفلسطينية",
-    "فلسطين المركز العربي للابحاث",
-    "فلسطين مركز دراسات الوحدة العربية",
-    "فلسطين دار الشروق","فلسطين دار الاداب",
-    "فلسطين دار الساقي","فلسطين دار الفارابي",
-    "المراة الفلسطينية","الاسرى الفلسطينيون",
-    "اطفال فلسطين","التعليم في فلسطين",
-    "الاقتصاد الفلسطيني","المياه فلسطين",
-    "الزراعة فلسطين","البيئة فلسطين",
-    "المجتمع المدني الفلسطيني","الاعلام الفلسطيني",
+    "أفريقيا كتاب 2024","أفريقيا كتاب 2025",
+    "افريقيا كتاب 2024","افريقيا كتاب 2025",
+    "الشأن الأفريقي كتاب","السياسة الأفريقية كتاب",
+    "التاريخ الأفريقي كتاب","الاقتصاد الأفريقي كتاب",
+    "التنمية الأفريقية كتاب","القارة الأفريقية كتاب",
+    "غرب أفريقيا كتاب","شرق أفريقيا كتاب",
+    "شمال أفريقيا كتاب","جنوب أفريقيا كتاب",
+    "وسط أفريقيا كتاب","الساحل الأفريقي كتاب",
+    "القرن الأفريقي كتاب","الاتحاد الأفريقي كتاب",
+    "الوحدة الأفريقية كتاب","الحوكمة الأفريقية كتاب",
+    "الديمقراطية الأفريقية كتاب","الانتخابات الأفريقية",
+    "النزاعات الأفريقية كتاب","الحروب الأهلية أفريقيا",
+    "الهجرة الأفريقية كتاب","الشتات الأفريقي كتاب",
+    "الأدب الأفريقي كتاب","السينما الأفريقية كتاب",
+    "الثقافة الأفريقية كتاب","الفن الأفريقي كتاب",
+    "الشباب الأفريقي كتاب","المرأة الأفريقية كتاب",
+    "نيجيريا كتاب","إثيوبيا كتاب","كينيا كتاب",
+    "غانا كتاب","السنغال كتاب","الكاميرون كتاب",
+    "الكونغو كتاب","السودان أزمة كتاب",
+    "جنوب السودان كتاب","الصومال كتاب",
+    "مالي كتاب","النيجر كتاب",
+    "بوركينا فاسو كتاب","تشاد كتاب",
+    "بوكو حرام كتاب","حركة الشباب كتاب",
+    "الإرهاب أفريقيا كتاب","الأمن الأفريقي كتاب",
+    "إيكواس كتاب","التجارة الأفريقية كتاب",
+    "المناخ أفريقيا كتاب","البيئة أفريقيا كتاب",
+    "الصحة أفريقيا كتاب","التعليم أفريقيا كتاب",
+    "الزراعة أفريقيا كتاب","التحضر أفريقيا كتاب",
+    "الاستعمار أفريقيا كتاب","ما بعد الاستعمار أفريقيا",
+    "الاستعمار الجديد أفريقيا","التحرر الأفريقي كتاب",
+    "مانديلا كتاب","نيلسون مانديلا كتاب",
+    "الموارد الطبيعية أفريقيا","النفط أفريقيا كتاب",
+    "الديون الأفريقية كتاب","المساعدات التنموية أفريقيا",
+    "حفظ السلام أفريقيا","حقوق الإنسان أفريقيا",
+    "الفساد أفريقيا كتاب","الانقلابات أفريقيا",
+    "الأزمة الليبية كتاب","الحراك الجزائري كتاب",
+    "المغرب الصحراء كتاب","الثورة التونسية كتاب",
+    "السياسة المصرية كتاب",
+    "الأمن الغذائي أفريقيا","المجاعة أفريقيا",
+    "اللاجئون الأفارقة كتاب",
+    "منطقة البحيرات الكبرى كتاب","بحيرة تشاد أزمة",
+    "المركز العربي للأبحاث أفريقيا",
+    "أفريقيا دار الشروق","أفريقيا عالم المعرفة"
   ]
 };
 
@@ -499,29 +644,41 @@ function detectTopics(title,desc){
   const t=((title||'')+' '+(desc||'')).toLowerCase();
   const out=[];
   const map=[
-    [/غز|gaza/i,'Gaza'],[/نكب|nakba/i,'Nakba'],
-    [/اباد|genocide|genocid/i,'Genocide'],[/احتلال|occupation/i,'Occupation'],
-    [/مقاوم|resistance|résistance/i,'Resistance'],[/تاريخ|history|histoire/i,'History'],
-    [/قدس|jerusalem|jérusalem/i,'Jerusalem'],[/لاج|refugee|réfugié|refugie/i,'Refugees'],
-    [/قانون.*دول|international.law|droit.inter/i,'International Law'],
-    [/ادب|literature|littérature|litterature/i,'Literature'],
-    [/حقوق|human.right|droits/i,'Human Rights'],
-    [/ابارتهايد|apartheid/i,'Apartheid'],[/صهيون|zionism|sionisme/i,'Zionism'],
-    [/استيطان|settlement|coloni/i,'Settlements'],[/انتفاض|intifada/i,'Intifada'],
-    [/تطهير|ethnic.cleansing|nettoyage/i,'Ethnic Cleansing'],
-    [/حماس|hamas/i,'Hamas'],[/حصار|blockade|blocus|siege/i,'Blockade'],
-    [/عود|return|retour/i,'Right of Return'],
-    [/ضف|west.bank|cisjordanie/i,'West Bank'],
-    [/اسر[ىي]|prisoner|prisonnier/i,'Prisoners'],
-    [/شعر|poetry|poésie|poesie/i,'Poetry'],
+    [/politi|سياس/i,'Politics'],[/histor|histoire|تاريخ/i,'History'],
+    [/econom|économi|اقتصاد/i,'Economy'],[/develop|développ|تنمي/i,'Development'],
+    [/conflict|conflit|guerre|حرب|نزاع/i,'Conflict'],
+    [/sahel|ساحل/i,'Sahel'],[/horn.of.africa|corne|قرن.أفريق|قرن.افريق/i,'Horn of Africa'],
+    [/north.africa|afrique.du.nord|شمال.أفريق|شمال.افريق|مغرب/i,'North Africa'],
+    [/west.africa|afrique.de.l.ouest|غرب.أفريق|غرب.افريق/i,'West Africa'],
+    [/east.africa|afrique.de.l.est|شرق.أفريق|شرق.افريق/i,'East Africa'],
+    [/southern.africa|afrique.australe|جنوب.أفريق|جنوب.افريق/i,'Southern Africa'],
+    [/central.africa|afrique.centrale|وسط.أفريق|وسط.افريق/i,'Central Africa'],
+    [/migrat|هجر/i,'Migration'],[/security|sécurité|أمن/i,'Security'],
+    [/cultur|ثقاف/i,'Culture'],[/literature|littérature|أدب/i,'Literature'],
+    [/health|santé|صح/i,'Health'],[/environment|environnement|بيئ/i,'Environment'],
+    [/governance|gouvernance|حوكم/i,'Governance'],
+    [/pan.african|panafricain|وحدة.أفريق|وحدة.افريق/i,'Pan-Africanism'],
+    [/terror|إرهاب|ارهاب/i,'Terrorism'],
+    [/democracy|démocratie|ديمقراط/i,'Democracy'],
+    [/colon|استعمار/i,'Colonialism'],
+    [/trade|commerce|تجار/i,'Trade'],
+    [/coup|انقلاب/i,'Coups'],
+    [/youth|jeunesse|شباب/i,'Youth'],
+    [/women|femmes|مرأة|نساء/i,'Women'],
+    [/education|éducation|تعليم/i,'Education'],
+    [/agricul|زراع/i,'Agriculture'],
+    [/mining|minerai|تعدين|معادن/i,'Mining'],
+    [/oil|pétrole|نفط/i,'Oil & Resources'],
+    [/refugee|réfugié|لاجئ/i,'Refugees']
   ];
   for(const[rx,label]of map)if(rx.test(t))out.push(label);
-  if(/palestin|فلسط/i.test(t)&&!out.includes('Palestine'))out.unshift('Palestine');
-  return out.length?out.slice(0,5):['Palestine'];
+  if(/أفريق|افريق|africa|afrique/i.test(t)&&!out.includes('Africa'))out.unshift('Africa');
+  return out.length?out.slice(0,5):['Africa'];
 }
 
-// ══════════ ازالة التكرار ══════════
+// ══════════ إزالة التكرار ══════════
 function normT(s){return(s||'').toLowerCase().replace(/[^\w\s\u0600-\u06FF]/g,' ').replace(/\s+/g,' ').trim().substring(0,80)}
+
 function dedup(books){
   const seen=new Set(),titles=[],out=[];
   for(const b of books){
@@ -554,29 +711,22 @@ async function fetchGoogle(query,langRestrict){
     const resp=await fetch(`https://www.googleapis.com/books/v1/volumes?${params}`);
     if(resp.status===429){await sleep(5000);return books}
     if(!resp.ok)return books;
-
     const data=await resp.json();
     const items=data.items||[];
-
     for(const item of items){
       try{
         const v=item.volumeInfo||{};
         const title=v.title||'';
         if(!title||title.length<3)continue;
-
         const pubDate=v.publishedDate||'';
-        let year=0;
-        if(pubDate)year=parseInt(pubDate.substring(0,4));
-        if(year>0&&year<MIN_YEAR)continue;
-        if(!year)continue;
-
+        if(!pubDate)continue;
+        // فلتر 12 شهر
+        if(!isWithin12Months(pubDate))continue;
         const desc=(v.description||'').substring(0,500);
         const authors=v.authors||[];
-        if(!isPalestineBook(title+(v.subtitle?': '+v.subtitle:''),desc,authors).pass)continue;
-
+        if(!isAfricaBook(title+(v.subtitle?': '+v.subtitle:''),desc,authors).pass)continue;
         const lang=v.language==='ar'?'ar':v.language==='fr'?'fr':detectLang(title);
         const isbns=v.industryIdentifiers||[];
-
         books.push({
           id:item.id,
           title:title+(v.subtitle?': '+v.subtitle:''),
@@ -605,24 +755,23 @@ async function fetchOpenLib(query){
     const resp=await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=30&sort=new`);
     if(!resp.ok)return books;
     const data=await resp.json();
-
     for(const doc of(data.docs||[])){
       try{
         const title=doc.title||'';
         if(!title)continue;
         const year=doc.first_publish_year||0;
-        if(year>0&&year<MIN_YEAR)continue;
         if(!year)continue;
-
+        // فلتر 12 شهر - Open Library يعطي سنة فقط، نقبل السنة الحالية والسابقة
+        const pubDateStr=year+'-01-01';
+        if(!isWithin12Months(pubDateStr))continue;
         const subjects=(doc.subject||[]).join(' ');
         const authors=doc.author_name||[];
-        if(!isPalestineBook(title,subjects,authors).pass)continue;
-
+        if(!isAfricaBook(title,subjects,authors).pass)continue;
         const coverId=doc.cover_i;
         books.push({
           id:'ol_'+doc.key,title,authors,
           publisher:(doc.publisher||[])[0]||'',
-          publication_date:year+'-01-01',
+          publication_date:pubDateStr,
           pages:doc.number_of_pages_median||null,
           isbn:(doc.isbn||[])[0]||'',
           book_url:'https://openlibrary.org'+doc.key,
@@ -642,29 +791,30 @@ async function fetchOpenLib(query){
 async function fetchCrossref(query){
   const books=[];
   try{
+    // Crossref: from-pub-date = 12 months ago
+    const minDate=getMinDate();
+    const minDateStr=minDate.getFullYear()+'-'+String(minDate.getMonth()+1).padStart(2,'0')+'-'+String(minDate.getDate()).padStart(2,'0');
     const params=new URLSearchParams({
-      query,filter:'type:book,from-pub-date:2023-01-01',
+      query,filter:'type:book,from-pub-date:'+minDateStr,
       rows:'20',sort:'published',order:'desc'
     });
     const resp=await fetch(`https://api.crossref.org/works?${params}`,{
-      headers:{'User-Agent':'PalestineBooks/2.0 (mailto:r@example.com)'}
+      headers:{'User-Agent':'AfricaBooks/1.0 (mailto:r@example.com)'}
     });
     if(!resp.ok)return books;
     const data=await resp.json();
-
     for(const item of((data.message&&data.message.items)||[])){
       try{
         const title=(item.title||[])[0]||'';
         if(!title)continue;
         const authors=(item.author||[]).map(a=>`${a.given||''} ${a.family||''}`.trim());
-        if(!isPalestineBook(title,(item.subject||[]).join(' '),authors).pass)continue;
-
+        if(!isAfricaBook(title,(item.subject||[]).join(' '),authors).pass)continue;
         const dp=(item['published-print']&&item['published-print']['date-parts']&&item['published-print']['date-parts'][0])||
-                 (item['published-online']&&item['published-online']['date-parts']&&item['published-online']['date-parts'][0]);
+          (item['published-online']&&item['published-online']['date-parts']&&item['published-online']['date-parts'][0]);
         const yr=dp?dp[0]:0;
-        if(yr>0&&yr<MIN_YEAR)continue;
-        const pubDate=dp?`${dp[0]}-${String(dp[1]||1).padStart(2,'0')}-${String(dp[2]||1).padStart(2,'0')}`:'2024-01-01';
-
+        const pubDate=dp?`${dp[0]}-${String(dp[1]||1).padStart(2,'0')}-${String(dp[2]||1).padStart(2,'0')}`:'';
+        if(!pubDate)continue;
+        if(!isWithin12Months(pubDate))continue;
         books.push({
           id:'cr_'+(item.DOI||Math.random().toString(36).substr(2,9)),
           title,authors,publisher:item.publisher||'',
@@ -690,14 +840,11 @@ async function fetchAllBooks(){
   isUpdating=true;
   activeSources.clear();
   const prevCount=ALL_BOOKS.length;
-
   document.getElementById('pbar').style.display='block';
   document.getElementById('rBtn').disabled=true;
-
   if(ALL_BOOKS.length===0){
     document.getElementById('grid').innerHTML='<div class="loader"><div class="spinner"></div><p>جار جلب الكتب...</p></div>';
   }
-
   const newBooks=[];
   const tasks=[];
 
@@ -714,20 +861,17 @@ async function fetchAllBooks(){
   let done=0;
 
   for(const task of tasks){
-    done++;
+    ++done;
     const pct=Math.round((done/total)*100);
     document.getElementById('pfill').style.width=pct+'%';
     document.getElementById('ptxt').textContent=pct+'% - '+task.api+' ['+task.lang+']: '+task.q.substring(0,30)+'...';
-
     let result=[];
     try{
       if(task.api==='google')result=await fetchGoogle(task.q,task.lang);
       else if(task.api==='openlib')result=await fetchOpenLib(task.q);
       else if(task.api==='crossref')result=await fetchCrossref(task.q);
     }catch(e){}
-
     if(result.length>0)newBooks.push(...result);
-
     const delay=task.api==='google'?600:task.api==='crossref'?1200:500;
     await sleep(delay);
   }
@@ -735,7 +879,6 @@ async function fetchAllBooks(){
   const combined=[...ALL_BOOKS,...newBooks];
   ALL_BOOKS=dedup(combined);
   ALL_BOOKS.sort((a,b)=>new Date(b.publication_date)-new Date(a.publication_date));
-
   const addedCount=ALL_BOOKS.length-prevCount;
 
   try{
@@ -747,10 +890,8 @@ async function fetchAllBooks(){
   document.getElementById('pbar').style.display='none';
   document.getElementById('rBtn').disabled=false;
   isUpdating=false;
-
   updateStats();filterBooks();updateTime();
-
-  if(addedCount>0&&prevCount>0)showNotif('تم اضافة '+addedCount+' كتاب جديد!');
+  if(addedCount>0&&prevCount>0)showNotif('تم إضافة '+addedCount+' كتاب جديد!');
 }
 
 function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
@@ -779,28 +920,20 @@ function filterBooks(){
     return true;
   });
 
-  // ★ ترتيب متعدد الخيارات
   switch(sort){
     case 'newest':
-      list.sort((a,b)=>new Date(b.publication_date)-new Date(a.publication_date));
-      break;
+      list.sort((a,b)=>new Date(b.publication_date)-new Date(a.publication_date));break;
     case 'oldest':
-      list.sort((a,b)=>new Date(a.publication_date)-new Date(b.publication_date));
-      break;
+      list.sort((a,b)=>new Date(a.publication_date)-new Date(b.publication_date));break;
     case 'rating':
-      list.sort((a,b)=>(b.rating||0)-(a.rating||0));
-      break;
+      list.sort((a,b)=>(b.rating||0)-(a.rating||0));break;
     case 'most_pages':
-      list.sort((a,b)=>(b.pages||0)-(a.pages||0));
-      break;
+      list.sort((a,b)=>(b.pages||0)-(a.pages||0));break;
     case 'least_pages':
-      list.sort((a,b)=>(a.pages||0)-(b.pages||0));
-      break;
+      list.sort((a,b)=>(a.pages||0)-(b.pages||0));break;
     case 'title':
-      list.sort((a,b)=>a.title.localeCompare(b.title,'ar'));
-      break;
+      list.sort((a,b)=>a.title.localeCompare(b.title,'ar'));break;
   }
-
   renderBooks(list);
 }
 
@@ -808,61 +941,56 @@ function esc(s){const d=document.createElement('div');d.textContent=s||'';return
 
 function renderBooks(books){
   const grid=document.getElementById('grid');
-
   if(!books.length&&ALL_BOOKS.length===0){
     grid.innerHTML='<div class="loader"><div class="spinner"></div><p>جار جلب الكتب...</p></div>';
     return;
   }
   if(!books.length){
-    grid.innerHTML='<div class="no-res"><div class="emoji">📚</div><p>لا توجد كتب مطابقة</p><p style="font-size:.9em;margin-top:8px;opacity:.7">جرب تغيير الفلتر</p></div>';
+    grid.innerHTML='<div class="no-res"><div class="emoji">🌍</div><p>لا توجد كتب مطابقة</p><p style="font-size:.9em;margin-top:8px;opacity:.7">جرب تغيير الفلتر</p></div>';
     return;
   }
-
-  const hotTopics=['Nakba','Gaza','Genocide','Occupation','Resistance','Hamas','Ethnic Cleansing','Prisoners'];
-
+  const hotTopics=['Conflict','Terrorism','Sahel','Security','Coups','Refugees','Migration'];
   grid.innerHTML=books.map(b=>{
     const lc='l-'+b.language;
-    const ll=b.language==='ar'?'عربي':b.language==='fr'?'Francais':'English';
+    const ll=b.language==='ar'?'عربي':b.language==='fr'?'Français':'English';
     const date=fmtDate(b.publication_date);
     const pagesStr=b.pages?String(b.pages):'';
     const ratingStr=b.rating?b.rating.toFixed(1):'';
-
     const coverHTML=b.cover
-      ?'<img src="'+b.cover+'" alt="'+esc(b.title)+'" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML=\'<div style=\\\'width:130px;height:180px;background:linear-gradient(135deg,#c8102e,#007a3d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:4em;position:relative;z-index:2\\\'>🇵🇸</div>\'">'
-      :'<div style="width:130px;height:180px;background:linear-gradient(135deg,#c8102e,#007a3d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:4em;position:relative;z-index:2">🇵🇸</div>';
-
+      ?'<img src="'+b.cover+'" alt="'+esc(b.title)+'" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML=\'<div style=\\\'width:130px;height:180px;background:linear-gradient(135deg,#1B5E20,#D4A017);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:4em;position:relative;z-index:2\\\'>🌍</div>\'\">'
+      :'<div style="width:130px;height:180px;background:linear-gradient(135deg,#1B5E20,#D4A017);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:4em;position:relative;z-index:2">🌍</div>';
     const tagsHTML=b.topics.slice(0,5).map(t=>
       '<span class="tag '+(hotTopics.some(h=>t.includes(h))?'hot':'')+'">'+esc(t)+'</span>'
     ).join('');
 
-    return '<div class="book-card">'+
-      '<div class="cover-wrap">'+
-        coverHTML+
-        '<span class="lang-badge '+lc+'">'+ll+'</span>'+
-        '<span class="src-badge">'+esc(b.source)+'</span>'+
-      '</div>'+
-      '<div class="book-body" dir="rtl">'+
-        '<div class="book-title">'+esc(b.title)+'</div>'+
-        '<div class="book-author">'+esc(b.authors.slice(0,3).join(', ')||'غير محدد')+'</div>'+
-        '<div class="book-pub">'+esc(b.publisher||'غير محدد')+'</div>'+
-        '<div class="book-meta">'+
-          (date?'<span>📅 '+date+'</span>':'')+
-          (pagesStr?'<span>📄 '+pagesStr+' p</span>':'')+
-          (ratingStr?'<span>⭐ '+ratingStr+'</span>':'')+
-          (b.isbn?'<span>📋 ISBN</span>':'')+
-        '</div>'+
-        '<div class="topics">'+tagsHTML+'</div>'+
-        (b.description?'<div class="book-desc">'+esc(b.description)+'</div>':'')+
-        '<div class="book-actions">'+
-          (b.book_url?'<a href="'+esc(b.book_url)+'" target="_blank" rel="noopener" class="blink bp">🔗 رابط الكتاب</a>':'')+
-          (b.isbn?'<a href="https://www.worldcat.org/isbn/'+b.isbn+'" target="_blank" rel="noopener" class="blink bs">📚 WorldCat</a>':'')+
-        '</div>'+
-      '</div>'+
-    '</div>';
+    return '<div class="book-card">'
+      +'<div class="cover-wrap">'
+      +coverHTML
+      +'<span class="lang-badge '+lc+'">'+ll+'</span>'
+      +'<span class="src-badge">'+esc(b.source)+'</span>'
+      +'</div>'
+      +'<div class="book-body" dir="rtl">'
+      +'<div class="book-title">'+esc(b.title)+'</div>'
+      +'<div class="book-author">'+esc(b.authors.slice(0,3).join(', ')||'غير محدد')+'</div>'
+      +'<div class="book-pub">'+esc(b.publisher||'غير محدد')+'</div>'
+      +'<div class="book-meta">'
+      +(date?'<span>📅 '+date+'</span>':'')
+      +(pagesStr?'<span>📄 '+pagesStr+' p</span>':'')
+      +(ratingStr?'<span>⭐ '+ratingStr+'</span>':'')
+      +(b.isbn?'<span>📋 ISBN</span>':'')
+      +'</div>'
+      +'<div class="topics">'+tagsHTML+'</div>'
+      +(b.description?'<div class="book-desc">'+esc(b.description)+'</div>':'')
+      +'<div class="book-actions">'
+      +(b.book_url?'<a href="'+esc(b.book_url)+'" target="_blank" rel="noopener" class="blink bp">🔗 رابط الكتاب</a>':'')
+      +(b.isbn?'<a href="https://www.worldcat.org/isbn/'+b.isbn+'" target="_blank" rel="noopener" class="blink bs">📚 WorldCat</a>':'')
+      +'</div>'
+      +'</div>'
+      +'</div>';
   }).join('');
 }
 
-// ══════════ الاحصائيات ══════════
+// ══════════ الإحصائيات ══════════
 function updateStats(){
   document.getElementById('sTotal').textContent=String(ALL_BOOKS.length);
   document.getElementById('sAr').textContent=String(ALL_BOOKS.filter(b=>b.language==='ar').length);
@@ -873,7 +1001,7 @@ function updateStats(){
 }
 
 function updateTime(){
-  document.getElementById('lastUp').textContent='اخر تحديث: '+fmtDateTime();
+  document.getElementById('lastUp').textContent='آخر تحديث: '+fmtDateTime();
 }
 
 function manualRefresh(){
@@ -892,7 +1020,6 @@ function manualRefresh(){
         ALL_BOOKS=cache.books;
         if(cache.sources)cache.sources.forEach(s=>activeSources.add(s));
         updateStats();filterBooks();updateTime();
-
         const elapsed=Date.now()-(cache.timestamp||0);
         if(elapsed<DAILY_MS){
           setTimeout(()=>fetchAllBooks(),DAILY_MS-elapsed);
@@ -905,7 +1032,6 @@ function manualRefresh(){
   }catch(e){}
   await fetchAllBooks();
 })();
-
 setInterval(()=>fetchAllBooks(),DAILY_MS);
 </script>
 </body>
